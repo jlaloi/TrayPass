@@ -28,11 +28,13 @@ public class CryptoEncrypter {
 	public static String decrypt(String str, SecretKey key) {
 		String result = "";
 		try {
-			Cipher dcipher = Cipher.getInstance(algorithm);
-			dcipher.init(Cipher.DECRYPT_MODE, key);
-			byte[] dec = new sun.misc.BASE64Decoder().decodeBuffer(str);
-			byte[] utf8 = dcipher.doFinal(dec);
-			result = new String(utf8, "UTF8");
+			if(str != null && str.length() > 0){
+				Cipher dcipher = Cipher.getInstance(algorithm);
+				dcipher.init(Cipher.DECRYPT_MODE, key);
+				byte[] dec = new sun.misc.BASE64Decoder().decodeBuffer(str);
+				byte[] utf8 = dcipher.doFinal(dec);
+				result = new String(utf8, "UTF8");
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -55,12 +57,6 @@ public class CryptoEncrypter {
 			e.printStackTrace();
 		}
 		return result;
-	}
-	
-	public static void main(String[] args) {
-		String text = "Advanced Encryption Standard ou AES (soit « standard de chiffrement avancé » en français), aussi connu sous le nom de Rijndael, est un algorithme de chiffrement symétrique. Il remporta en octobre 2000 le concours AES, lancé en 1997 par le NIST et devint le nouveau standard de chiffrement pour les organisations du gouvernement des États-Unis.";
-		SecretKey key = getSecretKey("et ta soeur134");
-		System.out.println(encrypt(text, key));
 	}
 
 }

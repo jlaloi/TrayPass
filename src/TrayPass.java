@@ -2,6 +2,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.Menu;
 import java.awt.MenuItem;
 import java.awt.PopupMenu;
 import java.awt.SystemTray;
@@ -100,7 +101,8 @@ public class TrayPass {
 
 		popup.addSeparator();
 
-		// Adding Crypto item
+		// Adding Crypto items
+		Menu  crypto = new Menu ("Encryption");
 		MenuItem cryptoItem = new MenuItem("Config Encrypter");
 		cryptoItem.setFont(font);
 		cryptoItem.addActionListener(new ActionListener() {
@@ -108,7 +110,25 @@ public class TrayPass {
 				new CryptoConfigFrame();
 			}
 		});
-		popup.add(cryptoItem);
+		crypto.add(cryptoItem);
+		MenuItem cryptoItem2 = new MenuItem("Set Encrypter");
+		cryptoItem2.setFont(font);
+		cryptoItem2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new CryptoFrame();
+			}
+		});
+		crypto.add(cryptoItem2);
+		MenuItem cryptoItem3 = new MenuItem("Encrypter help");
+		cryptoItem3.setFont(font);
+		cryptoItem3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new CryptoEncryptFrame();
+			}
+		});
+		crypto.add(cryptoItem3);
+		popup.add(crypto);
+			
 
 		// Adding reload item
 		MenuItem reloadItem = new MenuItem("Reload");

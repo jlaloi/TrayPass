@@ -32,8 +32,8 @@ public class CryptoFrame extends JDialog {
 		add(test);
 		add(save);
 		
-		pack();
-		setTitle("Tray Encrypter Config");
+		setSize(400, 100);
+		setTitle("Set Encrypter Config");
 		setLocationRelativeTo(getParent());
 		setVisible(true);
 		
