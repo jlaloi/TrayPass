@@ -10,8 +10,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 
-import javax.swing.UIManager;
-
 public class TrayPass {
 
 	public static String title = "Tray Pass";
@@ -91,7 +89,7 @@ public class TrayPass {
 
 		// Adding Crypto items
 		Menu crypto = new Menu("Encryption");
-		MenuItem cryptoItem = new MenuItem("Config Encrypter");
+		MenuItem cryptoItem = new MenuItem("Config");
 		cryptoItem.setFont(TrayObject.font);
 		cryptoItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -99,15 +97,7 @@ public class TrayPass {
 			}
 		});
 		crypto.add(cryptoItem);
-		MenuItem cryptoItem2 = new MenuItem("Set Encrypter");
-		cryptoItem2.setFont(TrayObject.font);
-		cryptoItem2.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				new CryptoEnterFrame();
-			}
-		});
-		crypto.add(cryptoItem2);
-		MenuItem cryptoItem3 = new MenuItem("Encrypter help");
+		MenuItem cryptoItem3 = new MenuItem("Generate");
 		cryptoItem3.setFont(TrayObject.font);
 		cryptoItem3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -115,6 +105,14 @@ public class TrayPass {
 			}
 		});
 		crypto.add(cryptoItem3);
+		MenuItem cryptoItem2 = new MenuItem("Set");
+		cryptoItem2.setFont(TrayObject.font);
+		cryptoItem2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new CryptoEnterFrame();
+			}
+		});
+		crypto.add(cryptoItem2);
 		crypto.setFont(TrayObject.font);
 		popup.add(crypto);
 
@@ -142,45 +140,14 @@ public class TrayPass {
 		// Display
 		trayIcon.setPopupMenu(popup);
 
+		// Crypto
 		if (useEncryption) {
 			if (trayConfig.getCryptoExample() != null && trayConfig.getCryptoExample().trim().length() > 0) {
 				new CryptoEnterFrame();
-			} else {
+			} else if (TrayObject.secretKey == null) {
 				new CryptoConfigFrame();
 			}
 		}
 
-	}
-
-	public static void main(String[] args) {
-		if (args.length > 0) {
-			TrayObject.passFile = args[0];
-		}
-
-		if (args.length > 1) {
-			TrayObject.iconFile = args[1];
-			try {
-				TrayObject.trayImageIcon = Toolkit.getDefaultToolkit().getImage(TrayObject.iconFile);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-
-		if (args.length > 2) {
-			TrayObject.configFileName = args[2];
-		}
-
-		System.out.println("passFile: " + TrayObject.passFile);
-		System.out.println("imageFile: " + TrayObject.iconFile);
-		System.out.println("configFileName: " + TrayObject.configFileName);
-
-		if (SystemTray.isSupported()) {
-			try {
-				UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			new TrayPass();
-		}
 	}
 }
