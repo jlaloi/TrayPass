@@ -1,4 +1,3 @@
-
 import java.security.MessageDigest;
 import java.util.Arrays;
 
@@ -29,15 +28,14 @@ public class CryptoEncrypter {
 	public static String decrypt(String str, SecretKey key) {
 		String result = "";
 		try {
-			if(str != null && str.trim().length() > 3){
+			if (str != null && str.trim().length() > 3) {
 				Cipher dcipher = Cipher.getInstance(algorithm);
 				dcipher.init(Cipher.DECRYPT_MODE, key);
 				byte[] dec = new sun.misc.BASE64Decoder().decodeBuffer(str);
 				byte[] utf8 = dcipher.doFinal(dec);
 				result = new String(utf8, "UTF8");
 			}
-		}catch (BadPaddingException be){
-			System.out.println("Wrong KEY");
+		} catch (BadPaddingException be) {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

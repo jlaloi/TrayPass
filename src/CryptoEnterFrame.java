@@ -24,7 +24,7 @@ public class CryptoEnterFrame extends JDialog {
 		add(example);
 
 		setSize(200, 80);
-		setTitle("Set Encrypter Config");
+		setTitle("Enter your key");
 		setIconImage(TrayPass.trayImageIcon);
 		setLocationRelativeTo(getParent());
 		setVisible(true);

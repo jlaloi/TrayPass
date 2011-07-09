@@ -5,7 +5,7 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
 public class TrayConfig implements Serializable {
-	
+
 	public static final String fileName = ".TrayPass";
 
 	private String cryptoExample = "";
@@ -17,7 +17,7 @@ public class TrayConfig implements Serializable {
 		}
 		return home + System.getProperty("file.separator") + fileName;
 	}
-	
+
 	public void save() {
 		try {
 			FileOutputStream fos = new FileOutputStream(getSaveFile());
@@ -58,12 +58,13 @@ public class TrayConfig implements Serializable {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public String getCryptoExample() {
 		return cryptoExample;
 	}
+
 	public void setCryptoExample(String cryptoExample) {
 		this.cryptoExample = cryptoExample;
 	}
-	
+
 }

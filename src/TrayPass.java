@@ -36,7 +36,7 @@ public class TrayPass {
 	public static TrayIcon trayIcon;
 
 	public static TrayConfig trayConfig;
-	
+
 	public static SecretKey key;
 
 	class PassItem extends MenuItem {
@@ -84,7 +84,7 @@ public class TrayPass {
 
 		// Adding pass
 		for (String pass : TrayTools.getFileLines(passFile)) {
-			if(pass.contains("@encrypt")){
+			if (pass.contains("@encrypt")) {
 				useEncryption = true;
 			}
 			if (pass.equals("line")) {
@@ -107,7 +107,7 @@ public class TrayPass {
 		popup.addSeparator();
 
 		// Adding Crypto items
-		Menu  crypto = new Menu ("Encryption");
+		Menu crypto = new Menu("Encryption");
 		MenuItem cryptoItem = new MenuItem("Config Encrypter");
 		cryptoItem.setFont(font);
 		cryptoItem.addActionListener(new ActionListener() {
@@ -132,8 +132,8 @@ public class TrayPass {
 			}
 		});
 		crypto.add(cryptoItem3);
+		crypto.setFont(font);
 		popup.add(crypto);
-			
 
 		// Adding reload item
 		MenuItem reloadItem = new MenuItem("Reload");
@@ -158,8 +158,8 @@ public class TrayPass {
 
 		// Display
 		trayIcon.setPopupMenu(popup);
-		
-		if(useEncryption){
+
+		if (useEncryption) {
 			new CryptoEnterFrame();
 		}
 
