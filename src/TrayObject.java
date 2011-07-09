@@ -1,5 +1,7 @@
+import java.awt.AWTException;
 import java.awt.Font;
 import java.awt.Image;
+import java.awt.Robot;
 
 import javax.crypto.SecretKey;
 
@@ -25,8 +27,23 @@ public class TrayObject {
 
 	public static String lineSeparator = System.getProperty("line.separator");
 
+	public static TrayConfig trayConfig = new TrayConfig();
+
 	public static SecretKey secretKey;
 
 	public static Image trayImageIcon;
+	
+	private static Robot robot;
+	
+	public static Robot getRobot(){
+		if(robot == null){
+			try {
+				robot = new Robot();
+			} catch (AWTException e) {
+				e.printStackTrace();
+			}
+		}
+		return robot;		
+	}
 
 }

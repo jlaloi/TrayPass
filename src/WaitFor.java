@@ -1,6 +1,5 @@
 import java.awt.Point;
 import java.awt.Rectangle;
-import java.awt.Robot;
 import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -14,13 +13,9 @@ public class WaitFor {
 	private boolean isFound = false;
 
 	private int click = 0;
-
-	private Robot robot;
-
 	public WaitFor(String path, int click) {
 		this.click = click;
 		try {
-			robot = new Robot();
 			File file = new File(path);
 			if (file.exists()) {
 				image = ImageIO.read(new File(path));
@@ -40,9 +35,9 @@ public class WaitFor {
 				Point result = isOnDesktop(image);
 				isFound = result != null;
 				if (click > 0 && result != null) {
-					robot.mouseMove(result.x + (image.getWidth() / 2), result.y + (image.getHeight() / 2));
-					robot.mousePress(click);
-					robot.mouseRelease(click);
+					TrayObject.getRobot().mouseMove(result.x + (image.getWidth() / 2), result.y + (image.getHeight() / 2));
+					TrayObject.getRobot().mousePress(click);
+					TrayObject.getRobot().mouseRelease(click);
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -55,7 +50,7 @@ public class WaitFor {
 		Point result = null;
 		try {
 			Rectangle captureSize = new Rectangle(Toolkit.getDefaultToolkit().getScreenSize());
-			BufferedImage desktop = robot.createScreenCapture(captureSize);
+			BufferedImage desktop = TrayObject.getRobot().createScreenCapture(captureSize);
 			result = imageIncluded(desktop, image);
 		} catch (Exception e) {
 			e.printStackTrace();

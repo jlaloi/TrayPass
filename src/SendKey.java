@@ -1,17 +1,6 @@
-import java.awt.Robot;
 import java.awt.event.KeyEvent;
 
 public class SendKey {
-
-	private Robot robot;
-
-	public SendKey() {
-		try {
-			robot = new Robot();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
 
 	public void type(String characters) {
 		int i = 0;
@@ -357,10 +346,10 @@ public class SendKey {
 	}
 
 	private void doType(int[] keyCodes, int offset, int length) {
-		if (length > 0 && robot != null) {
-			robot.keyPress(keyCodes[offset]);
+		if (length > 0) {
+			TrayObject.getRobot().keyPress(keyCodes[offset]);
 			doType(keyCodes, offset + 1, length - 1);
-			robot.keyRelease(keyCodes[offset]);
+			TrayObject.getRobot().keyRelease(keyCodes[offset]);
 		}
 	}
 }

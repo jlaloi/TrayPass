@@ -33,6 +33,7 @@ public class Launcher {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
+			TrayObject.trayConfig.load();
 			new TrayPass();
 		}
 	}

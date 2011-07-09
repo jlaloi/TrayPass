@@ -37,8 +37,8 @@ public class CryptoConfigFrame extends JDialog {
 		save.addMouseListener(new MouseAdapter() {
 			public void mouseReleased(MouseEvent arg0) {
 				TrayObject.secretKey = CryptoEncrypter.getSecretKey(key.getText());
-				TrayPass.trayConfig.setCryptoExample(CryptoEncrypter.encrypt(example.getText(), TrayObject.secretKey));
-				TrayPass.trayConfig.save();
+				TrayObject.trayConfig.setCryptoExample(CryptoEncrypter.encrypt(example.getText(), TrayObject.secretKey));
+				TrayObject.trayConfig.save();
 				dispose();
 			}
 		});

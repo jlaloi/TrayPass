@@ -8,6 +8,9 @@ import java.awt.Toolkit;
 import java.awt.TrayIcon;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.InputEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 
 public class TrayPass {
@@ -17,8 +20,6 @@ public class TrayPass {
 	public static BufferedImage workingIcon;
 
 	public static TrayIcon trayIcon;
-
-	public static TrayConfig trayConfig;
 
 	class PassItem extends MenuItem {
 
@@ -38,8 +39,6 @@ public class TrayPass {
 	}
 
 	public TrayPass() {
-		trayConfig = new TrayConfig();
-		trayConfig.load();
 		try {
 			if (TrayObject.trayImageIcon == null) {
 				TrayObject.trayImageIcon = Toolkit.getDefaultToolkit().getImage(getClass().getResource(TrayObject.iconFile));
@@ -54,12 +53,24 @@ public class TrayPass {
 			SystemTray tray = SystemTray.getSystemTray();
 			setMenu();
 			tray.add(trayIcon);
+
+			trayIcon.addMouseListener(new MouseAdapter() {
+				public void mouseReleased(MouseEvent e) {
+					if (e.getButton() == MouseEvent.BUTTON1) {
+						TrayObject.getRobot().mouseRelease(InputEvent.BUTTON3_MASK);
+					} else if (e.getButton() == MouseEvent.BUTTON2) {
+						exit();
+					}
+
+				}
+			});
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
 	private void setMenu() {
+		TrayObject.trayConfig.load();
 		PopupMenu popup = new PopupMenu();
 		boolean useEncryption = false;
 
@@ -86,53 +97,61 @@ public class TrayPass {
 		}
 
 		popup.addSeparator();
+		Menu configMenu = new Menu("Configuration");
+		configMenu.setFont(TrayObject.font);
 
 		// Adding Crypto items
-		Menu crypto = new Menu("Encryption");
-		MenuItem cryptoItem = new MenuItem("Config");
+		MenuItem cryptoItem = new MenuItem("Crypto Config");
 		cryptoItem.setFont(TrayObject.font);
 		cryptoItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				new CryptoConfigFrame();
 			}
 		});
-		crypto.add(cryptoItem);
-		MenuItem cryptoItem3 = new MenuItem("Generate");
+		configMenu.add(cryptoItem);
+		MenuItem cryptoItem3 = new MenuItem("Crypto Generate");
 		cryptoItem3.setFont(TrayObject.font);
 		cryptoItem3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				new CryptoEncryptFrame();
 			}
 		});
-		crypto.add(cryptoItem3);
-		MenuItem cryptoItem2 = new MenuItem("Set");
+		configMenu.add(cryptoItem3);
+		MenuItem cryptoItem2 = new MenuItem("Crypto Set");
 		cryptoItem2.setFont(TrayObject.font);
 		cryptoItem2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				new CryptoEnterFrame();
 			}
 		});
-		crypto.add(cryptoItem2);
-		crypto.setFont(TrayObject.font);
-		popup.add(crypto);
+		configMenu.add(cryptoItem2);
 
-		// Adding reload item
-		MenuItem reloadItem = new MenuItem("Reload");
+		// Misc
+		MenuItem editItem = new MenuItem("Edit Menu");
+		editItem.setFont(TrayObject.font);
+		editItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				TrayTools.execute(new String[] { "notepad", TrayObject.passFile });
+			}
+		});
+		configMenu.add(editItem);
+		MenuItem reloadItem = new MenuItem("Reload Menu");
 		reloadItem.setFont(TrayObject.font);
 		reloadItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				setMenu();
 			}
 		});
-		popup.add(reloadItem);
+		configMenu.add(reloadItem);
+
+		popup.add(configMenu);
 
 		// Adding exit item
 		MenuItem exitItem = new MenuItem("Exit");
 		exitItem.setFont(TrayObject.font);
 		exitItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				trayConfig.save();
-				System.exit(0);
+				exit();
 			}
 		});
 		popup.add(exitItem);
@@ -142,12 +161,17 @@ public class TrayPass {
 
 		// Crypto
 		if (useEncryption) {
-			if (trayConfig.getCryptoExample() != null && trayConfig.getCryptoExample().trim().length() > 0) {
+			if (TrayObject.trayConfig.getCryptoExample() != null && TrayObject.trayConfig.getCryptoExample().trim().length() > 0) {
 				new CryptoEnterFrame();
 			} else if (TrayObject.secretKey == null) {
 				new CryptoConfigFrame();
 			}
 		}
 
+	}
+
+	private void exit() {
+		TrayObject.trayConfig.save();
+		System.exit(0);
 	}
 }

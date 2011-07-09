@@ -32,7 +32,7 @@ public class CryptoEnterFrame extends JDialog {
 			public void keyReleased(KeyEvent e) {
 				String keyp = new String(key.getPassword());
 				SecretKey generatedKey = CryptoEncrypter.getSecretKey(keyp);
-				String result = CryptoEncrypter.decrypt(TrayPass.trayConfig.getCryptoExample(), generatedKey);
+				String result = CryptoEncrypter.decrypt(TrayObject.trayConfig.getCryptoExample(), generatedKey);
 				example.setText(result);
 				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 					if (example.getText().trim().length() > 0) {
