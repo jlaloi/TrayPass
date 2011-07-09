@@ -9,10 +9,6 @@ import java.util.zip.ZipInputStream;
 
 public class PackManager {
 
-	public static String fileSeparator = System.getProperty("file.separator");
-
-	public static String tmpDir = "TrayPass";
-
 	public static String paramSeparator = "#";
 
 	public static String paramPattern = "#param#";
@@ -57,9 +53,11 @@ public class PackManager {
 	public static String getTmpDir(String path) {
 		String result;
 		if (System.getenv("TMP") != null && System.getenv("TMP").trim().length() > 0) {
-			result = System.getenv("TMP") + fileSeparator + tmpDir + fileSeparator + path + fileSeparator;
+			result = System.getenv("TMP") + TrayObject.fileSeparator + TrayObject.tmpDir + TrayObject.fileSeparator + path
+					+ TrayObject.fileSeparator;
 		} else {
-			result = "/tmp" + fileSeparator + tmpDir + fileSeparator + path + fileSeparator;
+			result = "/tmp" + TrayObject.fileSeparator + TrayObject.tmpDir + TrayObject.fileSeparator + path
+					+ TrayObject.fileSeparator;
 		}
 		try {
 			File tmp = new File(result);

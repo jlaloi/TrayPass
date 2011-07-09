@@ -6,8 +6,6 @@ import java.io.Serializable;
 
 public class TrayConfig implements Serializable {
 
-	public static final String fileName = ".TrayPass";
-
 	private String cryptoExample = "";
 
 	public String getSaveFile() {
@@ -15,7 +13,7 @@ public class TrayConfig implements Serializable {
 		if (home == null || home.trim().length() == 0) {
 			home = System.getenv("HOME");
 		}
-		return home + System.getProperty("file.separator") + fileName;
+		return home + TrayObject.fileSeparator + TrayObject.configFileName;
 	}
 
 	public void save() {

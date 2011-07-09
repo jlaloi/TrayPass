@@ -1,4 +1,3 @@
-import java.awt.AWTException;
 import java.awt.Robot;
 import java.awt.event.KeyEvent;
 
@@ -9,15 +8,14 @@ public class SendKey {
 	public SendKey() {
 		try {
 			robot = new Robot();
-		} catch (AWTException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
 	public void type(String characters) {
-		int length = characters.length();
 		int i = 0;
-		for (; i < length; i++) {
+		for (; i < characters.length(); i++) {
 			if (characters.substring(i, i + 1).equals("{")) {
 				typeSpecial(characters.substring(i, characters.indexOf("}", i) + 1));
 				i = characters.indexOf("}", i);
@@ -359,11 +357,10 @@ public class SendKey {
 	}
 
 	private void doType(int[] keyCodes, int offset, int length) {
-		if (length == 0 || robot == null) {
-			return;
+		if (length > 0 && robot != null) {
+			robot.keyPress(keyCodes[offset]);
+			doType(keyCodes, offset + 1, length - 1);
+			robot.keyRelease(keyCodes[offset]);
 		}
-		robot.keyPress(keyCodes[offset]);
-		doType(keyCodes, offset + 1, length - 1);
-		robot.keyRelease(keyCodes[offset]);
 	}
 }

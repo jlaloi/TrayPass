@@ -13,7 +13,6 @@ public class CryptoEnterFrame extends JDialog {
 	private JLabel example;
 
 	public CryptoEnterFrame() {
-
 		key = new JPasswordField();
 		key.setHorizontalAlignment(JPasswordField.CENTER);
 		example = new JLabel();
@@ -25,7 +24,7 @@ public class CryptoEnterFrame extends JDialog {
 
 		setSize(200, 80);
 		setTitle("Enter your key");
-		setIconImage(TrayPass.trayImageIcon);
+		setIconImage(TrayObject.trayImageIcon);
 		setLocationRelativeTo(getParent());
 		setVisible(true);
 
@@ -37,13 +36,11 @@ public class CryptoEnterFrame extends JDialog {
 				example.setText(result);
 				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 					if (example.getText().trim().length() > 0) {
-						TrayPass.key = generatedKey;
+						TrayObject.secretKey = generatedKey;
 						dispose();
 					}
 				}
 			}
 		});
-
 	}
-
 }

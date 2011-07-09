@@ -17,14 +17,12 @@ public class CryptoEncryptFrame extends JDialog {
 		encrypted.setHorizontalAlignment(JTextField.CENTER);
 
 		setLayout(new GridLayout(2, 1));
-
 		add(text);
-
 		add(encrypted);
 
 		setSize(800, 80);
 		setTitle("Tray Encrypter Help");
-		setIconImage(TrayPass.trayImageIcon);
+		setIconImage(TrayObject.trayImageIcon);
 		setLocationRelativeTo(getParent());
 		setVisible(true);
 
@@ -32,10 +30,10 @@ public class CryptoEncryptFrame extends JDialog {
 			public void keyReleased(KeyEvent e) {
 				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 					String result = "";
-					if (TrayPass.key == null) {
+					if (TrayObject.secretKey == null) {
 						result = "Encrypter not set!";
 					} else {
-						result = "@encrypt{" + CryptoEncrypter.encrypt(text.getText(), TrayPass.key) + "}";
+						result = TrayCMD.encrypt + "{" + CryptoEncrypter.encrypt(text.getText(), TrayObject.secretKey) + "}";
 						TrayTools.setClipboard(result);
 					}
 					encrypted.setText(result);
@@ -43,5 +41,4 @@ public class CryptoEncryptFrame extends JDialog {
 			}
 		});
 	}
-
 }

@@ -1,1 +1,4 @@
-{test}sfffff@encrypt{puDpHQjhpwyUBpJFKH3ZrQ==}xcwxc
+
+title:mon gros titre
+line
+{test}open:notepad][@bigwait][send:hello world!!{enter}][wait][send:@encrypt{puDpHQjhpwyUBpJFKH3ZrQ==}{enter}@input][waitforandclick:C:\Users\Julien\Pictures\test.png

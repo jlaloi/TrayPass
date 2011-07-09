@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 
 public class TrayTools {
 
@@ -67,7 +68,7 @@ public class TrayTools {
 	public static String getFileContent(String file) {
 		String result = "";
 		for (String line : getFileLines(file)) {
-			result += line + System.getProperty("line.separator");
+			result += line + TrayObject.lineSeparator;
 		}
 		return result;
 	}
@@ -90,6 +91,10 @@ public class TrayTools {
 		} catch (Exception e1) {
 			e1.printStackTrace();
 		}
+	}
+
+	public static String getInput() {
+		return (String) JOptionPane.showInputDialog(null, null, "Enter value", JOptionPane.PLAIN_MESSAGE, null, null, null);
 	}
 
 }

@@ -2,44 +2,42 @@ import java.awt.event.InputEvent;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import javax.swing.JOptionPane;
-
 public class TrayAction {
 	public static void doAction(String line) {
 		String[] lines = line.split("\\]\\[");
 		for (String pass : lines) {
 			pass = formatIt(pass);
-			if (pass.equals("@wait")) {
+			if (pass.equals(TrayCMD.wait)) {
 				TrayTools.waitMS(1000);
-			} else if (pass.equals("@bigwait")) {
+			} else if (pass.equals(TrayCMD.bigWait)) {
 				TrayTools.waitMS(5000);
-			} else if (pass.startsWith("pack:")) {
+			} else if (pass.startsWith(TrayCMD.pack)) {
 				doAction(PackManager.getLine(pass));
-			} else if (pass.startsWith("send:")) {
+			} else if (pass.startsWith(TrayCMD.send)) {
 				new SendKey().type(pass.substring(pass.indexOf(":") + 1));
-			} else if (pass.startsWith("waitfor")) {
+			} else if (pass.startsWith(TrayCMD.waitFor) || pass.startsWith(TrayCMD.waitForAndClick)
+					|| pass.startsWith(TrayCMD.waitForAndRightClick) || pass.startsWith(TrayCMD.waitForAndMiddleClick)) {
 				String image = pass.substring(pass.indexOf(":") + 1);
 				int click = 0;
-				if (pass.startsWith("waitforandclick:")) {
+				if (pass.startsWith(TrayCMD.waitForAndClick)) {
 					click = InputEvent.BUTTON1_MASK;
-				} else if (pass.startsWith("waitforandrightclick:")) {
+				} else if (pass.startsWith(TrayCMD.waitForAndRightClick)) {
 					click = InputEvent.BUTTON3_MASK;
-				} else if (pass.startsWith("waitforandmiddleclick:")) {
+				} else if (pass.startsWith(TrayCMD.waitForAndMiddleClick)) {
 					click = InputEvent.BUTTON2_MASK;
 				}
-				WaitFor wf = new WaitFor(image, click);
+
 				TrayPass.trayIcon.setToolTip("Looking for " + image);
-				for (int i = 0; i < 30; i++) {
-					if (wf.isOnDesktop())
-						break;
+				WaitFor wf = new WaitFor(image, click);
+				for (int i = 0; i < 30 && !wf.isOnDesktop(); i++) {
 					TrayTools.waitMS(500);
 				}
 				if (!wf.isOnDesktop())
 					break;
-			} else if (pass.startsWith("open:")) {
+			} else if (pass.startsWith(TrayCMD.open)) {
 				TrayTools.execute(pass.substring(pass.indexOf(":") + 1).split("#"));
 			} else {
-				if (pass.startsWith("file:")) {
+				if (pass.startsWith(TrayCMD.file)) {
 					pass = formatIt(TrayTools.getFileContent(pass.substring(pass.indexOf(":") + 1)));
 				}
 				TrayTools.setClipboard(pass);
@@ -49,14 +47,13 @@ public class TrayAction {
 
 	public static String getAllInputs(String text) {
 		String result = "";
-		String patern = "@input";
-		if (text.contains(patern)) {
-			String[] parts = text.split(patern);
+		if (text.contains(TrayCMD.input)) {
+			String[] parts = text.split(TrayCMD.input);
 			for (int i = 0; i < parts.length; i++) {
 				if (i + 1 == parts.length && parts.length > 1) {
 					result += parts[i];
 				} else {
-					result += parts[i] + getInput();
+					result += parts[i] + TrayTools.getInput();
 				}
 			}
 		} else {
@@ -65,24 +62,19 @@ public class TrayAction {
 		return result;
 	}
 
-	public static String getInput() {
-		return (String) JOptionPane.showInputDialog(null, null, "Enter value", JOptionPane.PLAIN_MESSAGE, null, null, null);
-	}
-	
-	public static String getDecrypt(String text){
+	public static String getDecrypt(String text) {
 		String result = text;
-		Pattern p = Pattern.compile("\\@encrypt\\{(.)+\\}");
+		Pattern p = Pattern.compile("\\" + TrayCMD.encrypt + "\\{[^}]+\\}");
 		Matcher m = p.matcher(text);
-		while(m.find() && TrayPass.key != null){
+		while (m.find() && TrayObject.secretKey != null) {
 			String encrypted = m.group();
-			String toDecrypt = encrypted.substring(9, encrypted.length() -1);
-			result = result.replace(encrypted, CryptoEncrypter.decrypt(toDecrypt, TrayPass.key));
+			String toDecrypt = encrypted.substring(9, encrypted.length() - 1);
+			result = result.replace(encrypted, CryptoEncrypter.decrypt(toDecrypt, TrayObject.secretKey));
 		}
 		return result;
 	}
-	
-	public static String formatIt(String text){
-		return getDecrypt(getAllInputs(text));
-	}
 
+	public static String formatIt(String text) {
+		return getAllInputs(getDecrypt(text));
+	}
 }
