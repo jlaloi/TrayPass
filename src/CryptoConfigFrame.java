@@ -37,6 +37,7 @@ public class CryptoConfigFrame extends JDialog {
 
 		setSize(400, 140);
 		setTitle("Tray Encrypter Config");
+		setIconImage(TrayPass.trayImageIcon);
 		setLocationRelativeTo(getParent());
 		setVisible(true);
 

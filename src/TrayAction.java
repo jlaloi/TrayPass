@@ -1,4 +1,6 @@
 import java.awt.event.InputEvent;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.swing.JOptionPane;
 
@@ -6,17 +8,15 @@ public class TrayAction {
 	public static void doAction(String line) {
 		String[] lines = line.split("\\]\\[");
 		for (String pass : lines) {
-			String content = pass;
+			pass = formatIt(pass);
 			if (pass.equals("@wait")) {
 				TrayTools.waitMS(1000);
 			} else if (pass.equals("@bigwait")) {
 				TrayTools.waitMS(5000);
 			} else if (pass.startsWith("pack:")) {
-				String packLine = PackManager.getLine(pass);
-				doAction(packLine);
+				doAction(PackManager.getLine(pass));
 			} else if (pass.startsWith("send:")) {
-				String toSend = pass.substring(pass.indexOf(":") + 1);
-				new SendKey().type(toSend);
+				new SendKey().type(pass.substring(pass.indexOf(":") + 1));
 			} else if (pass.startsWith("waitfor")) {
 				String image = pass.substring(pass.indexOf(":") + 1);
 				int click = 0;
@@ -37,13 +37,12 @@ public class TrayAction {
 				if (!wf.isOnDesktop())
 					break;
 			} else if (pass.startsWith("open:")) {
-				content = getAllInputs(pass.substring(pass.indexOf(":") + 1));
-				TrayTools.execute(content.split("#"));
+				TrayTools.execute(pass.substring(pass.indexOf(":") + 1).split("#"));
 			} else {
 				if (pass.startsWith("file:")) {
-					content = TrayTools.getFileContent(pass.substring(pass.indexOf(":") + 1));
+					pass = formatIt(TrayTools.getFileContent(pass.substring(pass.indexOf(":") + 1)));
 				}
-				TrayTools.setClipboard(getAllInputs(content));
+				TrayTools.setClipboard(pass);
 			}
 		}
 	}
@@ -68,6 +67,22 @@ public class TrayAction {
 
 	public static String getInput() {
 		return (String) JOptionPane.showInputDialog(null, null, "Enter value", JOptionPane.PLAIN_MESSAGE, null, null, null);
+	}
+	
+	public static String getDecrypt(String text){
+		String result = text;
+		Pattern p = Pattern.compile("\\@encrypt\\{(.)+\\}");
+		Matcher m = p.matcher(text);
+		while(m.find() && TrayPass.key != null){
+			String encrypted = m.group();
+			String toDecrypt = encrypted.substring(9, encrypted.length() -1);
+			result = result.replace(encrypted, CryptoEncrypter.decrypt(toDecrypt, TrayPass.key));
+		}
+		return result;
+	}
+	
+	public static String formatIt(String text){
+		return getDecrypt(getAllInputs(text));
 	}
 
 }

@@ -1,51 +1,45 @@
 import java.awt.GridLayout;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
-import javax.crypto.SecretKey;
-import javax.swing.JButton;
 import javax.swing.JDialog;
-import javax.swing.JLabel;
 import javax.swing.JTextField;
 
 public class CryptoEncryptFrame extends JDialog {
 
 	private JTextField text, encrypted;
-	private JButton button;
 
 	public CryptoEncryptFrame() {
 		text = new JTextField();
+		text.setHorizontalAlignment(JTextField.CENTER);
 		encrypted = new JTextField();
-		button = new JButton("Generate");
+		encrypted.setEditable(false);
+		encrypted.setHorizontalAlignment(JTextField.CENTER);
 
-		setLayout(new GridLayout(3, 2));
+		setLayout(new GridLayout(2, 1));
 
-		add(new JLabel(" To encrypte:"));
 		add(text);
 
-		add(new JLabel(" Encrypted:"));
 		add(encrypted);
 
-		add(new JLabel());
-		add(button);
-
-		setSize(400, 100);
+		setSize(800, 80);
 		setTitle("Tray Encrypter Help");
+		setIconImage(TrayPass.trayImageIcon);
 		setLocationRelativeTo(getParent());
 		setVisible(true);
 
-		button.addMouseListener(new MouseAdapter() {
-			public void mouseReleased(MouseEvent arg0) {
-				String keyText = TrayPass.key;
-				String result = "";
-				if (keyText == null || keyText.trim().length() == 0) {
-					result = "Encrypter not set!";
-				} else {
-					SecretKey key = CryptoEncrypter.getSecretKey(TrayPass.key);
-					result = "@encrypt{" + CryptoEncrypter.encrypt(text.getText(), key) + "}";
-					TrayTools.setClipboard(result);
+		text.addKeyListener(new KeyAdapter() {
+			public void keyReleased(KeyEvent e) {
+				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+					String result = "";
+					if (TrayPass.key == null) {
+						result = "Encrypter not set!";
+					} else {
+						result = "@encrypt{" + CryptoEncrypter.encrypt(text.getText(), TrayPass.key) + "}";
+						TrayTools.setClipboard(result);
+					}
+					encrypted.setText(result);
 				}
-				encrypted.setText(result);
 			}
 		});
 	}

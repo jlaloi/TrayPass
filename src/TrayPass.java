@@ -12,6 +12,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 
+import javax.crypto.SecretKey;
 import javax.swing.UIManager;
 
 public class TrayPass {
@@ -36,7 +37,7 @@ public class TrayPass {
 
 	public static TrayConfig trayConfig;
 	
-	public static String key;
+	public static SecretKey key;
 
 	class PassItem extends MenuItem {
 
@@ -79,9 +80,13 @@ public class TrayPass {
 
 	private void setMenu() {
 		PopupMenu popup = new PopupMenu();
+		boolean useEncryption = false;
 
 		// Adding pass
 		for (String pass : TrayTools.getFileLines(passFile)) {
+			if(pass.contains("@encrypt")){
+				useEncryption = true;
+			}
 			if (pass.equals("line")) {
 				popup.addSeparator();
 			} else if (pass.startsWith("title:")) {
@@ -115,7 +120,7 @@ public class TrayPass {
 		cryptoItem2.setFont(font);
 		cryptoItem2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new CryptoFrame();
+				new CryptoEnterFrame();
 			}
 		});
 		crypto.add(cryptoItem2);
@@ -153,6 +158,10 @@ public class TrayPass {
 
 		// Display
 		trayIcon.setPopupMenu(popup);
+		
+		if(useEncryption){
+			new CryptoEnterFrame();
+		}
 
 	}
 
