@@ -32,20 +32,20 @@ public class CaptureFrame extends JFrame {
 		super();
 		setTitle("Capture");
 		getContentPane().setBackground(Color.black);
-		this.setLayout(null);
+		setLayout(null);
 		label = new JLabel();
 		label.setHorizontalAlignment(JLabel.CENTER);
-		this.image = inputImage;
-		this.original = inputImage;
+		image = inputImage;
+		original = inputImage;
 		height = width * image.getHeight() / image.getWidth();
-		label.setToolTipText("Hold left click to select - Middle click to save - Space to reset");
+		label.setToolTipText("Hold left click to select - Middle click to save - Right click to clipboard - Space to reset");
 		add(label);
 		label.setLocation(0, 0);
 		add(rectangle);
 		setImage();
-		setVisible(true);
 		setResizable(false);
-		this.setIconImage(TrayObject.trayImageIcon);
+		setIconImage(TrayObject.trayImageIcon);
+		setVisible(true);
 
 		padX = getSize().width - getContentPane().getSize().width;
 		padY = getSize().height - getContentPane().getSize().height - padX;
@@ -61,31 +61,29 @@ public class CaptureFrame extends JFrame {
 			}
 
 			public void mouseReleased(MouseEvent e) {
-
-				if (e.getButton() == MouseEvent.BUTTON1) {
-					if (c1 != null) {
-						double propW = (double) image.getWidth() / label.getIcon().getIconWidth();
-						double propH = (double) image.getHeight() / label.getIcon().getIconHeight();
-						double x1 = Math.min(e.getX(), c1.getX());
-						double y1 = Math.min(e.getY(), c1.getY());
-						double x2 = Math.max(e.getX(), c1.getX());
-						double y2 = Math.max(e.getY(), c1.getY());
-						int x = Math.min((int) (x1 * propW), image.getWidth() - 1);
-						int y = Math.min((int) (y1 * propH), image.getHeight() - 1);
-						int w = Math.min((int) ((x2 - x1) * propW), image.getWidth() - 1 - x);
-						int h = Math.min((int) ((y2 - y1) * propH), image.getHeight() - 1 - y);
-						image = image.getSubimage(x, y, w, h);
-						setImage();
-						c1 = null;
-						rectangle.setVisible(false);
-					}
+				if (e.getButton() == MouseEvent.BUTTON1 && c1 != null) {
+					double propW = (double) image.getWidth() / label.getIcon().getIconWidth();
+					double propH = (double) image.getHeight() / label.getIcon().getIconHeight();
+					double x1 = Math.min(e.getX(), c1.getX());
+					double y1 = Math.min(e.getY() - 1, c1.getY());
+					double x2 = Math.max(e.getX(), c1.getX());
+					double y2 = Math.max(e.getY() - 1, c1.getY());
+					int x = Math.min((int) (x1 * propW), image.getWidth() - 1);
+					int y = Math.min((int) (y1 * propH), image.getHeight() - 1);
+					int w = Math.min((int) ((x2 - x1) * propW), image.getWidth() - 1 - x);
+					int h = Math.min((int) ((y2 - y1) * propH), image.getHeight() - 1 - y);
+					image = image.getSubimage(x, y, w, h);
+					setImage();
+					c1 = null;
+					rectangle.setVisible(false);
 				}
-
-				if (e.getButton() == MouseEvent.BUTTON2) {
-					if (saveFile())
-						exit();
+				if (e.getButton() == MouseEvent.BUTTON2 && saveFile()) {
+					exit();
 				}
-
+				if (e.getButton() == MouseEvent.BUTTON3) {
+					TrayTools.setClipboard(image);
+					exit();
+				}
 			}
 		});
 
@@ -103,14 +101,14 @@ public class CaptureFrame extends JFrame {
 			int x, y, x1, y1;
 
 			public void mouseDragged(MouseEvent e) {
-				if (c1 == null)
-					return;
-				x = (int) Math.min(c1.getX(), e.getX());
-				y = (int) Math.min(c1.getY(), e.getY());
-				x1 = (int) Math.max(c1.getX(), e.getX());
-				y1 = (int) Math.max(c1.getY(), e.getY());
-				rectangle.setBounds(x, y + padY, x1 - x, y1 - y);
-				repaint();
+				if (c1 != null) {
+					x = (int) Math.min(c1.getX(), e.getX());
+					y = (int) Math.min(c1.getY(), e.getY());
+					x1 = (int) Math.max(c1.getX(), e.getX());
+					y1 = (int) Math.max(c1.getY(), e.getY());
+					rectangle.setBounds(x, y + padY, x1 - x, y1 - y);
+					repaint();
+				}
 			}
 		});
 		addWindowListener(new Close());
@@ -180,10 +178,7 @@ public class CaptureFrame extends JFrame {
 			g.setColor(Color.orange);
 			g.drawRect(0, 0, getWidth() - 1, getHeight() - 1);
 			g.setColor(Color.GREEN);
-			int x = getWidth() / 2;
-			int y = getHeight() / 2;
-			g.fillRect(x - pointSize / 2, y - pointSize / 2, pointSize, pointSize);
+			g.fillRect((getWidth() - pointSize) / 2 - 1, (getHeight() - pointSize) / 2 - 1, pointSize, pointSize);
 		}
 	}
-
 }

@@ -9,7 +9,10 @@ import java.awt.Rectangle;
 import java.awt.RenderingHints;
 import java.awt.Toolkit;
 import java.awt.Transparency;
+import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.StringSelection;
+import java.awt.datatransfer.Transferable;
+import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.DataInputStream;
@@ -87,10 +90,6 @@ public class TrayTools {
 		}
 	}
 
-	public static void setClipboard(String text) {
-		Toolkit.getDefaultToolkit().getSystemClipboard().setContents(new StringSelection(text), null);
-	}
-
 	public static void waitMS(long ms) {
 		try {
 			Thread.sleep(ms);
@@ -117,6 +116,18 @@ public class TrayTools {
 		}
 	}
 
+	public static void setClipboard(String text) {
+		setClipboard(new StringSelection(text));
+	}
+
+	public static void setClipboard(BufferedImage image) {
+		setClipboard(new ImageSelection(image));
+	}
+
+	public static void setClipboard(Transferable transferable) {
+		Toolkit.getDefaultToolkit().getSystemClipboard().setContents(transferable, null);
+	}
+
 	public static BufferedImage resizeImage(BufferedImage image, int width, int height) {
 		BufferedImage scaledImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
 		Graphics2D graphics2D = scaledImage.createGraphics();
@@ -124,5 +135,28 @@ public class TrayTools {
 		graphics2D.drawImage(image, 0, 0, width, height, null);
 		graphics2D.dispose();
 		return scaledImage;
+	}
+
+	static class ImageSelection implements Transferable {
+		private Image image;
+
+		public ImageSelection(Image image) {
+			this.image = image;
+		}
+
+		public Object getTransferData(DataFlavor flavor) throws UnsupportedFlavorException {
+			if (flavor.equals(DataFlavor.imageFlavor) == false) {
+				throw new UnsupportedFlavorException(flavor);
+			}
+			return image;
+		}
+
+		public boolean isDataFlavorSupported(DataFlavor flavor) {
+			return flavor.equals(DataFlavor.imageFlavor);
+		}
+
+		public DataFlavor[] getTransferDataFlavors() {
+			return new DataFlavor[] { DataFlavor.imageFlavor };
+		}
 	}
 }
