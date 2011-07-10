@@ -59,7 +59,7 @@ public class TrayPass {
 					if (e.getButton() == MouseEvent.BUTTON1) {
 						TrayObject.getRobot().mouseRelease(InputEvent.BUTTON3_MASK);
 					} else if (e.getButton() == MouseEvent.BUTTON2) {
-						exit();
+						new CaptureFrame(TrayTools.getScreenCapture());
 					}
 
 				}
