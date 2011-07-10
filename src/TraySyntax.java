@@ -122,7 +122,7 @@ public enum TraySyntax {
 		}
 		frame
 				.add(new JLabel(
-						"Example: {Mon Action}open:notepad][@bigwait][send:hello world!!{enter}][send:@encrypt{puDpHQjhpwyUBpJFKH3ZrQ==}{enter}@input][waitforandclick:C:\test.png"));
+						" Example: {Mon Action}open:notepad][@bigwait][send:hello world!!{enter}][send:@encrypt{puDpHQjhpwyUBpJFKH3ZrQ==}{enter}@input][waitforandclick:C:\test.png"));
 		frame.setIconImage(TrayObject.trayImageIcon);
 		frame.pack();
 		frame.setLocationRelativeTo(frame.getParent());
