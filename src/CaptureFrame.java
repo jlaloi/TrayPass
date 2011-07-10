@@ -170,7 +170,7 @@ public class CaptureFrame extends JFrame {
 	}
 
 	class Rectangle extends JPanel {
-		int pointSize = 2;
+		int pointSize = 4;
 
 		public Rectangle() {
 			setOpaque(false);
@@ -182,7 +182,7 @@ public class CaptureFrame extends JFrame {
 			g.setColor(Color.GREEN);
 			int x = getWidth() / 2;
 			int y = getHeight() / 2;
-			g.fillRect(x - pointSize, y - pointSize, pointSize, pointSize);
+			g.fillRect(x - pointSize / 2, y - pointSize / 2, pointSize, pointSize);
 		}
 	}
 
