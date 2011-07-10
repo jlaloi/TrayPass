@@ -33,7 +33,7 @@ public class CryptoEncryptFrame extends JDialog {
 					if (TrayObject.secretKey == null) {
 						result = "Encrypter not set!";
 					} else {
-						result = TrayCMD.encrypt + "{" + CryptoEncrypter.encrypt(text.getText(), TrayObject.secretKey) + "}";
+						result = TraySyntax.ENCRYPT + "{" + CryptoEncrypter.encrypt(text.getText(), TrayObject.secretKey) + "}";
 						TrayTools.setClipboard(result);
 					}
 					encrypted.setText(result);

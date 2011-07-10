@@ -19,6 +19,8 @@ public class TrayObject {
 
 	public static Font font = new Font(fontName, Font.PLAIN, 11);
 
+	public static Font fontInfo = new Font(fontName, Font.PLAIN, 12);
+
 	public static Font fontBold = new Font(fontName, Font.BOLD, 11);
 
 	public static final String algorithm = "AES";
@@ -32,18 +34,18 @@ public class TrayObject {
 	public static SecretKey secretKey;
 
 	public static Image trayImageIcon;
-	
+
 	private static Robot robot;
-	
-	public static Robot getRobot(){
-		if(robot == null){
+
+	public static Robot getRobot() {
+		if (robot == null) {
 			try {
 				robot = new Robot();
 			} catch (AWTException e) {
 				e.printStackTrace();
 			}
 		}
-		return robot;		
+		return robot;
 	}
 
 }

@@ -76,12 +76,12 @@ public class TrayPass {
 
 		// Adding pass
 		for (String pass : TrayTools.getFileLines(TrayObject.passFile)) {
-			if (pass.contains(TrayCMD.encrypt)) {
+			if (pass.contains(TraySyntax.ENCRYPT.getPattern())) {
 				useEncryption = true;
 			}
-			if (pass.equals(TrayCMD.line)) {
+			if (pass.equals(TraySyntax.LINE.getPattern())) {
 				popup.addSeparator();
-			} else if (pass.startsWith(TrayCMD.title)) {
+			} else if (pass.startsWith(TraySyntax.TITLE.getPattern())) {
 				MenuItem item = new MenuItem(pass.substring(pass.indexOf(":") + 1));
 				item.setFont(TrayObject.fontBold);
 				popup.add(item);
@@ -143,6 +143,22 @@ public class TrayPass {
 			}
 		});
 		configMenu.add(reloadItem);
+		MenuItem captureItem = new MenuItem("Screen Capture");
+		captureItem.setFont(TrayObject.font);
+		captureItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new CaptureFrame(TrayTools.getScreenCapture());
+			}
+		});
+		configMenu.add(captureItem);
+		MenuItem helpItem = new MenuItem("Syntax help");
+		helpItem.setFont(TrayObject.font);
+		helpItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				TraySyntax.showSyntaxFrame();
+			}
+		});
+		configMenu.add(helpItem);
 
 		popup.add(configMenu);
 

@@ -4,26 +4,28 @@ import java.util.regex.Pattern;
 
 public class TrayAction {
 	public static void doAction(String line) {
-		String[] lines = line.split("\\]\\[");
+		String[] lines = line.split(TraySyntax.SEPARATOR.getPattern());
 		for (String pass : lines) {
 			pass = formatIt(pass);
-			if (pass.equals(TrayCMD.wait)) {
+			if (pass.equals(TraySyntax.WAIT)) {
 				TrayTools.waitMS(1000);
-			} else if (pass.equals(TrayCMD.bigWait)) {
+			} else if (pass.equals(TraySyntax.BIGWAIT.getPattern())) {
 				TrayTools.waitMS(5000);
-			} else if (pass.startsWith(TrayCMD.pack)) {
+			} else if (pass.startsWith(TraySyntax.PACK.getPattern())) {
 				doAction(PackManager.getLine(pass));
-			} else if (pass.startsWith(TrayCMD.send)) {
+			} else if (pass.startsWith(TraySyntax.SEND.getPattern())) {
 				new SendKey().type(pass.substring(pass.indexOf(":") + 1));
-			} else if (pass.startsWith(TrayCMD.waitFor) || pass.startsWith(TrayCMD.waitForAndClick)
-					|| pass.startsWith(TrayCMD.waitForAndRightClick) || pass.startsWith(TrayCMD.waitForAndMiddleClick)) {
+			} else if (pass.startsWith(TraySyntax.WAITFOR.getPattern())
+					|| pass.startsWith(TraySyntax.WAITFORANDCLICK.getPattern())
+					|| pass.startsWith(TraySyntax.WAITFORANDRIGHTCLICK.getPattern())
+					|| pass.startsWith(TraySyntax.WAITFORANDMIDDLECLICK.getPattern())) {
 				String image = pass.substring(pass.indexOf(":") + 1);
 				int click = 0;
-				if (pass.startsWith(TrayCMD.waitForAndClick)) {
+				if (pass.startsWith(TraySyntax.WAITFORANDCLICK.getPattern())) {
 					click = InputEvent.BUTTON1_MASK;
-				} else if (pass.startsWith(TrayCMD.waitForAndRightClick)) {
+				} else if (pass.startsWith(TraySyntax.WAITFORANDRIGHTCLICK.getPattern())) {
 					click = InputEvent.BUTTON3_MASK;
-				} else if (pass.startsWith(TrayCMD.waitForAndMiddleClick)) {
+				} else if (pass.startsWith(TraySyntax.WAITFORANDMIDDLECLICK.getPattern())) {
 					click = InputEvent.BUTTON2_MASK;
 				}
 
@@ -34,10 +36,10 @@ public class TrayAction {
 				}
 				if (!wf.isOnDesktop())
 					break;
-			} else if (pass.startsWith(TrayCMD.open)) {
+			} else if (pass.startsWith(TraySyntax.OPEN.getPattern())) {
 				TrayTools.execute(pass.substring(pass.indexOf(":") + 1).split("#"));
 			} else {
-				if (pass.startsWith(TrayCMD.file)) {
+				if (pass.startsWith(TraySyntax.FILE.getPattern())) {
 					pass = formatIt(TrayTools.getFileContent(pass.substring(pass.indexOf(":") + 1)));
 				}
 				TrayTools.setClipboard(pass);
@@ -47,8 +49,8 @@ public class TrayAction {
 
 	public static String getAllInputs(String text) {
 		String result = "";
-		if (text.contains(TrayCMD.input)) {
-			String[] parts = text.split(TrayCMD.input);
+		if (text.contains(TraySyntax.INPUT.getPattern())) {
+			String[] parts = text.split(TraySyntax.INPUT.getPattern());
 			for (int i = 0; i < parts.length; i++) {
 				if (i + 1 == parts.length && parts.length > 1) {
 					result += parts[i];
@@ -64,7 +66,7 @@ public class TrayAction {
 
 	public static String getDecrypt(String text) {
 		String result = text;
-		Pattern p = Pattern.compile("\\" + TrayCMD.encrypt + "\\{[^}]+\\}");
+		Pattern p = Pattern.compile("\\" + TraySyntax.ENCRYPT.getPattern() + "\\{[^}]+\\}");
 		Matcher m = p.matcher(text);
 		while (m.find() && TrayObject.secretKey != null) {
 			String encrypted = m.group();

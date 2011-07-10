@@ -8,6 +8,8 @@ public class TrayConfig implements Serializable {
 
 	private String cryptoExample = "";
 
+	private String captureDir = "";
+
 	public String getSaveFile() {
 		String home = System.getenv("USERPROFILE");
 		if (home == null || home.trim().length() == 0) {
@@ -51,6 +53,7 @@ public class TrayConfig implements Serializable {
 			}
 			if (tmp != null) {
 				this.setCryptoExample(tmp.getCryptoExample());
+				this.setCaptureDir(tmp.getCaptureDir());
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -65,4 +68,11 @@ public class TrayConfig implements Serializable {
 		this.cryptoExample = cryptoExample;
 	}
 
+	public String getCaptureDir() {
+		return captureDir;
+	}
+
+	public void setCaptureDir(String captureDir) {
+		this.captureDir = captureDir;
+	}
 }

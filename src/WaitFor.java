@@ -1,6 +1,4 @@
 import java.awt.Point;
-import java.awt.Rectangle;
-import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
 import java.io.File;
 
@@ -13,6 +11,7 @@ public class WaitFor {
 	private boolean isFound = false;
 
 	private int click = 0;
+
 	public WaitFor(String path, int click) {
 		this.click = click;
 		try {
@@ -46,23 +45,21 @@ public class WaitFor {
 		return isFound;
 	}
 
-	public Point isOnDesktop(BufferedImage image) {
+	public static Point isOnDesktop(BufferedImage image) {
 		Point result = null;
 		try {
-			Rectangle captureSize = new Rectangle(Toolkit.getDefaultToolkit().getScreenSize());
-			BufferedImage desktop = TrayObject.getRobot().createScreenCapture(captureSize);
-			result = imageIncluded(desktop, image);
+			result = imageIncluded(TrayTools.getScreenCapture(), image);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return result;
 	}
 
-	public Point imageIncluded(BufferedImage desktop, BufferedImage pattern) {
+	public static Point imageIncluded(BufferedImage desktop, BufferedImage pattern) {
 		Point result = null;
 		for (int y = 0; y <= desktop.getHeight() - pattern.getHeight(); y++) {
 			for (int x = 0; x <= desktop.getWidth() - pattern.getWidth(); x++) {
-				if (desktop.getRGB(x, y) == pattern.getRGB(0, 0) && sameImage(desktop, pattern, x, y)) {
+				if (sameImage(desktop, pattern, x, y)) {
 					System.out.println("Found at " + x + "x" + y);
 					result = new Point(x, y);
 					return result;
@@ -72,11 +69,19 @@ public class WaitFor {
 		return result;
 	}
 
-	public boolean sameImage(BufferedImage source, BufferedImage pattern, int startX, int startY) {
+	public static boolean sameImage(BufferedImage source, BufferedImage pattern, int startX, int startY) {
 		if (source.getWidth() - startX < pattern.getWidth() || source.getHeight() - startY < pattern.getHeight()) {
 			return false;
 		}
-		if (source.getRGB(startX + pattern.getWidth() - 1, startY + pattern.getHeight() - 1) != pattern.getRGB(pattern.getWidth() - 1, pattern.getHeight() - 1)) {
+		if (source.getRGB(startX, startY) != pattern.getRGB(0, 0)) {
+			return false;
+		}
+		if (source.getRGB(startX + pattern.getWidth() - 1, startY + pattern.getHeight() - 1) != pattern.getRGB(
+				pattern.getWidth() - 1, pattern.getHeight() - 1)) {
+			return false;
+		}
+		if (source.getRGB(startX + pattern.getWidth() / 2 - 1, startY + pattern.getHeight() / 2 - 1) != pattern.getRGB(pattern
+				.getWidth() / 2 - 1, pattern.getHeight() / 2 - 1)) {
 			return false;
 		}
 		for (int y = 0; y < pattern.getHeight(); y++) {
@@ -88,5 +93,4 @@ public class WaitFor {
 		}
 		return true;
 	}
-
 }
