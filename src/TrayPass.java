@@ -22,7 +22,6 @@ public class TrayPass {
 	public static TrayIcon trayIcon;
 
 	class PassItem extends MenuItem {
-
 		public PassItem(String label, final String line) {
 			super(label);
 			setFont(TrayObject.font);
@@ -35,7 +34,6 @@ public class TrayPass {
 				}
 			});
 		}
-
 	}
 
 	public TrayPass() {
