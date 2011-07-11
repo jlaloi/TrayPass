@@ -67,7 +67,11 @@ public enum TraySyntax {
 	WAITFORANDRIGHTCLICK(
 			"waitforandrightclick:",
 			"waitforandrightclick:<Image file>",
-			"Same than waitfor and then right click in the middle of the image");
+			"Same than waitfor and then right click in the middle of the image"),
+	NOTE(
+			"note:",
+			"note:<text file>",
+			"Save the clipboard content to the file");
 
 	private final String pattern;
 	private final String syntax;

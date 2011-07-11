@@ -15,9 +15,11 @@ import java.awt.datatransfer.Transferable;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.DataInputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
@@ -82,6 +84,24 @@ public class TrayTools {
 		return result;
 	}
 
+	public static void addToFile(String file, String str) {
+		BufferedWriter bw = null;
+		try {
+			bw = new BufferedWriter(new FileWriter(file, true));
+			bw.write(str);
+			bw.newLine();
+			bw.flush();
+		} catch (Exception ioe) {
+			ioe.printStackTrace();
+		} finally {
+			try {
+				bw.close();
+			} catch (Exception ioe2) {
+				ioe2.printStackTrace();
+			}
+		}
+	}
+
 	public static void execute(String[] cmd) {
 		try {
 			Runtime.getRuntime().exec(cmd);
@@ -128,6 +148,19 @@ public class TrayTools {
 		Toolkit.getDefaultToolkit().getSystemClipboard().setContents(transferable, null);
 	}
 
+	public static String getClipboardContent() {
+		String result = "";
+		try {
+			Transferable contents = Toolkit.getDefaultToolkit().getSystemClipboard().getContents(null);
+			if (contents != null && contents.isDataFlavorSupported(DataFlavor.stringFlavor)) {
+				result = (String) contents.getTransferData(DataFlavor.stringFlavor);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+
 	public static BufferedImage resizeImage(BufferedImage image, int width, int height) {
 		BufferedImage scaledImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
 		Graphics2D graphics2D = scaledImage.createGraphics();
@@ -159,4 +192,5 @@ public class TrayTools {
 			return new DataFlavor[] { DataFlavor.imageFlavor };
 		}
 	}
+
 }

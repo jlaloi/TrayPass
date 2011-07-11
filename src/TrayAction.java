@@ -13,6 +13,8 @@ public class TrayAction {
 				TrayTools.waitMS(5000);
 			} else if (pass.startsWith(TraySyntax.PACK.getPattern())) {
 				doAction(PackManager.getLine(pass));
+			} else if (pass.startsWith(TraySyntax.NOTE.getPattern())) {
+				TrayTools.addToFile(pass.substring(pass.indexOf(":") + 1), TrayTools.getClipboardContent());
 			} else if (pass.startsWith(TraySyntax.SEND.getPattern())) {
 				new SendKey().type(pass.substring(pass.indexOf(":") + 1));
 			} else if (pass.startsWith(TraySyntax.WAITFOR.getPattern())
@@ -28,10 +30,9 @@ public class TrayAction {
 				} else if (pass.startsWith(TraySyntax.WAITFORANDMIDDLECLICK.getPattern())) {
 					click = InputEvent.BUTTON2_MASK;
 				}
-
-				TrayPass.trayIcon.setToolTip("Looking for " + image);
 				WaitFor wf = new WaitFor(image, click);
 				for (int i = 0; i < 30 && !wf.isOnDesktop(); i++) {
+					TrayPass.trayIcon.setToolTip("Looking for " + image + " (" + i + "/30)");
 					TrayTools.waitMS(500);
 				}
 				if (!wf.isOnDesktop())
