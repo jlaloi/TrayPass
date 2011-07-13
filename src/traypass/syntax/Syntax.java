@@ -7,15 +7,15 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 
 import traypass.TrayPassObject;
+import traypass.syntax.action.ActionClipboard;
 import traypass.syntax.action.ActionEncrypt;
 import traypass.syntax.action.ActionExecute;
 import traypass.syntax.action.ActionFile;
-import traypass.syntax.action.ActionGetClipboard;
+import traypass.syntax.action.ActionMouse;
 import traypass.syntax.action.ActionNote;
 import traypass.syntax.action.ActionPack;
 import traypass.syntax.action.ActionPrompt;
 import traypass.syntax.action.ActionSend;
-import traypass.syntax.action.ActionSetClipboard;
 import traypass.syntax.action.ActionWait;
 import traypass.syntax.action.ActionWaitFor;
 
@@ -28,24 +28,28 @@ public enum Syntax {
 			new ActionWait(),
 			"@wait{ms}",
 			"Wait 1 second"),
+			
 	PROMPT(
 			"@prompt",
 			0,
 			new ActionPrompt(),
 			"@prompt",
 			"Display a prompt to enter a value"),
+			
 	EXECUTE(
 			"@execute",
 			-1,
 			new ActionExecute(),
 			"@execute(<Parameter>,<Parameter>)",
 			"Display a prompt to enter a value"),
+			
 	SEND(
 			"@send",
 			1,
 			new ActionSend(),
 			"@send{<String>}",
 			"Simulate a keyboard and send specified string"),
+			
 	FILE(
 			"@file",
 			1,
@@ -60,19 +64,12 @@ public enum Syntax {
 			"@encrypt{<Encrypted text>}",
 			"Decrypt the encrypted text"),
 
-	GETCLIPBOARD(
-			"@getclipboard",
-			0,
-			new ActionGetClipboard(),
-			"@getclipboard{}",
-			"Get the clipboard content"),
-
-	SETCLIPBOARD(
-			"@setclipboard",
-			1,
-			new ActionSetClipboard(),
-			"@setclipboard{<text>}",
-			"Set the clipboard content with the specified text"),
+	CLIPBOARD(
+			"@clipboard",
+			-1,
+			new ActionClipboard(),
+			"@clipboard{<text>}",
+			"Set the clipboard content with the specified text or without parameter get the clipboard content"),
 
 	NOTE(
 			"@note",
@@ -87,6 +84,13 @@ public enum Syntax {
 			new ActionPack(),
 			"@pack{<file path>,<param>}",
 			"Execute the specified pack"),
+			
+			MOUSE(
+					"@mouse",
+					3,
+					new ActionMouse(),
+					"@mouse{<x>,<y>},<click>",
+					"Click on the specified position"),
 
 	WAITFOR(
 			"@waitfor",
@@ -96,8 +100,8 @@ public enum Syntax {
 			"Waiting to find the image in the screen and then perform the specified mouse");
 
 	private String pattern;
-	private int nbParameter = 0;
-	private Action action = null;
+	private int nbParameter;
+	private Action action;
 	private String example;
 	private String description;
 
@@ -118,15 +122,7 @@ public enum Syntax {
 	public String getPattern() {
 		return pattern;
 	}
-
-	public String getSyntax() {
-		return example;
-	}
-
-	public String getDescription() {
-		return description;
-	}
-
+	
 	public int getNbParameter() {
 		return nbParameter;
 	}
@@ -134,11 +130,7 @@ public enum Syntax {
 	public Action getAction() {
 		return action;
 	}
-
-	public String getExample() {
-		return example;
-	}
-
+	
 	public static void showSyntaxFrame() {
 		JFrame frame = new JFrame("Syntax Description");
 		frame.setBackground(Color.white);
