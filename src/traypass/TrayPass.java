@@ -1,3 +1,5 @@
+package traypass;
+
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Menu;
@@ -13,6 +15,17 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 
+import traypass.crypto.CryptoConfigFrame;
+import traypass.crypto.CryptoEncryptFrame;
+import traypass.crypto.CryptoEnterFrame;
+import traypass.misc.CaptureFrame;
+import traypass.syntax.Interpreter;
+import traypass.syntax.Syntax;
+import traypass.syntax.action.ActionExecute;
+import traypass.tools.ToolFile;
+import traypass.tools.ToolImage;
+
+
 public class TrayPass {
 
 	public static String title = "Tray Pass";
@@ -24,12 +37,12 @@ public class TrayPass {
 	class PassItem extends MenuItem {
 		public PassItem(String label, final String line) {
 			super(label);
-			setFont(TrayObject.font);
+			setFont(TrayPassObject.font);
 			addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					trayIcon.setImage(workingIcon);
-					TrayAction.doAction(line);
-					trayIcon.setImage(TrayObject.trayImageIcon);
+					Interpreter.computeFunctions(line);
+					trayIcon.setImage(TrayPassObject.trayImageIcon);
 					trayIcon.setToolTip(title);
 				}
 			});
@@ -38,16 +51,16 @@ public class TrayPass {
 
 	public TrayPass() {
 		try {
-			if (TrayObject.trayImageIcon == null) {
-				TrayObject.trayImageIcon = Toolkit.getDefaultToolkit().getImage(getClass().getResource(TrayObject.iconFile));
+			if (TrayPassObject.trayImageIcon == null) {
+				TrayPassObject.trayImageIcon = Toolkit.getDefaultToolkit().getImage(getClass().getResource(TrayPassObject.iconFile));
 			}
-			workingIcon = TrayTools.toBufferedImage(TrayObject.trayImageIcon);
+			workingIcon = ToolImage.toBufferedImage(TrayPassObject.trayImageIcon);
 			Graphics g = workingIcon.getGraphics();
 			int rectSize = 6;
 			g.setColor(Color.GREEN);
 			g.fillOval(workingIcon.getWidth() - rectSize, workingIcon.getHeight() - rectSize, rectSize, rectSize);
 
-			trayIcon = new TrayIcon(TrayObject.trayImageIcon, title);
+			trayIcon = new TrayIcon(TrayPassObject.trayImageIcon, title);
 			SystemTray tray = SystemTray.getSystemTray();
 			setMenu();
 			tray.add(trayIcon);
@@ -55,9 +68,9 @@ public class TrayPass {
 			trayIcon.addMouseListener(new MouseAdapter() {
 				public void mouseReleased(MouseEvent e) {
 					if (e.getButton() == MouseEvent.BUTTON1) {
-						TrayObject.getRobot().mouseRelease(InputEvent.BUTTON3_MASK);
+						TrayPassObject.getRobot().mouseRelease(InputEvent.BUTTON3_MASK);
 					} else if (e.getButton() == MouseEvent.BUTTON2) {
-						new CaptureFrame(TrayTools.getScreenCapture());
+						new CaptureFrame(ToolImage.getScreenCapture());
 					}
 
 				}
@@ -68,20 +81,20 @@ public class TrayPass {
 	}
 
 	private void setMenu() {
-		TrayObject.trayConfig.load();
+		TrayPassObject.trayConfig.load();
 		PopupMenu popup = new PopupMenu();
 		boolean useEncryption = false;
 
 		// Adding pass
-		for (String pass : TrayTools.getFileLines(TrayObject.passFile)) {
-			if (pass.contains(TraySyntax.ENCRYPT.getPattern())) {
+		for (String pass : ToolFile.getFileLines(TrayPassObject.passFile)) {
+			if (pass.contains(Syntax.ENCRYPT.getPattern())) {
 				useEncryption = true;
 			}
-			if (pass.equals(TraySyntax.LINE.getPattern())) {
+			if (pass.equals("line")) {
 				popup.addSeparator();
-			} else if (pass.startsWith(TraySyntax.TITLE.getPattern())) {
+			} else if (pass.startsWith("title:")) {
 				MenuItem item = new MenuItem(pass.substring(pass.indexOf(":") + 1));
-				item.setFont(TrayObject.fontBold);
+				item.setFont(TrayPassObject.fontBold);
 				popup.add(item);
 			} else {
 				String label = pass;
@@ -96,11 +109,11 @@ public class TrayPass {
 
 		popup.addSeparator();
 		Menu configMenu = new Menu("Configuration");
-		configMenu.setFont(TrayObject.font);
+		configMenu.setFont(TrayPassObject.font);
 
 		// Adding Crypto items
 		MenuItem cryptoItem = new MenuItem("Crypto Config");
-		cryptoItem.setFont(TrayObject.font);
+		cryptoItem.setFont(TrayPassObject.font);
 		cryptoItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				new CryptoConfigFrame();
@@ -108,7 +121,7 @@ public class TrayPass {
 		});
 		configMenu.add(cryptoItem);
 		MenuItem cryptoItem3 = new MenuItem("Crypto Generate");
-		cryptoItem3.setFont(TrayObject.font);
+		cryptoItem3.setFont(TrayPassObject.font);
 		cryptoItem3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				new CryptoEncryptFrame();
@@ -116,7 +129,7 @@ public class TrayPass {
 		});
 		configMenu.add(cryptoItem3);
 		MenuItem cryptoItem2 = new MenuItem("Crypto Set");
-		cryptoItem2.setFont(TrayObject.font);
+		cryptoItem2.setFont(TrayPassObject.font);
 		cryptoItem2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				new CryptoEnterFrame();
@@ -126,15 +139,15 @@ public class TrayPass {
 
 		// Misc
 		MenuItem editItem = new MenuItem("Edit Menu");
-		editItem.setFont(TrayObject.font);
+		editItem.setFont(TrayPassObject.font);
 		editItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				TrayTools.execute(new String[] { "notepad", TrayObject.passFile });
+				ActionExecute.execute(new String[] { "notepad", TrayPassObject.passFile });
 			}
 		});
 		configMenu.add(editItem);
 		MenuItem reloadItem = new MenuItem("Reload Menu");
-		reloadItem.setFont(TrayObject.font);
+		reloadItem.setFont(TrayPassObject.font);
 		reloadItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				setMenu();
@@ -142,18 +155,18 @@ public class TrayPass {
 		});
 		configMenu.add(reloadItem);
 		MenuItem captureItem = new MenuItem("Screen Capture");
-		captureItem.setFont(TrayObject.font);
+		captureItem.setFont(TrayPassObject.font);
 		captureItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new CaptureFrame(TrayTools.getScreenCapture());
+				new CaptureFrame(ToolImage.getScreenCapture());
 			}
 		});
 		configMenu.add(captureItem);
 		MenuItem helpItem = new MenuItem("Syntax help");
-		helpItem.setFont(TrayObject.font);
+		helpItem.setFont(TrayPassObject.font);
 		helpItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				TraySyntax.showSyntaxFrame();
+				Syntax.showSyntaxFrame();
 			}
 		});
 		configMenu.add(helpItem);
@@ -162,7 +175,7 @@ public class TrayPass {
 
 		// Adding exit item
 		MenuItem exitItem = new MenuItem("Exit");
-		exitItem.setFont(TrayObject.font);
+		exitItem.setFont(TrayPassObject.font);
 		exitItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				exit();
@@ -175,9 +188,9 @@ public class TrayPass {
 
 		// Crypto
 		if (useEncryption) {
-			if (TrayObject.trayConfig.getCryptoExample() != null && TrayObject.trayConfig.getCryptoExample().trim().length() > 0) {
+			if (TrayPassObject.trayConfig.getCryptoExample() != null && TrayPassObject.trayConfig.getCryptoExample().trim().length() > 0) {
 				new CryptoEnterFrame();
-			} else if (TrayObject.secretKey == null) {
+			} else if (TrayPassObject.secretKey == null) {
 				new CryptoConfigFrame();
 			}
 		}
@@ -185,7 +198,7 @@ public class TrayPass {
 	}
 
 	private void exit() {
-		TrayObject.trayConfig.save();
+		TrayPassObject.trayConfig.save();
 		System.exit(0);
 	}
 }

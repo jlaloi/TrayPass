@@ -1,3 +1,4 @@
+package traypass.crypto;
 import java.awt.GridLayout;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -6,6 +7,9 @@ import javax.crypto.SecretKey;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPasswordField;
+
+import traypass.TrayPassObject;
+
 
 public class CryptoEnterFrame extends JDialog {
 
@@ -24,7 +28,7 @@ public class CryptoEnterFrame extends JDialog {
 
 		setSize(200, 80);
 		setTitle("Enter your key");
-		setIconImage(TrayObject.trayImageIcon);
+		setIconImage(TrayPassObject.trayImageIcon);
 		setLocationRelativeTo(getParent());
 		setVisible(true);
 
@@ -32,11 +36,11 @@ public class CryptoEnterFrame extends JDialog {
 			public void keyReleased(KeyEvent e) {
 				String keyp = new String(key.getPassword());
 				SecretKey generatedKey = CryptoEncrypter.getSecretKey(keyp);
-				String result = CryptoEncrypter.decrypt(TrayObject.trayConfig.getCryptoExample(), generatedKey);
+				String result = CryptoEncrypter.decrypt(TrayPassObject.trayConfig.getCryptoExample(), generatedKey);
 				example.setText(result);
 				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 					if (example.getText().trim().length() > 0) {
-						TrayObject.secretKey = generatedKey;
+						TrayPassObject.secretKey = generatedKey;
 						dispose();
 					}
 				}

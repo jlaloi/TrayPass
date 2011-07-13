@@ -1,3 +1,4 @@
+package traypass.crypto;
 import java.awt.GridLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -6,6 +7,9 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+
+import traypass.TrayPassObject;
+
 
 public class CryptoConfigFrame extends JDialog {
 
@@ -30,15 +34,15 @@ public class CryptoConfigFrame extends JDialog {
 
 		pack();
 		setTitle("Tray Encrypter Config");
-		setIconImage(TrayObject.trayImageIcon);
+		setIconImage(TrayPassObject.trayImageIcon);
 		setLocationRelativeTo(getParent());
 		setVisible(true);
 
 		save.addMouseListener(new MouseAdapter() {
 			public void mouseReleased(MouseEvent arg0) {
-				TrayObject.secretKey = CryptoEncrypter.getSecretKey(key.getText());
-				TrayObject.trayConfig.setCryptoExample(CryptoEncrypter.encrypt(example.getText(), TrayObject.secretKey));
-				TrayObject.trayConfig.save();
+				TrayPassObject.secretKey = CryptoEncrypter.getSecretKey(key.getText());
+				TrayPassObject.trayConfig.setCryptoExample(CryptoEncrypter.encrypt(example.getText(), TrayPassObject.secretKey));
+				TrayPassObject.trayConfig.save();
 				dispose();
 			}
 		});

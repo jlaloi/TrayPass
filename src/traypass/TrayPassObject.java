@@ -1,3 +1,4 @@
+package traypass;
 import java.awt.AWTException;
 import java.awt.Font;
 import java.awt.Image;
@@ -5,7 +6,8 @@ import java.awt.Robot;
 
 import javax.crypto.SecretKey;
 
-public class TrayObject {
+
+public class TrayPassObject {
 
 	public static String configFileName = ".TrayPass";
 
@@ -29,7 +31,7 @@ public class TrayObject {
 
 	public static String lineSeparator = System.getProperty("line.separator");
 
-	public static TrayConfig trayConfig = new TrayConfig();
+	public static TrayPassConfig trayConfig = new TrayPassConfig();
 
 	public static SecretKey secretKey;
 

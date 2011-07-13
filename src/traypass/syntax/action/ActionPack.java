@@ -1,3 +1,5 @@
+package traypass.syntax.action;
+
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -7,7 +9,12 @@ import java.util.HashMap;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
-public class PackManager {
+import traypass.TrayPassObject;
+import traypass.syntax.Action;
+import traypass.tools.ToolFile;
+
+
+public class ActionPack extends Action {
 
 	public static String paramSeparator = "#";
 
@@ -15,7 +22,34 @@ public class PackManager {
 
 	public static String lineFile = "line.txt";
 
-	public static HashMap<String, String> preparePack(String path) {
+	public String execute(Object... parameter) {
+		String pack = (String) parameter[0];
+		HashMap<String, String> files = preparePack(pack);
+		String result = "";
+		if (files.containsKey(lineFile)) {
+			String[] lines = ToolFile.getFileLines(files.get(lineFile)).get(0).split(paramPattern);
+			// Parameters
+			if (lines.length > 1 && parameter.length > 1) {
+				for (int i = 1; i < lines.length; i++) {
+					result += lines[i];
+					if (i + 1 != lines.length && i < parameter.length) {
+						result += parameter[i];
+					}
+				}
+			} else {
+				result = lines[0];
+			}
+			// Files
+			for (String file : files.keySet()) {
+				if (!file.equals(lineFile)) {
+					result = result.replace(file, files.get(file));
+				}
+			}
+		}
+		return result;
+	}
+
+	private HashMap<String, String> preparePack(String path) {
 		HashMap<String, String> result = new HashMap<String, String>();
 		String tempDir = getTmpDir(getFileName(path));
 		int BUFFER = 2048;
@@ -46,18 +80,18 @@ public class PackManager {
 		return result;
 	}
 
-	public static String getFileName(String file) {
+	private String getFileName(String file) {
 		return new File(file).getName();
 	}
 
-	public static String getTmpDir(String path) {
+	private String getTmpDir(String path) {
 		String result;
 		if (System.getenv("TMP") != null && System.getenv("TMP").trim().length() > 0) {
-			result = System.getenv("TMP") + TrayObject.fileSeparator + TrayObject.tmpDir + TrayObject.fileSeparator + path
-					+ TrayObject.fileSeparator;
+			result = System.getenv("TMP") + TrayPassObject.fileSeparator + TrayPassObject.tmpDir + TrayPassObject.fileSeparator + path
+					+ TrayPassObject.fileSeparator;
 		} else {
-			result = "/tmp" + TrayObject.fileSeparator + TrayObject.tmpDir + TrayObject.fileSeparator + path
-					+ TrayObject.fileSeparator;
+			result = "/tmp" + TrayPassObject.fileSeparator + TrayPassObject.tmpDir + TrayPassObject.fileSeparator + path
+					+ TrayPassObject.fileSeparator;
 		}
 		try {
 			File tmp = new File(result);
@@ -70,45 +104,4 @@ public class PackManager {
 		return result;
 	}
 
-	public static String getLine(String line) {
-		String result = "";
-		try {
-			String pack = line.substring(line.indexOf(":") + 1);
-			String[] params = new String[0];
-			if (pack.contains(paramSeparator)) {
-				pack = pack.substring(0, pack.indexOf(paramSeparator));
-				params = line.substring(line.indexOf(":") + pack.length() + 2).split(paramSeparator);
-			}
-			result = getLine(pack, params);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return result;
-	}
-
-	public static String getLine(String pack, String[] params) {
-		HashMap<String, String> files = preparePack(pack);
-		String result = "";
-		if (files.containsKey(lineFile)) {
-			String[] lines = TrayTools.getFileLines(files.get(lineFile)).get(0).split(paramPattern);
-			// Parameters
-			if (lines.length > 1 && params.length > 0) {
-				for (int i = 0; i < lines.length; i++) {
-					result += lines[i];
-					if (i + 1 != lines.length && i < params.length) {
-						result += params[i];
-					}
-				}
-			} else {
-				result = lines[0];
-			}
-			// Files
-			for (String file : files.keySet()) {
-				if (!file.equals(lineFile)) {
-					result = result.replace(file, files.get(file));
-				}
-			}
-		}
-		return result;
-	}
 }

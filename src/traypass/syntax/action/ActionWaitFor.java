@@ -1,10 +1,18 @@
+package traypass.syntax.action;
+
 import java.awt.Point;
 import java.awt.image.BufferedImage;
 import java.io.File;
 
 import javax.imageio.ImageIO;
 
-public class WaitFor {
+import traypass.TrayPass;
+import traypass.TrayPassObject;
+import traypass.syntax.Action;
+import traypass.tools.ToolImage;
+
+
+public class ActionWaitFor extends Action {
 
 	private BufferedImage image;
 
@@ -12,20 +20,22 @@ public class WaitFor {
 
 	private int click = 0;
 
-	public WaitFor(String path, int click) {
-		this.click = click;
+	public String execute(Object... parameter) {
+		this.click = Integer.valueOf((String) parameter[1]);
+		String path = (String) parameter[0];
 		try {
 			File file = new File(path);
 			if (file.exists()) {
 				image = ImageIO.read(new File(path));
 			}
+			for (int i = 0; i < 20 && !isOnDesktop(); i++) {
+				TrayPass.trayIcon.setToolTip("Looking for " + image + " (" + i + "/20)");
+				ActionWait.waitMS(500);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-	}
-
-	public void reset() {
-		isFound = false;
+		return "";
 	}
 
 	public boolean isOnDesktop() {
@@ -34,9 +44,9 @@ public class WaitFor {
 				Point result = isOnDesktop(image);
 				isFound = result != null;
 				if (click > 0 && result != null) {
-					TrayObject.getRobot().mouseMove(result.x + (image.getWidth() / 2), result.y + (image.getHeight() / 2));
-					TrayObject.getRobot().mousePress(click);
-					TrayObject.getRobot().mouseRelease(click);
+					TrayPassObject.getRobot().mouseMove(result.x + (image.getWidth() / 2), result.y + (image.getHeight() / 2));
+					TrayPassObject.getRobot().mousePress(click);
+					TrayPassObject.getRobot().mouseRelease(click);
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -48,7 +58,7 @@ public class WaitFor {
 	public static Point isOnDesktop(BufferedImage image) {
 		Point result = null;
 		try {
-			result = imageIncluded(TrayTools.getScreenCapture(), image);
+			result = imageIncluded(ToolImage.getScreenCapture(), image);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -93,4 +103,5 @@ public class WaitFor {
 		}
 		return true;
 	}
+
 }

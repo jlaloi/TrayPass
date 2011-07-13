@@ -1,3 +1,5 @@
+package traypass.misc;
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -17,6 +19,11 @@ import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+
+import traypass.TrayPassObject;
+import traypass.tools.ToolClipboard;
+import traypass.tools.ToolImage;
+
 
 public class CaptureFrame extends JFrame {
 
@@ -44,7 +51,7 @@ public class CaptureFrame extends JFrame {
 		add(rectangle);
 		setImage();
 		setResizable(false);
-		setIconImage(TrayObject.trayImageIcon);
+		setIconImage(TrayPassObject.trayImageIcon);
 		setVisible(true);
 
 		padX = getSize().width - getContentPane().getSize().width;
@@ -81,7 +88,7 @@ public class CaptureFrame extends JFrame {
 					exit();
 				}
 				if (e.getButton() == MouseEvent.BUTTON3) {
-					TrayTools.setClipboard(image);
+					ToolClipboard.setClipboard(image);
 					exit();
 				}
 			}
@@ -133,7 +140,7 @@ public class CaptureFrame extends JFrame {
 		setLocationRelativeTo(getParent());
 		setTitle(image.getWidth() + "x" + image.getHeight());
 
-		BufferedImage icon = TrayTools.resizeImage(image, iwidth, iheight);
+		BufferedImage icon = ToolImage.resizeImage(image, iwidth, iheight);
 		label.setIcon(new ImageIcon(icon));
 		label.setSize(iwidth, iheight);
 	}
@@ -141,14 +148,14 @@ public class CaptureFrame extends JFrame {
 	private boolean saveFile() {
 		JFileChooser chooser = new JFileChooser();
 		chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
-		chooser.setSelectedFile(new File(TrayObject.trayConfig.getCaptureDir() + "Capture" + ".png"));
+		chooser.setSelectedFile(new File(TrayPassObject.trayConfig.getCaptureDir() + "Capture" + ".png"));
 		chooser.setApproveButtonText("Save");
 		chooser.setDialogTitle("Save image");
 		int returnVal = chooser.showOpenDialog(this);
 		if (returnVal == JFileChooser.APPROVE_OPTION) {
-			TrayTools.saveImage(image, chooser.getSelectedFile());
-			TrayObject.trayConfig.setCaptureDir(chooser.getSelectedFile().getParentFile().getPath() + TrayObject.fileSeparator);
-			TrayObject.trayConfig.save();
+			ToolImage.saveImage(image, chooser.getSelectedFile());
+			TrayPassObject.trayConfig.setCaptureDir(chooser.getSelectedFile().getParentFile().getPath() + TrayPassObject.fileSeparator);
+			TrayPassObject.trayConfig.save();
 			return true;
 		}
 		return false;

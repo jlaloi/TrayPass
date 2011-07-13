@@ -1,9 +1,15 @@
+package traypass.crypto;
+
 import java.awt.GridLayout;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
 import javax.swing.JDialog;
 import javax.swing.JTextField;
+
+import traypass.TrayPassObject;
+import traypass.tools.ToolClipboard;
+
 
 public class CryptoEncryptFrame extends JDialog {
 
@@ -22,7 +28,7 @@ public class CryptoEncryptFrame extends JDialog {
 
 		setSize(800, 80);
 		setTitle("Tray Encrypter Help");
-		setIconImage(TrayObject.trayImageIcon);
+		setIconImage(TrayPassObject.trayImageIcon);
 		setLocationRelativeTo(getParent());
 		setVisible(true);
 
@@ -30,11 +36,12 @@ public class CryptoEncryptFrame extends JDialog {
 			public void keyReleased(KeyEvent e) {
 				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 					String result = "";
-					if (TrayObject.secretKey == null) {
+					if (TrayPassObject.secretKey == null) {
 						result = "Encrypter not set!";
 					} else {
-						result = TraySyntax.ENCRYPT + "{" + CryptoEncrypter.encrypt(text.getText(), TrayObject.secretKey) + "}";
-						TrayTools.setClipboard(result);
+						result = traypass.syntax.Syntax.ENCRYPT.getPattern() + "{"
+								+ CryptoEncrypter.encrypt(text.getText(), TrayPassObject.secretKey) + "}";
+						ToolClipboard.setClipboard(result);
 					}
 					encrypted.setText(result);
 				}

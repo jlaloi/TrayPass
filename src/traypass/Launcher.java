@@ -1,3 +1,5 @@
+package traypass;
+
 import java.awt.SystemTray;
 import java.awt.Toolkit;
 
@@ -7,25 +9,25 @@ public class Launcher {
 
 	public static void main(String[] args) {
 		if (args.length > 0) {
-			TrayObject.passFile = args[0];
+			TrayPassObject.passFile = args[0];
 		}
 
 		if (args.length > 1) {
-			TrayObject.iconFile = args[1];
+			TrayPassObject.iconFile = args[1];
 			try {
-				TrayObject.trayImageIcon = Toolkit.getDefaultToolkit().getImage(TrayObject.iconFile);
+				TrayPassObject.trayImageIcon = Toolkit.getDefaultToolkit().getImage(TrayPassObject.iconFile);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
 
 		if (args.length > 2) {
-			TrayObject.configFileName = args[2];
+			TrayPassObject.configFileName = args[2];
 		}
 
-		System.out.println("passFile: " + TrayObject.passFile);
-		System.out.println("imageFile: " + TrayObject.iconFile);
-		System.out.println("configFileName: " + TrayObject.configFileName);
+		System.out.println("passFile: " + TrayPassObject.passFile);
+		System.out.println("imageFile: " + TrayPassObject.iconFile);
+		System.out.println("configFileName: " + TrayPassObject.configFileName);
 
 		if (SystemTray.isSupported()) {
 			try {
@@ -33,7 +35,7 @@ public class Launcher {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			TrayObject.trayConfig.load();
+			TrayPassObject.trayConfig.load();
 			new TrayPass();
 		}
 	}

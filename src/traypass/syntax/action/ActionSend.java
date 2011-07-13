@@ -1,8 +1,16 @@
+package traypass.syntax.action;
+
 import java.awt.event.KeyEvent;
 
-public class SendKey {
+import traypass.TrayPassObject;
+import traypass.syntax.Action;
 
-	public void type(String characters) {
+
+public class ActionSend extends Action {
+
+	public String execute(Object... parameter) {
+		String characters = (String) parameter[0];
+		System.out.println(characters);
 		int i = 0;
 		for (; i < characters.length(); i++) {
 			if (characters.substring(i, i + 1).equals("{")) {
@@ -12,9 +20,10 @@ public class SendKey {
 				type(characters.charAt(i));
 			}
 		}
+		return "";
 	}
 
-	public void typeSpecial(String value) {
+	private void typeSpecial(String value) {
 		String v = value.toLowerCase().trim();
 		if (v.equals("{enter}")) {
 			doType(KeyEvent.VK_ENTER);
@@ -45,7 +54,7 @@ public class SendKey {
 		}
 	}
 
-	public void type(char character) {
+	private void type(char character) {
 		switch (character) {
 		case 'a':
 			doType(KeyEvent.VK_A);
@@ -347,9 +356,10 @@ public class SendKey {
 
 	private void doType(int[] keyCodes, int offset, int length) {
 		if (length > 0) {
-			TrayObject.getRobot().keyPress(keyCodes[offset]);
+			TrayPassObject.getRobot().keyPress(keyCodes[offset]);
 			doType(keyCodes, offset + 1, length - 1);
-			TrayObject.getRobot().keyRelease(keyCodes[offset]);
+			TrayPassObject.getRobot().keyRelease(keyCodes[offset]);
 		}
 	}
+
 }

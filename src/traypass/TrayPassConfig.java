@@ -1,10 +1,12 @@
+package traypass;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
-public class TrayConfig implements Serializable {
+
+public class TrayPassConfig implements Serializable {
 
 	private String cryptoExample = "";
 
@@ -15,7 +17,7 @@ public class TrayConfig implements Serializable {
 		if (home == null || home.trim().length() == 0) {
 			home = System.getenv("HOME");
 		}
-		return home + TrayObject.fileSeparator + TrayObject.configFileName;
+		return home + TrayPassObject.fileSeparator + TrayPassObject.configFileName;
 	}
 
 	public void save() {
@@ -41,9 +43,9 @@ public class TrayConfig implements Serializable {
 		try {
 			FileInputStream fis = new FileInputStream(getSaveFile());
 			ObjectInputStream ois = new ObjectInputStream(fis);
-			TrayConfig tmp = null;
+			TrayPassConfig tmp = null;
 			try {
-				tmp = (TrayConfig) ois.readObject();
+				tmp = (TrayPassConfig) ois.readObject();
 			} finally {
 				try {
 					ois.close();
