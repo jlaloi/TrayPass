@@ -5,15 +5,17 @@ import java.awt.event.KeyEvent;
 import traypass.TrayPassObject;
 import traypass.syntax.Action;
 
-
 public class ActionSend extends Action {
 
 	public String execute(Object... parameter) {
 		String characters = (String) parameter[0];
 		for (int i = 0; i < characters.length(); i++) {
-			if (characters.substring(i, i + 1).equals("(") && characters.indexOf(")",i) != -1) {
-				typeSpecial(characters.substring(i, characters.indexOf(")", i) + 1));
-				i = characters.indexOf(")", i);
+			if (characters.substring(i, i + 1).equals("(") && characters.indexOf(")", i) != -1) {
+				if (typeSpecial(characters.substring(i, characters.indexOf(")", i) + 1))) {
+					i = characters.indexOf(")", i);
+				} else {
+					type(characters.charAt(i));
+				}
 			} else {
 				type(characters.charAt(i));
 			}
@@ -21,7 +23,8 @@ public class ActionSend extends Action {
 		return "";
 	}
 
-	private void typeSpecial(String value) {
+	private boolean typeSpecial(String value) {
+		boolean result = true;
 		String v = value.toLowerCase().trim();
 		if (v.equals("(enter)")) {
 			doType(KeyEvent.VK_ENTER);
@@ -49,31 +52,33 @@ public class ActionSend extends Action {
 			doType(KeyEvent.VK_PAGE_DOWN);
 		} else if (v.equals("(f1)")) {
 			doType(KeyEvent.VK_F1);
-		}else if (v.equals("(f2)")) {
+		} else if (v.equals("(f2)")) {
 			doType(KeyEvent.VK_F2);
-		}else if (v.equals("(f3)")) {
+		} else if (v.equals("(f3)")) {
 			doType(KeyEvent.VK_F3);
-		}else if (v.equals("(f4)")) {
+		} else if (v.equals("(f4)")) {
 			doType(KeyEvent.VK_F4);
-		}else if (v.equals("(f5)")) {
+		} else if (v.equals("(f5)")) {
 			doType(KeyEvent.VK_F5);
-		}else if (v.equals("(f6)")) {
+		} else if (v.equals("(f6)")) {
 			doType(KeyEvent.VK_F6);
-		}else if (v.equals("(f7)")) {
+		} else if (v.equals("(f7)")) {
 			doType(KeyEvent.VK_F7);
-		}else if (v.equals("(f8)")) {
+		} else if (v.equals("(f8)")) {
 			doType(KeyEvent.VK_F8);
-		}else if (v.equals("(f9)")) {
+		} else if (v.equals("(f9)")) {
 			doType(KeyEvent.VK_F9);
-		}else if (v.equals("(f10)")) {
+		} else if (v.equals("(f10)")) {
 			doType(KeyEvent.VK_F10);
-		}else if (v.equals("(f11)")) {
+		} else if (v.equals("(f11)")) {
 			doType(KeyEvent.VK_F11);
-		}else if (v.equals("(f12)")) {
+		} else if (v.equals("(f12)")) {
 			doType(KeyEvent.VK_F12);
-		}else {
+		} else {
+			result = false;
 			System.out.println("typeSpecial " + value + " not found");
 		}
+		return result;
 	}
 
 	private void type(char character) {
