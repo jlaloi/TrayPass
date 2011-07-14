@@ -30,6 +30,7 @@ public class ToolMouse {
 	public static void doClick(int x, int y, int click) {
 		int c = getMouseClick(click);
 		if (c > 0) {
+			System.out.println("click " + x + "x" + y + " " + c);
 			TrayPassObject.getRobot().mouseMove(x, y);
 			TrayPassObject.getRobot().mousePress(c);
 			TrayPassObject.getRobot().mouseRelease(c);

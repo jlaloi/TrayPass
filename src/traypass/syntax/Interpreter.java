@@ -72,6 +72,7 @@ public class Interpreter {
 				computedParams.add(computeFunction(param));
 			}
 
+			System.out.println("Executing " + methodName);
 			result = compute(methodName, computedParams);
 		} catch (Exception e) {
 			System.out.println("Exception while executing:" + function);

@@ -31,9 +31,9 @@ public enum Syntax {
 
 	PROMPT(
 			"@prompt",
-			0,
+			1,
 			new ActionPrompt(),
-			"@prompt",
+			"@prompt{<label>}",
 			"Display a prompt to enter a value"),
 
 	EXECUTE(
@@ -120,12 +120,6 @@ public enum Syntax {
 		this.description = description;
 	}
 
-	JLabel getLabel() {
-		JLabel label = new JLabel(" " + example + " ==> " + description + " ");
-		label.setFont(TrayPassObject.fontInfo);
-		return label;
-	}
-
 	public String getPattern() {
 		return pattern;
 	}
@@ -138,12 +132,22 @@ public enum Syntax {
 		return action;
 	}
 
+	public String getExample() {
+		return example;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
 	public static void showSyntaxFrame() {
 		JFrame frame = new JFrame("Syntax Description");
 		frame.setBackground(Color.white);
 		frame.setLayout(new GridLayout(Syntax.values().length, 1));
 		for (Syntax item : Syntax.values()) {
-			frame.add(item.getLabel());
+			JLabel label = new JLabel(" " + item.getExample() + " ==> " + item.getDescription() + " ");
+			label.setFont(TrayPassObject.fontInfo);
+			frame.add(label);
 		}
 		frame.setIconImage(TrayPassObject.trayImageIcon);
 		frame.pack();

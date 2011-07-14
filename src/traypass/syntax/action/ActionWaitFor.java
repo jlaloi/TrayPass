@@ -15,21 +15,24 @@ public class ActionWaitFor extends Action {
 
 	private BufferedImage image;
 
+	private String imagePath = "";
+
 	private boolean isFound = false;
 
 	private int click = 0;
 
 	public String execute(Object... parameter) {
 		this.click = Integer.valueOf((String) parameter[1]);
-		String path = (String) parameter[0];
+		isFound = false;
+		imagePath = (String) parameter[0];
 		try {
-			File file = new File(path);
+			File file = new File(imagePath);
 			if (file.exists()) {
-				image = ImageIO.read(new File(path));
-			}
-			for (int i = 0; i < 20 && !isOnDesktop(); i++) {
-				TrayPass.trayIcon.setToolTip("Looking for " + image + " (" + i + "/20)");
-				ActionWait.waitMS(500);
+				image = ImageIO.read(new File(imagePath));
+				for (int i = 0; i < 20 && !isOnDesktop(); i++) {
+					TrayPass.trayIcon.setToolTip("Looking for " + imagePath + " (" + i + "/20)");
+					ActionWait.waitMS(500);
+				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -52,7 +55,7 @@ public class ActionWaitFor extends Action {
 		return isFound;
 	}
 
-	public static Point isOnDesktop(BufferedImage image) {
+	public Point isOnDesktop(BufferedImage image) {
 		Point result = null;
 		try {
 			result = imageIncluded(ToolImage.getScreenCapture(), image);
@@ -62,12 +65,12 @@ public class ActionWaitFor extends Action {
 		return result;
 	}
 
-	public static Point imageIncluded(BufferedImage desktop, BufferedImage pattern) {
+	public Point imageIncluded(BufferedImage desktop, BufferedImage pattern) {
 		Point result = null;
 		for (int y = 0; y <= desktop.getHeight() - pattern.getHeight(); y++) {
 			for (int x = 0; x <= desktop.getWidth() - pattern.getWidth(); x++) {
 				if (sameImage(desktop, pattern, x, y)) {
-					System.out.println("Found at " + x + "x" + y);
+					System.out.println(imagePath + " found at " + x + "x" + y);
 					result = new Point(x, y);
 					return result;
 				}
@@ -76,7 +79,7 @@ public class ActionWaitFor extends Action {
 		return result;
 	}
 
-	public static boolean sameImage(BufferedImage source, BufferedImage pattern, int startX, int startY) {
+	public boolean sameImage(BufferedImage source, BufferedImage pattern, int startX, int startY) {
 		if (source.getWidth() - startX < pattern.getWidth() || source.getHeight() - startY < pattern.getHeight()) {
 			return false;
 		}
