@@ -36,6 +36,7 @@ public class ToolClipboard {
 	}
 
 	static class ImageSelection implements Transferable {
+
 		private Image image;
 
 		public ImageSelection(Image image) {

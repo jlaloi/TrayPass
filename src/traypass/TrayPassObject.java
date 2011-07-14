@@ -1,11 +1,11 @@
 package traypass;
+
 import java.awt.AWTException;
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.Robot;
 
 import javax.crypto.SecretKey;
-
 
 public class TrayPassObject {
 
@@ -49,5 +49,4 @@ public class TrayPassObject {
 		}
 		return robot;
 	}
-
 }

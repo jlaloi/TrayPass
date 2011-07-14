@@ -25,7 +25,6 @@ import traypass.syntax.action.ActionExecute;
 import traypass.tools.ToolFile;
 import traypass.tools.ToolImage;
 
-
 public class TrayPass {
 
 	public static String title = "Tray Pass";
@@ -52,7 +51,8 @@ public class TrayPass {
 	public TrayPass() {
 		try {
 			if (TrayPassObject.trayImageIcon == null) {
-				TrayPassObject.trayImageIcon = Toolkit.getDefaultToolkit().getImage(getClass().getResource(TrayPassObject.iconFile));
+				TrayPassObject.trayImageIcon = Toolkit.getDefaultToolkit().getImage(
+						getClass().getResource(TrayPassObject.iconFile));
 			}
 			workingIcon = ToolImage.toBufferedImage(TrayPassObject.trayImageIcon);
 			Graphics g = workingIcon.getGraphics();
@@ -188,7 +188,8 @@ public class TrayPass {
 
 		// Crypto
 		if (useEncryption) {
-			if (TrayPassObject.trayConfig.getCryptoExample() != null && TrayPassObject.trayConfig.getCryptoExample().trim().length() > 0) {
+			if (TrayPassObject.trayConfig.getCryptoExample() != null
+					&& TrayPassObject.trayConfig.getCryptoExample().trim().length() > 0) {
 				new CryptoEnterFrame();
 			} else if (TrayPassObject.secretKey == null) {
 				new CryptoConfigFrame();

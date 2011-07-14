@@ -20,7 +20,6 @@ import javax.swing.ImageIcon;
 
 import traypass.TrayPassObject;
 
-
 public class ToolImage {
 
 	public static BufferedImage getScreenCapture() {
@@ -73,4 +72,5 @@ public class ToolImage {
 		g.dispose();
 		return bimage;
 	}
+
 }

@@ -1,4 +1,5 @@
 package traypass.crypto;
+
 import java.awt.GridLayout;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -9,7 +10,6 @@ import javax.swing.JLabel;
 import javax.swing.JPasswordField;
 
 import traypass.TrayPassObject;
-
 
 public class CryptoEnterFrame extends JDialog {
 

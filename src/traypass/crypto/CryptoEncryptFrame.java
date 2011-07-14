@@ -10,7 +10,6 @@ import javax.swing.JTextField;
 import traypass.TrayPassObject;
 import traypass.tools.ToolClipboard;
 
-
 public class CryptoEncryptFrame extends JDialog {
 
 	private JTextField text, encrypted;

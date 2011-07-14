@@ -2,7 +2,6 @@ package traypass.syntax.action;
 
 import traypass.syntax.Action;
 
-
 public class ActionWait extends Action {
 
 	public String execute(Object... parameter) {

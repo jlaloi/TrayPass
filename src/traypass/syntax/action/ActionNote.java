@@ -6,7 +6,6 @@ import traypass.TrayPassObject;
 import traypass.syntax.Action;
 import traypass.tools.ToolFile;
 
-
 public class ActionNote extends Action {
 
 	public String execute(Object... parameter) {

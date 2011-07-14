@@ -4,7 +4,6 @@ import javax.swing.JOptionPane;
 
 import traypass.syntax.Action;
 
-
 public class ActionPrompt extends Action {
 
 	public String execute(Object... parameter) {

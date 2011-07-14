@@ -24,7 +24,6 @@ import traypass.TrayPassObject;
 import traypass.tools.ToolClipboard;
 import traypass.tools.ToolImage;
 
-
 public class CaptureFrame extends JFrame {
 
 	private final int width = 1024;
@@ -154,7 +153,8 @@ public class CaptureFrame extends JFrame {
 		int returnVal = chooser.showOpenDialog(this);
 		if (returnVal == JFileChooser.APPROVE_OPTION) {
 			ToolImage.saveImage(image, chooser.getSelectedFile());
-			TrayPassObject.trayConfig.setCaptureDir(chooser.getSelectedFile().getParentFile().getPath() + TrayPassObject.fileSeparator);
+			TrayPassObject.trayConfig.setCaptureDir(chooser.getSelectedFile().getParentFile().getPath()
+					+ TrayPassObject.fileSeparator);
 			TrayPassObject.trayConfig.save();
 			return true;
 		}

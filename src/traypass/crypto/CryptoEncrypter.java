@@ -1,4 +1,5 @@
 package traypass.crypto;
+
 import java.security.MessageDigest;
 import java.util.Arrays;
 
@@ -9,7 +10,6 @@ import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 
 import traypass.TrayPassObject;
-
 
 public class CryptoEncrypter {
 
