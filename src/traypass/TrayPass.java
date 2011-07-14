@@ -87,7 +87,7 @@ public class TrayPass {
 
 		// Adding pass
 		for (String pass : ToolFile.getFileLines(TrayPassObject.passFile)) {
-			if (pass.contains(Syntax.ENCRYPT.getPattern())) {
+			if (pass.contains(Syntax.DECRYPT.getPattern())) {
 				useEncryption = true;
 			}
 			if (pass.equals("line")) {

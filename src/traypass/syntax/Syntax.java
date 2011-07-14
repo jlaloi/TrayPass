@@ -9,7 +9,7 @@ import javax.swing.JLabel;
 import traypass.TrayPassObject;
 import traypass.syntax.action.ActionClipboard;
 import traypass.syntax.action.ActionConcat;
-import traypass.syntax.action.ActionEncrypt;
+import traypass.syntax.action.ActionDecrypt;
 import traypass.syntax.action.ActionExecute;
 import traypass.syntax.action.ActionFile;
 import traypass.syntax.action.ActionMouse;
@@ -27,7 +27,7 @@ public enum Syntax {
 			1,
 			new ActionWait(),
 			"@wait{ms}",
-			"Wait 1 second"),
+			"Wait specified millisecond"),
 
 	PROMPT(
 			"@prompt",
@@ -40,15 +40,15 @@ public enum Syntax {
 			"@execute",
 			-1,
 			new ActionExecute(),
-			"@execute(<Parameter>,<Parameter>)",
-			"Display a prompt to enter a value"),
+			"@execute(<executable>,<Parameter>,<Parameter>)",
+			"Execute specified executable with specified parameter(s)"),
 
 	SEND(
 			"@send",
 			1,
 			new ActionSend(),
-			"@send{<String>}",
-			"Simulate a keyboard and send specified string"),
+			"@send{<keys>}",
+			"Simulate a keyboard and send specified keys"),
 
 	FILE(
 			"@file",
@@ -57,11 +57,11 @@ public enum Syntax {
 			"@file{<file path>}",
 			"Read the content of the specified file"),
 
-	ENCRYPT(
-			"@encrypt",
+	DECRYPT(
+			"@decrypt",
 			1,
-			new ActionEncrypt(),
-			"@encrypt{<Encrypted text>}",
+			new ActionDecrypt(),
+			"@decrypt{<Encrypted text>}",
 			"Decrypt the encrypted text"),
 
 	CLIPBOARD(
