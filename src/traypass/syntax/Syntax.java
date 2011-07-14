@@ -8,6 +8,7 @@ import javax.swing.JLabel;
 
 import traypass.TrayPassObject;
 import traypass.syntax.action.ActionClipboard;
+import traypass.syntax.action.ActionConcat;
 import traypass.syntax.action.ActionEncrypt;
 import traypass.syntax.action.ActionExecute;
 import traypass.syntax.action.ActionFile;
@@ -19,7 +20,6 @@ import traypass.syntax.action.ActionSend;
 import traypass.syntax.action.ActionWait;
 import traypass.syntax.action.ActionWaitFor;
 
-
 public enum Syntax {
 
 	WAIT(
@@ -28,28 +28,28 @@ public enum Syntax {
 			new ActionWait(),
 			"@wait{ms}",
 			"Wait 1 second"),
-			
+
 	PROMPT(
 			"@prompt",
 			0,
 			new ActionPrompt(),
 			"@prompt",
 			"Display a prompt to enter a value"),
-			
+
 	EXECUTE(
 			"@execute",
 			-1,
 			new ActionExecute(),
 			"@execute(<Parameter>,<Parameter>)",
 			"Display a prompt to enter a value"),
-			
+
 	SEND(
 			"@send",
 			1,
 			new ActionSend(),
 			"@send{<String>}",
 			"Simulate a keyboard and send specified string"),
-			
+
 	FILE(
 			"@file",
 			1,
@@ -84,20 +84,27 @@ public enum Syntax {
 			new ActionPack(),
 			"@pack{<file path>,<param>}",
 			"Execute the specified pack"),
-			
-			MOUSE(
-					"@mouse",
-					3,
-					new ActionMouse(),
-					"@mouse{<x>,<y>},<click>",
-					"Click on the specified position"),
+
+	MOUSE(
+			"@mouse",
+			3,
+			new ActionMouse(),
+			"@mouse{<x>,<y>,<click>}",
+			"Click on the specified position"),
 
 	WAITFOR(
 			"@waitfor",
 			2,
 			new ActionWaitFor(),
 			"@waitfor{<image path>,<click type>}",
-			"Waiting to find the image in the screen and then perform the specified mouse");
+			"Waiting to find the image in the screen and then perform the specified mouse"),
+
+	CONCAT(
+			"@concat",
+			-1,
+			new ActionConcat(),
+			"@concat{<text>,<text>}",
+			"Concatenate specified text");
 
 	private String pattern;
 	private int nbParameter;
@@ -122,7 +129,7 @@ public enum Syntax {
 	public String getPattern() {
 		return pattern;
 	}
-	
+
 	public int getNbParameter() {
 		return nbParameter;
 	}
@@ -130,7 +137,7 @@ public enum Syntax {
 	public Action getAction() {
 		return action;
 	}
-	
+
 	public static void showSyntaxFrame() {
 		JFrame frame = new JFrame("Syntax Description");
 		frame.setBackground(Color.white);

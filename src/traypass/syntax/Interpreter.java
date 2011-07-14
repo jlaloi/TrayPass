@@ -30,7 +30,7 @@ public class Interpreter {
 	}
 
 	public static String computeFunction(String function) {
-		String result = "";
+		String result = function;
 		try {
 			if (!checkSyntax(function)) {
 				return function;
@@ -83,7 +83,8 @@ public class Interpreter {
 	public static String compute(String functionName, List<String> parameters) {
 		String result = "";
 		for (Syntax syntax : Syntax.values()) {
-			if (syntax.getPattern().equals(functionName) && (syntax.getNbParameter() == -1 || syntax.getNbParameter() == parameters.size())) {
+			if (syntax.getPattern().equals(functionName)
+					&& (syntax.getNbParameter() == -1 || syntax.getNbParameter() == parameters.size())) {
 				result = syntax.getAction().execute(parameters.toArray());
 				break;
 			}

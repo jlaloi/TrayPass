@@ -13,10 +13,7 @@ import traypass.TrayPassObject;
 import traypass.syntax.Action;
 import traypass.tools.ToolFile;
 
-
 public class ActionPack extends Action {
-
-	public static String paramSeparator = "#";
 
 	public static String paramPattern = "#param#";
 
@@ -30,10 +27,10 @@ public class ActionPack extends Action {
 			String[] lines = ToolFile.getFileLines(files.get(lineFile)).get(0).split(paramPattern);
 			// Parameters
 			if (lines.length > 1 && parameter.length > 1) {
-				for (int i = 1; i < lines.length; i++) {
+				for (int i = 0; i < lines.length; i++) {
 					result += lines[i];
-					if (i + 1 != lines.length && i < parameter.length) {
-						result += parameter[i];
+					if (i + 1 != lines.length && i < parameter.length - 1) {
+						result += parameter[i + 1];
 					}
 				}
 			} else {
@@ -87,8 +84,8 @@ public class ActionPack extends Action {
 	private String getTmpDir(String path) {
 		String result;
 		if (System.getenv("TMP") != null && System.getenv("TMP").trim().length() > 0) {
-			result = System.getenv("TMP") + TrayPassObject.fileSeparator + TrayPassObject.tmpDir + TrayPassObject.fileSeparator + path
-					+ TrayPassObject.fileSeparator;
+			result = System.getenv("TMP") + TrayPassObject.fileSeparator + TrayPassObject.tmpDir + TrayPassObject.fileSeparator
+					+ path + TrayPassObject.fileSeparator;
 		} else {
 			result = "/tmp" + TrayPassObject.fileSeparator + TrayPassObject.tmpDir + TrayPassObject.fileSeparator + path
 					+ TrayPassObject.fileSeparator;

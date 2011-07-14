@@ -7,10 +7,9 @@ import java.io.File;
 import javax.imageio.ImageIO;
 
 import traypass.TrayPass;
-import traypass.TrayPassObject;
 import traypass.syntax.Action;
 import traypass.tools.ToolImage;
-
+import traypass.tools.ToolMouse;
 
 public class ActionWaitFor extends Action {
 
@@ -44,9 +43,7 @@ public class ActionWaitFor extends Action {
 				Point result = isOnDesktop(image);
 				isFound = result != null;
 				if (click > 0 && result != null) {
-					TrayPassObject.getRobot().mouseMove(result.x + (image.getWidth() / 2), result.y + (image.getHeight() / 2));
-					TrayPassObject.getRobot().mousePress(click);
-					TrayPassObject.getRobot().mouseRelease(click);
+					ToolMouse.doClick(result.x + (image.getWidth() / 2), result.y + (image.getHeight() / 2), click);
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
