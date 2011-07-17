@@ -21,6 +21,10 @@ public class ActionWaitFor extends Action {
 
 	private int click = 0;
 
+	private final int maxCheck = 20;
+
+	private final int checkWait = 500;
+
 	public String execute(Object... parameter) {
 		this.click = Integer.valueOf((String) parameter[1]);
 		isFound = false;
@@ -29,10 +33,12 @@ public class ActionWaitFor extends Action {
 			File file = new File(imagePath);
 			if (file.exists()) {
 				image = ImageIO.read(new File(imagePath));
-				for (int i = 0; i < 20 && !isOnDesktop(); i++) {
-					TrayPass.trayIcon.setToolTip("Looking for " + imagePath + " (" + i + "/20)");
-					ActionWait.waitMS(500);
+				for (int i = 0; i < maxCheck && !isOnDesktop(); i++) {
+					TrayPass.trayIcon.setToolTip("Looking for " + imagePath + " (" + i + "/" + maxCheck + ")");
+					ActionWait.waitMS(checkWait);
 				}
+			} else {
+				System.out.println("No image: " + imagePath);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

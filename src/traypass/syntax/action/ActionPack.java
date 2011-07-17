@@ -11,6 +11,7 @@ import java.util.zip.ZipInputStream;
 
 import traypass.TrayPassObject;
 import traypass.syntax.Action;
+import traypass.syntax.Interpreter;
 import traypass.tools.ToolFile;
 
 public class ActionPack extends Action {
@@ -42,8 +43,10 @@ public class ActionPack extends Action {
 					result = result.replace(file, files.get(file));
 				}
 			}
+			System.out.println("pack:" + result);
+			Interpreter.computeFunctions(result);
 		}
-		return result;
+		return "";
 	}
 
 	private HashMap<String, String> preparePack(String path) {
