@@ -51,9 +51,9 @@ public class ActionPack extends Action {
 
 	private HashMap<String, String> preparePack(String path) {
 		HashMap<String, String> result = new HashMap<String, String>();
-		String tempDir = getTmpDir(getFileName(path));
 		int BUFFER = 2048;
 		try {
+			String tempDir = getTmpDir(getFileName(path));
 			BufferedOutputStream dest = null;
 			FileInputStream fis = new FileInputStream(path);
 			BufferedInputStream buffi = new BufferedInputStream(fis);
@@ -75,6 +75,7 @@ public class ActionPack extends Action {
 			}
 			zip.close();
 		} catch (Exception e) {
+			Interpreter.showError("preparePack: " + path + "\n" + e);
 			e.printStackTrace();
 		}
 		return result;
@@ -93,13 +94,9 @@ public class ActionPack extends Action {
 			result = "/tmp" + TrayPassObject.fileSeparator + TrayPassObject.tmpDir + TrayPassObject.fileSeparator + path
 					+ TrayPassObject.fileSeparator;
 		}
-		try {
-			File tmp = new File(result);
-			if (!tmp.exists() || !tmp.isDirectory()) {
-				tmp.mkdirs();
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
+		File tmp = new File(result);
+		if (!tmp.exists() || !tmp.isDirectory()) {
+			tmp.mkdirs();
 		}
 		return result;
 	}

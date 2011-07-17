@@ -1,6 +1,5 @@
 package traypass;
 
-import java.awt.AWTException;
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.Robot;
@@ -43,7 +42,7 @@ public class TrayPassObject {
 		if (robot == null) {
 			try {
 				robot = new Robot();
-			} catch (AWTException e) {
+			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}

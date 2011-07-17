@@ -8,6 +8,7 @@ import javax.imageio.ImageIO;
 
 import traypass.TrayPass;
 import traypass.syntax.Action;
+import traypass.syntax.Interpreter;
 import traypass.tools.ToolImage;
 import traypass.tools.ToolMouse;
 
@@ -32,15 +33,16 @@ public class ActionWaitFor extends Action {
 		try {
 			File file = new File(imagePath);
 			if (file.exists()) {
-				image = ImageIO.read(new File(imagePath));
+				image = ImageIO.read(file);
 				for (int i = 0; i < maxCheck && !isOnDesktop(); i++) {
 					TrayPass.trayIcon.setToolTip("Looking for " + imagePath + " (" + i + "/" + maxCheck + ")");
 					ActionWait.waitMS(checkWait);
 				}
 			} else {
-				System.out.println("No image: " + imagePath);
+				Interpreter.showError("No image: " + imagePath);
 			}
 		} catch (Exception e) {
+			Interpreter.showError("WaitFor: " + e);
 			e.printStackTrace();
 		}
 		return "";
@@ -48,14 +50,10 @@ public class ActionWaitFor extends Action {
 
 	public boolean isOnDesktop() {
 		if (!isFound && image != null) {
-			try {
-				Point result = isOnDesktop(image);
-				isFound = result != null;
-				if (click > 0 && result != null) {
-					ToolMouse.doClick(result.x + (image.getWidth() / 2), result.y + (image.getHeight() / 2), click);
-				}
-			} catch (Exception e) {
-				e.printStackTrace();
+			Point result = isOnDesktop(image);
+			isFound = result != null;
+			if (click > 0 && result != null) {
+				ToolMouse.doClick(result.x + (image.getWidth() / 2), result.y + (image.getHeight() / 2), click);
 			}
 		}
 		return isFound;
@@ -63,11 +61,7 @@ public class ActionWaitFor extends Action {
 
 	public Point isOnDesktop(BufferedImage image) {
 		Point result = null;
-		try {
-			result = imageIncluded(ToolImage.getScreenCapture(), image);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		result = imageIncluded(ToolImage.getScreenCapture(), image);
 		return result;
 	}
 

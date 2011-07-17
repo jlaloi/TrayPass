@@ -13,7 +13,6 @@ import java.awt.Toolkit;
 import java.awt.Transparency;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.IOException;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -31,7 +30,7 @@ public class ToolImage {
 	public static void saveImage(BufferedImage image, File file) {
 		try {
 			ImageIO.write(image, "png", file);
-		} catch (IOException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
@@ -49,9 +48,7 @@ public class ToolImage {
 		if (image instanceof BufferedImage) {
 			return (BufferedImage) image;
 		}
-
 		image = new ImageIcon(image).getImage();
-
 		BufferedImage bimage = null;
 		GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
 		try {
@@ -62,11 +59,9 @@ public class ToolImage {
 		} catch (HeadlessException e) {
 			e.printStackTrace();
 		}
-
 		if (bimage == null) {
 			bimage = new BufferedImage(image.getWidth(null), image.getHeight(null), BufferedImage.TYPE_INT_ARGB);
 		}
-
 		Graphics g = bimage.createGraphics();
 		g.drawImage(image, 0, 0, null);
 		g.dispose();

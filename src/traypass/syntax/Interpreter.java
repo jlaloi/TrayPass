@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.swing.JOptionPane;
+
 public class Interpreter {
 
 	public static final Pattern pattern = Pattern.compile("\\@([a-z])*\\{(.*)\\}");
@@ -75,7 +77,7 @@ public class Interpreter {
 			System.out.println("Executing " + methodName);
 			result = compute(methodName, computedParams);
 		} catch (Exception e) {
-			System.out.println("Exception while executing:" + function);
+			showError("Exception while executing:" + function + ":\n" + e);
 			e.printStackTrace();
 		}
 		return result;
@@ -92,4 +94,9 @@ public class Interpreter {
 		}
 		return result;
 	}
+
+	public static void showError(String text) {
+		JOptionPane.showMessageDialog(null, text, "TrayPass error!", JOptionPane.ERROR_MESSAGE);
+	}
+
 }

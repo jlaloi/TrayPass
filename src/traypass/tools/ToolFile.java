@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import traypass.TrayPassObject;
+import traypass.syntax.Interpreter;
 
 public class ToolFile {
 
@@ -25,6 +26,7 @@ public class ToolFile {
 			}
 			in.close();
 		} catch (Exception e) {
+			Interpreter.showError("getFileLines " + file + ":\n" + e);
 			e.printStackTrace();
 		}
 		return result;

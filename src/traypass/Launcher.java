@@ -5,6 +5,8 @@ import java.awt.Toolkit;
 
 import javax.swing.UIManager;
 
+import traypass.syntax.Interpreter;
+
 public class Launcher {
 
 	public static void main(String[] args) {
@@ -17,6 +19,7 @@ public class Launcher {
 			try {
 				TrayPassObject.trayImageIcon = Toolkit.getDefaultToolkit().getImage(TrayPassObject.iconFile);
 			} catch (Exception e) {
+				Interpreter.showError("Load icon " + args[1] + ":\n" + e);
 				e.printStackTrace();
 			}
 		}
