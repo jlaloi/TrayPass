@@ -9,10 +9,11 @@ public class ActionSend extends Action {
 
 	public String execute(Object... parameter) {
 		String characters = (String) parameter[0];
+		System.out.println("Typing: " + characters);
 		for (int i = 0; i < characters.length(); i++) {
-			if (characters.substring(i, i + 1).equals("(") && characters.indexOf(")", i) != -1) {
-				if (typeSpecial(characters.substring(i, characters.indexOf(")", i) + 1))) {
-					i = characters.indexOf(")", i);
+			if (characters.substring(i, i + 1).equals("{") && characters.indexOf("}", i) != -1) {
+				if (typeSpecial(characters.substring(i, characters.indexOf("}", i) + 1))) {
+					i = characters.indexOf("}", i);
 				} else {
 					type(characters.charAt(i));
 				}
@@ -26,53 +27,53 @@ public class ActionSend extends Action {
 	private boolean typeSpecial(String value) {
 		boolean result = true;
 		String v = value.toLowerCase().trim();
-		if (v.equals("(enter)")) {
+		if (v.equals("{enter}")) {
 			doType(KeyEvent.VK_ENTER);
-		} else if (v.equals("(tab)")) {
+		} else if (v.equals("{tab}")) {
 			doType(KeyEvent.VK_TAB);
-		} else if (v.equals("(escape)")) {
+		} else if (v.equals("{escape}")) {
 			doType(KeyEvent.VK_ESCAPE);
-		} else if (v.equals("(insert)")) {
+		} else if (v.equals("{insert}")) {
 			doType(KeyEvent.VK_INSERT);
-		} else if (v.equals("(control)")) {
+		} else if (v.equals("{control}")) {
 			doType(KeyEvent.VK_CONTROL);
-		} else if (v.equals("(alt)")) {
+		} else if (v.equals("{alt}")) {
 			doType(KeyEvent.VK_ALT);
-		} else if (v.equals("(shift)")) {
+		} else if (v.equals("{shift}")) {
 			doType(KeyEvent.VK_SHIFT);
-		} else if (v.equals("(backspace)")) {
+		} else if (v.equals("{backspace}")) {
 			doType(KeyEvent.VK_BACK_SPACE);
-		} else if (v.equals("(end)")) {
+		} else if (v.equals("{end}")) {
 			doType(KeyEvent.VK_END);
-		} else if (v.equals("(home)")) {
+		} else if (v.equals("{home}")) {
 			doType(KeyEvent.VK_HOME);
-		} else if (v.equals("(pageup)")) {
+		} else if (v.equals("{pageup}")) {
 			doType(KeyEvent.VK_PAGE_UP);
-		} else if (v.equals("(pagedown)")) {
+		} else if (v.equals("{pagedown}")) {
 			doType(KeyEvent.VK_PAGE_DOWN);
-		} else if (v.equals("(f1)")) {
+		} else if (v.equals("{f1}")) {
 			doType(KeyEvent.VK_F1);
-		} else if (v.equals("(f2)")) {
+		} else if (v.equals("{f2}")) {
 			doType(KeyEvent.VK_F2);
-		} else if (v.equals("(f3)")) {
+		} else if (v.equals("{f3}")) {
 			doType(KeyEvent.VK_F3);
-		} else if (v.equals("(f4)")) {
+		} else if (v.equals("{f4}")) {
 			doType(KeyEvent.VK_F4);
-		} else if (v.equals("(f5)")) {
+		} else if (v.equals("{f5}")) {
 			doType(KeyEvent.VK_F5);
-		} else if (v.equals("(f6)")) {
+		} else if (v.equals("{f6}")) {
 			doType(KeyEvent.VK_F6);
-		} else if (v.equals("(f7)")) {
+		} else if (v.equals("{f7}")) {
 			doType(KeyEvent.VK_F7);
-		} else if (v.equals("(f8)")) {
+		} else if (v.equals("{f8}")) {
 			doType(KeyEvent.VK_F8);
-		} else if (v.equals("(f9)")) {
+		} else if (v.equals("{f9}")) {
 			doType(KeyEvent.VK_F9);
-		} else if (v.equals("(f10)")) {
+		} else if (v.equals("{f10}")) {
 			doType(KeyEvent.VK_F10);
-		} else if (v.equals("(f11)")) {
+		} else if (v.equals("{f11}")) {
 			doType(KeyEvent.VK_F11);
-		} else if (v.equals("(f12)")) {
+		} else if (v.equals("{f12}")) {
 			doType(KeyEvent.VK_F12);
 		} else {
 			result = false;
@@ -383,9 +384,14 @@ public class ActionSend extends Action {
 
 	private void doType(int[] keyCodes, int offset, int length) {
 		if (length > 0) {
-			TrayPassObject.getRobot().keyPress(keyCodes[offset]);
-			doType(keyCodes, offset + 1, length - 1);
-			TrayPassObject.getRobot().keyRelease(keyCodes[offset]);
+			try {
+				TrayPassObject.getRobot().keyPress(keyCodes[offset]);
+				doType(keyCodes, offset + 1, length - 1);
+				TrayPassObject.getRobot().keyRelease(keyCodes[offset]);
+			} catch (Exception e) {
+				System.out.println(keyCodes[0]);
+				e.printStackTrace();
+			}
 		}
 	}
 

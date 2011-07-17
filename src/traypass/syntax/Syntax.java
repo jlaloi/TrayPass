@@ -26,14 +26,14 @@ public enum Syntax {
 			"@wait",
 			1,
 			new ActionWait(),
-			"@wait{ms}",
+			"@wait(ms)",
 			"Wait specified millisecond"),
 
 	PROMPT(
 			"@prompt",
 			1,
 			new ActionPrompt(),
-			"@prompt{<label>}",
+			"@prompt(<label>)",
 			"Display a prompt to enter a value"),
 
 	EXECUTE(
@@ -41,69 +41,69 @@ public enum Syntax {
 			-1,
 			new ActionExecute(),
 			"@execute(<executable>,<Parameter>,<Parameter>)",
-			"Execute specified executable with specified parameter(s)"),
+			"Execute the specified executable with specified parameter(s)"),
 
 	SEND(
 			"@send",
 			1,
 			new ActionSend(),
-			"@send{<keys>}",
-			"Simulate a keyboard and send specified keys"),
+			"@send(<keys>)",
+			"Simulate a keyboard to send specified keys"),
 
 	FILE(
 			"@file",
 			1,
 			new ActionFile(),
-			"@file{<file path>}",
+			"@file(<file path>)",
 			"Read the content of the specified file"),
 
 	DECRYPT(
 			"@decrypt",
 			1,
 			new ActionDecrypt(),
-			"@decrypt{<Encrypted text>}",
+			"@decrypt(<Encrypted text>)",
 			"Decrypt the encrypted text"),
 
 	CLIPBOARD(
 			"@clipboard",
 			-1,
 			new ActionClipboard(),
-			"@clipboard{<text>}",
-			"Set the clipboard content with the specified text or without parameter get the clipboard content"),
+			"@clipboard(<text>)",
+			"Set the clipboard content with the specified text or without parameter to get the clipboard content"),
 
 	NOTE(
 			"@note",
 			2,
 			new ActionNote(),
-			"@note{<file path>,<text>}",
+			"@note(<file path>,<text>)",
 			"Add the specified text to the specified file"),
 
 	PACK(
 			"@pack",
 			-1,
 			new ActionPack(),
-			"@pack{<file path>,<param>}",
+			"@pack(<file path>,<param>)",
 			"Execute the specified pack"),
 
 	MOUSE(
 			"@mouse",
 			3,
 			new ActionMouse(),
-			"@mouse{<x>,<y>,<click>}",
+			"@mouse(<x>,<y>,<click>)",
 			"Click on the specified position"),
 
 	WAITFOR(
 			"@waitfor",
 			2,
 			new ActionWaitFor(),
-			"@waitfor{<image path>,<click type>}",
-			"Waiting to find the image in the screen and then perform the specified mouse"),
+			"@waitfor(<image path>,<click type>)",
+			"Waiting to find the image on the screen and then perform the specified mouse click"),
 
 	CONCAT(
 			"@concat",
 			-1,
 			new ActionConcat(),
-			"@concat{<text>,<text>}",
+			"@concat(<text>,<text>)",
 			"Concatenate specified text");
 
 	private String pattern;
@@ -143,12 +143,15 @@ public enum Syntax {
 	public static void showSyntaxFrame() {
 		JFrame frame = new JFrame("Syntax Description");
 		frame.setBackground(Color.white);
-		frame.setLayout(new GridLayout(Syntax.values().length, 1));
+		frame.setLayout(new GridLayout(Syntax.values().length+1, 1));
 		for (Syntax item : Syntax.values()) {
 			JLabel label = new JLabel(" " + item.getExample() + " ==> " + item.getDescription() + " ");
 			label.setFont(TrayPassObject.fontInfo);
 			frame.add(label);
 		}
+		JLabel example = new JLabel(" Example: {example}@execute(notepad);@wait(400);@send(@concat(@prompt(text?),{enter}ok)) ");
+		example.setFont(TrayPassObject.fontInfo);
+		frame.add(example);
 		frame.setIconImage(TrayPassObject.trayImageIcon);
 		frame.pack();
 		frame.setLocationRelativeTo(frame.getParent());

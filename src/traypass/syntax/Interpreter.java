@@ -9,16 +9,18 @@ import javax.swing.JOptionPane;
 
 public class Interpreter {
 
-	public static final Pattern pattern = Pattern.compile("\\@([a-z])*\\{(.*)\\}");
+	public static final Pattern pattern = Pattern.compile("\\@([a-z])*\\((.*)\\)");
 
 	public static final char functionStart = '@';
 
-	public static final char functionParamStart = '{';
+	public static final char functionParamStart = '(';
 
-	public static final char functionParamEnd = '}';
+	public static final char functionParamEnd = ')';
 
-	public static final String functionSeparator = "\\]\\[";
+	public static final String functionSeparator = ";";
 
+	public static final char functionParamSeparator = ',';
+	
 	private static boolean checkSyntax(String function) {
 		Matcher matcher = pattern.matcher(function);
 		return matcher.find() && matcher.group().equals(function);
@@ -61,21 +63,24 @@ public class Interpreter {
 				} else if (ch == functionStart) {
 					numberOfBracket++;
 					paramBuilder.append(ch);
-				} else if (ch == ',' && numberOfBracket == 1) {
+				} else if (ch == functionParamSeparator && numberOfBracket == 1) {
 					params.add(paramBuilder.toString());
 					paramBuilder = new StringBuilder();
 				} else {
 					paramBuilder.append(ch);
 				}
 			}
-
-			List<String> computedParams = new ArrayList<String>();
-			for (String param : params) {
-				computedParams.add(computeFunction(param));
+			
+			Action action = getAction(methodName, params.size());
+			if(action != null){
+				List<String> computedParams = new ArrayList<String>();
+				for (String param : params) {
+					computedParams.add(computeFunction(param));
+				}
+				System.out.println("Executing " + methodName);
+				result = action.execute(computedParams.toArray());
 			}
-
-			System.out.println("Executing " + methodName);
-			result = compute(methodName, computedParams);
+			
 		} catch (Exception e) {
 			showError("Exception while executing:" + function + ":\n" + e);
 			e.printStackTrace();
@@ -83,18 +88,18 @@ public class Interpreter {
 		return result;
 	}
 
-	public static String compute(String functionName, List<String> parameters) {
-		String result = "";
+	public static Action getAction(String functionName, int nbParameters){
+		Action result = null;
 		for (Syntax syntax : Syntax.values()) {
 			if (syntax.getPattern().equals(functionName)
-					&& (syntax.getNbParameter() == -1 || syntax.getNbParameter() == parameters.size())) {
-				result = syntax.getAction().execute(parameters.toArray());
+					&& (syntax.getNbParameter() == -1 || syntax.getNbParameter() == nbParameters)) {
+				result = syntax.getAction();
 				break;
 			}
 		}
 		return result;
 	}
-
+	
 	public static void showError(String text) {
 		JOptionPane.showMessageDialog(null, text, "TrayPass error!", JOptionPane.ERROR_MESSAGE);
 	}

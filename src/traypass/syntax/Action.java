@@ -7,6 +7,7 @@ public abstract class Action {
 	public String[] getStringArray(Object[] parameter) {
 		String[] result = new String[parameter.length];
 		for (int i = 0; i < parameter.length; i++) {
+			System.out.println(parameter[i]);
 			result[i] = (String) parameter[i];
 		}
 		return result;
