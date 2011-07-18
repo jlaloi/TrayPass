@@ -158,7 +158,7 @@ public enum Syntax {
 	public static void showSyntaxFrame() {
 		JFrame frame = new JFrame("Syntax Description");
 		frame.setBackground(Color.white);
-		frame.setLayout(new GridLayout(Syntax.values().length + 2, 1));
+		frame.setLayout(new GridLayout(Syntax.values().length + 3, 1));
 		for (Syntax item : Syntax.values()) {
 			JLabel label = new JLabel(" " + item.getExample() + " ==> " + item.getDescription() + " ");
 			label.setFont(TrayPassObject.fontInfo);
@@ -167,6 +167,9 @@ public enum Syntax {
 		JLabel separator = new JLabel(" Function separator is " + functionSeparator);
 		separator.setFont(TrayPassObject.fontInfo);
 		frame.add(separator);
+		JLabel escape = new JLabel(" Escape character is " + escapeChar);
+		escape.setFont(TrayPassObject.fontInfo);
+		frame.add(escape);
 		JLabel example = new JLabel(" Example: {example}@execute(notepad);@wait(400);@send(@concat(@prompt(text?),{enter}ok)) ");
 		example.setFont(TrayPassObject.fontInfo);
 		frame.add(example);
