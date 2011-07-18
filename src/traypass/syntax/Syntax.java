@@ -2,6 +2,7 @@ package traypass.syntax;
 
 import java.awt.Color;
 import java.awt.GridLayout;
+import java.util.regex.Pattern;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -106,6 +107,18 @@ public enum Syntax {
 			"@concat(<text>,<text>)",
 			"Concatenate specified text");
 
+	public static final Pattern functionPattern = Pattern.compile("\\@([a-z])*\\((.*)\\)");
+
+	public static final char functionStart = '@';
+
+	public static final char functionParamStart = '(';
+
+	public static final char functionParamEnd = ')';
+
+	public static final String functionSeparator = ";";
+
+	public static final char functionParamSeparator = ',';
+
 	private String pattern;
 	private int nbParameter;
 	private Action action;
@@ -143,12 +156,15 @@ public enum Syntax {
 	public static void showSyntaxFrame() {
 		JFrame frame = new JFrame("Syntax Description");
 		frame.setBackground(Color.white);
-		frame.setLayout(new GridLayout(Syntax.values().length+1, 1));
+		frame.setLayout(new GridLayout(Syntax.values().length + 2, 1));
 		for (Syntax item : Syntax.values()) {
 			JLabel label = new JLabel(" " + item.getExample() + " ==> " + item.getDescription() + " ");
 			label.setFont(TrayPassObject.fontInfo);
 			frame.add(label);
 		}
+		JLabel separator = new JLabel(" Function separator is " + functionSeparator);
+		separator.setFont(TrayPassObject.fontInfo);
+		frame.add(separator);
 		JLabel example = new JLabel(" Example: {example}@execute(notepad);@wait(400);@send(@concat(@prompt(text?),{enter}ok)) ");
 		example.setFont(TrayPassObject.fontInfo);
 		frame.add(example);
