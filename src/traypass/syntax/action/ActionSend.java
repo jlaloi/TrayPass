@@ -241,7 +241,7 @@ public class ActionSend extends Action {
 			doType(KeyEvent.VK_SHIFT, KeyEvent.VK_Z);
 			break;
 		case '`':
-			doType(KeyEvent.VK_BACK_QUOTE);
+			doType(KeyEvent.VK_ALT, KeyEvent.VK_CONTROL, KeyEvent.VK_7);
 			break;
 		case '0':
 			doType(KeyEvent.VK_SHIFT, KeyEvent.VK_0);
@@ -274,7 +274,7 @@ public class ActionSend extends Action {
 			doType(KeyEvent.VK_SHIFT, KeyEvent.VK_9);
 			break;
 		case '-':
-			doType(KeyEvent.VK_MINUS);
+			doType(KeyEvent.VK_6);
 			break;
 		case '=':
 			doType(KeyEvent.VK_EQUALS);
@@ -286,10 +286,10 @@ public class ActionSend extends Action {
 			doType(KeyEvent.VK_EXCLAMATION_MARK);
 			break;
 		case '@':
-			doType(KeyEvent.VK_AT);
+			doType(KeyEvent.VK_ALT, KeyEvent.VK_CONTROL, KeyEvent.VK_0);
 			break;
 		case '#':
-			doType(KeyEvent.VK_NUMBER_SIGN);
+			doType(KeyEvent.VK_ALT, KeyEvent.VK_CONTROL, KeyEvent.VK_3);
 			break;
 		case '$':
 			doType(KeyEvent.VK_DOLLAR);
@@ -301,19 +301,19 @@ public class ActionSend extends Action {
 			doType(KeyEvent.VK_CIRCUMFLEX);
 			break;
 		case '&':
-			doType(KeyEvent.VK_AMPERSAND);
+			doType(KeyEvent.VK_1);
 			break;
 		case '*':
 			doType(KeyEvent.VK_ASTERISK);
 			break;
 		case '(':
-			doType(KeyEvent.VK_LEFT_PARENTHESIS);
+			doType(KeyEvent.VK_5);
 			break;
 		case ')':
 			doType(KeyEvent.VK_RIGHT_PARENTHESIS);
 			break;
 		case '_':
-			doType(KeyEvent.VK_UNDERSCORE);
+			doType(KeyEvent.VK_8);
 			break;
 		case '+':
 			doType(KeyEvent.VK_PLUS);
@@ -325,7 +325,7 @@ public class ActionSend extends Action {
 			doType(KeyEvent.VK_ENTER);
 			break;
 		case '[':
-			doType(KeyEvent.VK_OPEN_BRACKET);
+			doType(KeyEvent.VK_ALT, KeyEvent.VK_CONTROL, KeyEvent.VK_5);
 			break;
 		case ']':
 			doType(KeyEvent.VK_CLOSE_BRACKET);
@@ -334,13 +334,13 @@ public class ActionSend extends Action {
 			doType(KeyEvent.VK_BACK_SLASH);
 			break;
 		case '{':
-			doType(KeyEvent.VK_SHIFT, KeyEvent.VK_OPEN_BRACKET);
+			doType(KeyEvent.VK_ALT, KeyEvent.VK_CONTROL, KeyEvent.VK_4);
 			break;
 		case '}':
 			doType(KeyEvent.VK_SHIFT, KeyEvent.VK_CLOSE_BRACKET);
 			break;
 		case '|':
-			doType(KeyEvent.VK_SHIFT, KeyEvent.VK_BACK_SLASH);
+			doType(KeyEvent.VK_ALT, KeyEvent.VK_CONTROL, KeyEvent.VK_6);
 			break;
 		case ';':
 			doType(KeyEvent.VK_SEMICOLON);
@@ -352,7 +352,7 @@ public class ActionSend extends Action {
 			doType(KeyEvent.VK_QUOTE);
 			break;
 		case '"':
-			doType(KeyEvent.VK_QUOTEDBL);
+			doType(KeyEvent.VK_3);
 			break;
 		case ',':
 			doType(KeyEvent.VK_COMMA);

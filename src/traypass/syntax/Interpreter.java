@@ -14,9 +14,14 @@ public class Interpreter {
 	}
 
 	public static void computeFunctions(String line) {
-		String[] functions = line.split(Syntax.functionSeparator);
-		for (String function : functions) {
-			computeFunction(function);
+		try {
+			List<String> functions = splitFunctions(line);
+			for (String function : functions) {
+				computeFunction(function);
+			}
+		} catch (Exception e) {
+			showError("Exception while computeFunctions:" + line + ":\n" + e);
+			e.printStackTrace();
 		}
 	}
 
@@ -35,9 +40,7 @@ public class Interpreter {
 			int i = 0;
 			int numberOfBracket = 1;
 			while (numberOfBracket > 0 && i < paramsS.length()) {
-				char ch = paramsS.charAt(i);
-				i++;
-				if (ch == Syntax.functionParamEnd) {
+				if (isSpecialChar(paramsS, i, Syntax.functionParamEnd)) {
 					numberOfBracket--;
 					if (numberOfBracket == 0) {
 						String p = paramBuilder.toString();
@@ -45,24 +48,25 @@ public class Interpreter {
 							params.add(paramBuilder.toString());
 						}
 					} else {
-						paramBuilder.append(ch);
+						paramBuilder.append(paramsS.charAt(i));
 					}
-				} else if (ch == Syntax.functionStart) {
+				} else if (isSpecialChar(paramsS, i, Syntax.functionStart)) {
 					numberOfBracket++;
-					paramBuilder.append(ch);
-				} else if (ch == Syntax.functionParamSeparator && numberOfBracket == 1) {
+					paramBuilder.append(paramsS.charAt(i));
+				} else if (isSpecialChar(paramsS, i, Syntax.functionParamSeparator) && numberOfBracket == 1) {
 					params.add(paramBuilder.toString());
 					paramBuilder = new StringBuilder();
 				} else {
-					paramBuilder.append(ch);
+					paramBuilder.append(paramsS.charAt(i));
 				}
+				i++;
 			}
 
 			Action action = getAction(methodName, params.size());
 			if (action != null) {
 				List<String> computedParams = new ArrayList<String>();
 				for (String param : params) {
-					computedParams.add(computeFunction(param));
+					computedParams.add(clearEscapeChar(computeFunction(param)));
 				}
 				System.out.println("Executing " + methodName);
 				result = action.execute(computedParams.toArray());
@@ -84,6 +88,38 @@ public class Interpreter {
 				break;
 			}
 		}
+		return result;
+	}
+
+	public static boolean isSpecialChar(String str, int pos, char c) {
+		boolean result = str.charAt(pos) == c;
+		if (pos > 0 && result) {
+			result = str.charAt(pos - 1) != Syntax.escapeChar;
+		}
+		return result;
+	}
+
+	public static List<String> splitFunctions(String functions) {
+		List<String> result = new ArrayList<String>();
+		int i = 0;
+		int lastPos = 0;
+		for (; i < functions.length(); i++) {
+			if (isSpecialChar(functions, i, Syntax.functionSeparator)) {
+				result.add(functions.substring(lastPos, i));
+				lastPos = i + 1;
+			}
+		}
+		result.add(functions.substring(lastPos, functions.length()));
+		return result;
+	}
+
+	public static String clearEscapeChar(String str) {
+		String result = str.replace(Syntax.escapeChar + "" + Syntax.functionParamSeparator, Syntax.functionParamSeparator + "");
+		result = result.replace(Syntax.escapeChar + "" + Syntax.functionParamEnd, Syntax.functionParamEnd + "");
+		result = result.replace(Syntax.escapeChar + "" + Syntax.functionParamStart, Syntax.functionParamStart + "");
+		result = result.replace(Syntax.escapeChar + "" + Syntax.functionSeparator, Syntax.functionSeparator + "");
+		result = result.replace(Syntax.escapeChar + "" + Syntax.functionStart, Syntax.functionStart + "");
+		result = result.replace(Syntax.escapeChar + "" + Syntax.escapeChar, Syntax.escapeChar + "");
 		return result;
 	}
 

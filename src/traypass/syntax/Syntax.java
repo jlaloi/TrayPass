@@ -115,9 +115,11 @@ public enum Syntax {
 
 	public static final char functionParamEnd = ')';
 
-	public static final String functionSeparator = ";";
+	public static final char functionSeparator = ';';
 
 	public static final char functionParamSeparator = ',';
+
+	public static final char escapeChar = '\\';
 
 	private String pattern;
 	private int nbParameter;
