@@ -51,6 +51,8 @@ public class ActionSend extends Action {
 			doType(KeyEvent.VK_PAGE_UP);
 		} else if (v.equals("{pagedown}")) {
 			doType(KeyEvent.VK_PAGE_DOWN);
+		} else if (v.equals("{capslock}")) {
+			doType(KeyEvent.VK_CAPS_LOCK);
 		} else if (v.equals("{f1}")) {
 			doType(KeyEvent.VK_F1);
 		} else if (v.equals("{f2}")) {
@@ -389,7 +391,6 @@ public class ActionSend extends Action {
 				doType(keyCodes, offset + 1, length - 1);
 				TrayPassObject.getRobot().keyRelease(keyCodes[offset]);
 			} catch (Exception e) {
-				System.out.println(keyCodes[0]);
 				e.printStackTrace();
 			}
 		}

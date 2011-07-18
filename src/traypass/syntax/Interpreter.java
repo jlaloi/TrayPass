@@ -101,9 +101,8 @@ public class Interpreter {
 
 	public static List<String> splitFunctions(String functions) {
 		List<String> result = new ArrayList<String>();
-		int i = 0;
 		int lastPos = 0;
-		for (; i < functions.length(); i++) {
+		for (int i = 0; i < functions.length(); i++) {
 			if (isSpecialChar(functions, i, Syntax.functionSeparator)) {
 				result.add(functions.substring(lastPos, i));
 				lastPos = i + 1;
