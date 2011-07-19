@@ -1,4 +1,4 @@
-package traypass.crypto;
+package traypass.misc;
 
 import java.awt.GridLayout;
 import java.awt.event.KeyAdapter;
@@ -11,11 +11,11 @@ import traypass.TrayPassObject;
 import traypass.syntax.Syntax;
 import traypass.tools.ToolClipboard;
 
-public class CryptoEncryptFrame extends JDialog {
+public class SetEscapeFrame extends JDialog {
 
 	private JTextField text, encrypted;
 
-	public CryptoEncryptFrame() {
+	public SetEscapeFrame() {
 		text = new JTextField();
 		text.setHorizontalAlignment(JTextField.CENTER);
 		encrypted = new JTextField();
@@ -27,7 +27,7 @@ public class CryptoEncryptFrame extends JDialog {
 		add(encrypted);
 
 		setSize(800, 80);
-		setTitle("Tray Encrypter Help");
+		setTitle("Set Escape Character Help");
 		setIconImage(TrayPassObject.trayImageIcon);
 		setLocationRelativeTo(getParent());
 		setVisible(true);
@@ -35,17 +35,18 @@ public class CryptoEncryptFrame extends JDialog {
 		text.addKeyListener(new KeyAdapter() {
 			public void keyReleased(KeyEvent e) {
 				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-					String result = "";
-					if (TrayPassObject.secretKey == null) {
-						result = "Encrypter not set!";
-					} else {
-						result = Syntax.DECRYPT.getPattern() + Syntax.functionParamStart
-								+ CryptoEncrypter.encrypt(text.getText(), TrayPassObject.secretKey) + Syntax.functionParamEnd;
-						ToolClipboard.setClipboard(result);
-					}
+					String result = text.getText();
+					result = result.replace(Syntax.escapeChar + "", Syntax.escapeChar + "" + Syntax.escapeChar);
+					result = result.replace(Syntax.functionParamEnd + "", Syntax.escapeChar + "" + Syntax.functionParamEnd);
+					result = result.replace(Syntax.functionParamSeparator + "", Syntax.escapeChar + "" + Syntax.functionParamSeparator);
+					result = result.replace(Syntax.functionParamStart + "", Syntax.escapeChar + "" + Syntax.functionParamStart);
+					result = result.replace(Syntax.functionStart + "", Syntax.escapeChar + "" + Syntax.functionStart);
+					result = result.replace(Syntax.functionSeparator + "", Syntax.escapeChar + "" + Syntax.functionSeparator);
+					ToolClipboard.setClipboard(result);
 					encrypted.setText(result);
 				}
 			}
 		});
+
 	}
 }

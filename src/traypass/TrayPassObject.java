@@ -40,6 +40,8 @@ public class TrayPassObject {
 
 	public static String consoleEncode = "CP850";
 
+	public static int captureWidth = 1024;
+
 	private static Robot robot;
 
 	public static Robot getRobot() {

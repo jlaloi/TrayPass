@@ -36,12 +36,17 @@ public class Launcher {
 			TrayPassObject.consoleEncode = args[4];
 		}
 
+		if (args.length > 5) {
+			TrayPassObject.captureWidth = Integer.valueOf(args[5]);
+		}
+
 		System.out.println("Parameters:");
 		System.out.println("passFile: " + TrayPassObject.passFile);
 		System.out.println("imageFile: " + TrayPassObject.iconFile);
 		System.out.println("configFileName: " + TrayPassObject.configFileName);
 		System.out.println("fileEncode: " + TrayPassObject.fileEncode);
 		System.out.println("consoleEncode: " + TrayPassObject.consoleEncode);
+		System.out.println("captureWidth: " + TrayPassObject.captureWidth);
 		System.out.println("");
 
 		if (SystemTray.isSupported()) {

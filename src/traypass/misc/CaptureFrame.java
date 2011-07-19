@@ -26,7 +26,6 @@ import traypass.tools.ToolImage;
 
 public class CaptureFrame extends JFrame {
 
-	private final int width = 1024;
 	private int height = 0;
 	private BufferedImage image, original;
 	private Point c1;
@@ -43,7 +42,7 @@ public class CaptureFrame extends JFrame {
 		label.setHorizontalAlignment(JLabel.CENTER);
 		image = inputImage;
 		original = inputImage;
-		height = width * image.getHeight() / image.getWidth();
+		height = TrayPassObject.captureWidth * image.getHeight() / image.getWidth();
 		label.setToolTipText("Hold left click to select - Middle click to save - Right click to clipboard - Space to reset");
 		add(label);
 		label.setLocation(0, 0);
@@ -125,8 +124,8 @@ public class CaptureFrame extends JFrame {
 		int iwidth = image.getWidth();
 		int iheight = image.getHeight();
 
-		if (iwidth > width) {
-			iwidth = width - 1;
+		if (iwidth > TrayPassObject.captureWidth) {
+			iwidth = TrayPassObject.captureWidth - 1;
 			iheight = iwidth * image.getHeight() / image.getWidth();
 		}
 
@@ -153,8 +152,7 @@ public class CaptureFrame extends JFrame {
 		int returnVal = chooser.showOpenDialog(this);
 		if (returnVal == JFileChooser.APPROVE_OPTION) {
 			ToolImage.saveImage(image, chooser.getSelectedFile());
-			TrayPassObject.trayConfig.setCaptureDir(chooser.getSelectedFile().getParentFile().getPath()
-					+ TrayPassObject.fileSeparator);
+			TrayPassObject.trayConfig.setCaptureDir(chooser.getSelectedFile().getParentFile().getPath() + TrayPassObject.fileSeparator);
 			TrayPassObject.trayConfig.save();
 			return true;
 		}

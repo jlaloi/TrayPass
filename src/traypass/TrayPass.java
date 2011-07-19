@@ -19,6 +19,7 @@ import traypass.crypto.CryptoConfigFrame;
 import traypass.crypto.CryptoEncryptFrame;
 import traypass.crypto.CryptoEnterFrame;
 import traypass.misc.CaptureFrame;
+import traypass.misc.SetEscapeFrame;
 import traypass.syntax.Interpreter;
 import traypass.syntax.Syntax;
 import traypass.syntax.action.ActionExecute;
@@ -51,8 +52,7 @@ public class TrayPass {
 	public TrayPass() {
 		try {
 			if (TrayPassObject.trayImageIcon == null) {
-				TrayPassObject.trayImageIcon = Toolkit.getDefaultToolkit().getImage(
-						getClass().getResource(TrayPassObject.iconFile));
+				TrayPassObject.trayImageIcon = Toolkit.getDefaultToolkit().getImage(getClass().getResource(TrayPassObject.iconFile));
 			}
 			workingIcon = ToolImage.toBufferedImage(TrayPassObject.trayImageIcon);
 			Graphics g = workingIcon.getGraphics();
@@ -170,6 +170,14 @@ public class TrayPass {
 			}
 		});
 		configMenu.add(helpItem);
+		MenuItem clearItem = new MenuItem("Escape help");
+		clearItem.setFont(TrayPassObject.font);
+		clearItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new SetEscapeFrame();
+			}
+		});
+		configMenu.add(clearItem);
 
 		popup.add(configMenu);
 
@@ -188,8 +196,7 @@ public class TrayPass {
 
 		// Crypto
 		if (useEncryption) {
-			if (TrayPassObject.trayConfig.getCryptoExample() != null
-					&& TrayPassObject.trayConfig.getCryptoExample().trim().length() > 0) {
+			if (TrayPassObject.trayConfig.getCryptoExample() != null && TrayPassObject.trayConfig.getCryptoExample().trim().length() > 0) {
 				new CryptoEnterFrame();
 			} else if (TrayPassObject.secretKey == null) {
 				new CryptoConfigFrame();
