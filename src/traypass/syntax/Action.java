@@ -1,15 +1,9 @@
 package traypass.syntax;
 
+import java.util.List;
+
 public abstract class Action {
 
-	public abstract String execute(Object... parameter);
+	public abstract String execute(List<String> parameters);
 
-	public String[] getStringArray(Object[] parameter) {
-		String[] result = new String[parameter.length];
-		for (int i = 0; i < parameter.length; i++) {
-			System.out.println(parameter[i]);
-			result[i] = (String) parameter[i];
-		}
-		return result;
-	}
 }

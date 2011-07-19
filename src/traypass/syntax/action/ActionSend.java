@@ -1,14 +1,15 @@
 package traypass.syntax.action;
 
 import java.awt.event.KeyEvent;
+import java.util.List;
 
 import traypass.TrayPassObject;
 import traypass.syntax.Action;
 
 public class ActionSend extends Action {
 
-	public String execute(Object... parameter) {
-		String characters = (String) parameter[0];
+	public String execute(List<String> parameters) {
+		String characters = parameters.get(0);
 		System.out.println("Typing: " + characters);
 		for (int i = 0; i < characters.length(); i++) {
 			if (characters.substring(i, i + 1).equals("{") && characters.indexOf("}", i) != -1) {

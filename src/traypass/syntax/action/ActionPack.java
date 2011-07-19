@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.util.HashMap;
+import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
@@ -20,18 +21,18 @@ public class ActionPack extends Action {
 
 	public static String lineFile = "line.txt";
 
-	public String execute(Object... parameter) {
-		String pack = (String) parameter[0];
+	public String execute(List<String> parameters) {
+		String pack = parameters.get(0);
 		HashMap<String, String> files = preparePack(pack);
 		String result = "";
 		if (files.containsKey(lineFile)) {
 			String[] lines = ToolFile.getFileLines(files.get(lineFile)).get(0).split(paramPattern);
 			// Parameters
-			if (lines.length > 1 && parameter.length > 1) {
+			if (lines.length > 1 && parameters.size() > 1) {
 				for (int i = 0; i < lines.length; i++) {
 					result += lines[i];
-					if (i + 1 != lines.length && i < parameter.length - 1) {
-						result += parameter[i + 1];
+					if (i + 1 != lines.length && i < parameters.size() - 1) {
+						result += parameters.get(i + 1);
 					}
 				}
 			} else {

@@ -1,14 +1,15 @@
 package traypass.syntax.action;
 
+import java.util.List;
+
 import javax.swing.JOptionPane;
 
 import traypass.syntax.Action;
 
 public class ActionPrompt extends Action {
 
-	public String execute(Object... parameter) {
-		return (String) JOptionPane.showInputDialog(null, null, (String) parameter[0], JOptionPane.PLAIN_MESSAGE, null, null,
-				null);
+	public String execute(List<String> parameters) {
+		return (String) JOptionPane.showInputDialog(null, null, parameters.get(0), JOptionPane.PLAIN_MESSAGE, null, null, null);
 	}
 
 }

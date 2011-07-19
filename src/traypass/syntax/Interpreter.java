@@ -69,7 +69,7 @@ public class Interpreter {
 					computedParams.add(clearEscapeChar(computeFunction(param)));
 				}
 				System.out.println("Executing " + methodName);
-				result = action.execute(computedParams.toArray());
+				result = action.execute(computedParams);
 			}
 
 		} catch (Exception e) {

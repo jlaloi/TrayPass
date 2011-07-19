@@ -3,6 +3,7 @@ package traypass.syntax.action;
 import java.awt.Point;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.util.List;
 
 import javax.imageio.ImageIO;
 
@@ -26,10 +27,10 @@ public class ActionWaitFor extends Action {
 
 	private final int checkWait = 500;
 
-	public String execute(Object... parameter) {
-		this.click = Integer.valueOf((String) parameter[1]);
+	public String execute(List<String> parameters) {
+		this.click = Integer.valueOf(parameters.get(1));
 		isFound = false;
-		imagePath = (String) parameter[0];
+		imagePath = parameters.get(0);
 		try {
 			File file = new File(imagePath);
 			if (file.exists()) {

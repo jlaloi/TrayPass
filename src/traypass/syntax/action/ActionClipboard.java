@@ -1,15 +1,17 @@
 package traypass.syntax.action;
 
+import java.util.List;
+
 import traypass.syntax.Action;
 import traypass.tools.ToolClipboard;
 
 public class ActionClipboard extends Action {
 
-	public String execute(Object... parameter) {
+	public String execute(List<String> parameters) {
 		String result = "";
-		if (parameter != null && parameter.length == 1){
-			ToolClipboard.setClipboard((String) parameter[0]);
-		}else{
+		if (parameters != null && parameters.size() == 1) {
+			ToolClipboard.setClipboard(parameters.get(0));
+		} else {
 			result = ToolClipboard.getClipboardContent();
 		}
 		return result;
