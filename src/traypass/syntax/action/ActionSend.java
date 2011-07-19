@@ -164,6 +164,7 @@ public class ActionSend extends Action {
 			break;
 		case 'z':
 			doType(KeyEvent.VK_Z);
+			break;
 		case 'é':
 			doType(KeyEvent.VK_2);
 			break;

@@ -49,7 +49,7 @@ public enum Syntax {
 			"@executeresult",
 			-1,
 			new ActionExecuteResult(),
-			"@execute(<executable>,<Parameter>,<Parameter>)",
+			"@executeresult(<executable>,<Parameter>,<Parameter>)",
 			"Return the execution result of the specified executable with specified parameter(s)"),
 
 	SEND(

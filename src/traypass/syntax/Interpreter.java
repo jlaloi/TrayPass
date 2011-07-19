@@ -82,7 +82,7 @@ public class Interpreter {
 	public static Action getAction(String functionName, int nbParameters) {
 		Action result = null;
 		for (Syntax syntax : Syntax.values()) {
-			if (syntax.getPattern().equals(functionName)
+			if (syntax.getPattern().toLowerCase().equals(functionName.toLowerCase())
 					&& (syntax.getNbParameter() == -1 || syntax.getNbParameter() == nbParameters)) {
 				result = syntax.getAction();
 				break;
