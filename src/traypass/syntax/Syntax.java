@@ -12,6 +12,7 @@ import traypass.syntax.action.ActionClipboard;
 import traypass.syntax.action.ActionConcat;
 import traypass.syntax.action.ActionDecrypt;
 import traypass.syntax.action.ActionExecute;
+import traypass.syntax.action.ActionExecuteResult;
 import traypass.syntax.action.ActionFile;
 import traypass.syntax.action.ActionMouse;
 import traypass.syntax.action.ActionNote;
@@ -43,6 +44,13 @@ public enum Syntax {
 			new ActionExecute(),
 			"@execute(<executable>,<Parameter>,<Parameter>)",
 			"Execute the specified executable with specified parameter(s)"),
+
+	EXECUTERESULT(
+			"@executeresult",
+			-1,
+			new ActionExecuteResult(),
+			"@execute(<executable>,<Parameter>,<Parameter>)",
+			"Return the execution result of the specified executable with specified parameter(s)"),
 
 	SEND(
 			"@send",

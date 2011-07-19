@@ -36,6 +36,10 @@ public class TrayPassObject {
 
 	public static Image trayImageIcon;
 
+	public static String fileEncode = "UTF-8";
+
+	public static String consoleEncode = "CP850";
+
 	private static Robot robot;
 
 	public static Robot getRobot() {

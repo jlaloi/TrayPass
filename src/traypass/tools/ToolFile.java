@@ -19,7 +19,7 @@ public class ToolFile {
 		try {
 			FileInputStream fstream = new FileInputStream(file);
 			DataInputStream in = new DataInputStream(fstream);
-			BufferedReader br = new BufferedReader(new InputStreamReader(in));
+			BufferedReader br = new BufferedReader(new InputStreamReader(in, TrayPassObject.fileEncode));
 			String line;
 			while ((line = br.readLine()) != null) {
 				result.add(line);

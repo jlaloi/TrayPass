@@ -164,6 +164,14 @@ public class ActionSend extends Action {
 			break;
 		case 'z':
 			doType(KeyEvent.VK_Z);
+		case 'é':
+			doType(KeyEvent.VK_2);
+			break;
+		case 'è':
+			doType(KeyEvent.VK_7);
+			break;
+		case 'à':
+			doType(KeyEvent.VK_0);
 			break;
 		case 'A':
 			doType(KeyEvent.VK_SHIFT, KeyEvent.VK_A);
@@ -334,7 +342,7 @@ public class ActionSend extends Action {
 			doType(KeyEvent.VK_CLOSE_BRACKET);
 			break;
 		case '\\':
-			doType(KeyEvent.VK_BACK_SLASH);
+			doType(KeyEvent.VK_4);
 			break;
 		case '{':
 			doType(KeyEvent.VK_ALT, KeyEvent.VK_CONTROL, KeyEvent.VK_4);
@@ -392,7 +400,6 @@ public class ActionSend extends Action {
 				doType(keyCodes, offset + 1, length - 1);
 				TrayPassObject.getRobot().keyRelease(keyCodes[offset]);
 			} catch (Exception e) {
-				e.printStackTrace();
 			}
 		}
 	}
