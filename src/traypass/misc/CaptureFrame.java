@@ -15,8 +15,8 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 
 import javax.swing.ImageIcon;
+import javax.swing.JDialog;
 import javax.swing.JFileChooser;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -24,7 +24,7 @@ import traypass.TrayPassObject;
 import traypass.tools.ToolClipboard;
 import traypass.tools.ToolImage;
 
-public class CaptureFrame extends JFrame {
+public class CaptureFrame extends JDialog {
 
 	private int height = 0;
 	private BufferedImage image, original;
@@ -35,7 +35,6 @@ public class CaptureFrame extends JFrame {
 
 	public CaptureFrame(BufferedImage inputImage) {
 		super();
-		setTitle("Capture");
 		getContentPane().setBackground(Color.black);
 		setLayout(null);
 		label = new JLabel();
@@ -48,6 +47,8 @@ public class CaptureFrame extends JFrame {
 		label.setLocation(0, 0);
 		add(rectangle);
 		setImage();
+
+		setUndecorated(true);
 		setResizable(false);
 		setIconImage(TrayPassObject.trayImageIcon);
 		setVisible(true);
@@ -92,16 +93,6 @@ public class CaptureFrame extends JFrame {
 			}
 		});
 
-		this.addKeyListener(new KeyAdapter() {
-			public void keyPressed(KeyEvent e) {
-				if (e.getKeyCode() == KeyEvent.VK_SPACE) {
-					image = original;
-					c1 = null;
-					setImage();
-				}
-			}
-		});
-
 		label.addMouseMotionListener(new MouseMotionAdapter() {
 			int x, y, x1, y1;
 
@@ -116,6 +107,17 @@ public class CaptureFrame extends JFrame {
 				}
 			}
 		});
+
+		addKeyListener(new KeyAdapter() {
+			public void keyPressed(KeyEvent e) {
+				if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+					image = original;
+					c1 = null;
+					setImage();
+				}
+			}
+		});
+
 		addWindowListener(new Close());
 		requestFocus();
 	}
@@ -134,7 +136,7 @@ public class CaptureFrame extends JFrame {
 			iwidth = iheight * image.getWidth() / image.getHeight();
 		}
 
-		setSize(new Dimension(iwidth + 4, iheight + 28));
+		setSize(new Dimension(iwidth, iheight));
 		setLocationRelativeTo(getParent());
 		setTitle(image.getWidth() + "x" + image.getHeight());
 
