@@ -32,6 +32,7 @@ public class CryptoEnterFrame extends JDialog {
 		setIconImage(TrayPassObject.trayImageIcon);
 		setLocationRelativeTo(getParent());
 		setAlwaysOnTop(true);
+		setResizable(false);
 		setVisible(true);
 
 		key.addKeyListener(new KeyAdapter() {

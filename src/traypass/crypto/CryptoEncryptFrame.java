@@ -28,6 +28,7 @@ public class CryptoEncryptFrame extends JDialog {
 		setSize(800, 80);
 		setTitle("Tray Encrypter Help");
 		setIconImage(TrayPassObject.trayImageIcon);
+		setResizable(false);
 		setLocationRelativeTo(getParent());
 		setVisible(true);
 

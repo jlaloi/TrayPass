@@ -38,6 +38,7 @@ public class CryptoConfigFrame extends JDialog {
 		setTitle("Tray Encrypter Config");
 		setIconImage(TrayPassObject.trayImageIcon);
 		setLocationRelativeTo(getParent());
+		setResizable(false);
 		setVisible(true);
 
 		save.addMouseListener(new MouseAdapter() {
