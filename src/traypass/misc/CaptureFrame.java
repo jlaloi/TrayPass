@@ -114,6 +114,8 @@ public class CaptureFrame extends JDialog {
 					image = original;
 					c1 = null;
 					setImage();
+				} else if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+					exit();
 				}
 			}
 		});

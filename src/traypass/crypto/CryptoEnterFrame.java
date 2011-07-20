@@ -35,6 +35,8 @@ public class CryptoEnterFrame extends JDialog {
 		setResizable(false);
 		setVisible(true);
 
+		key.requestFocus();
+
 		key.addKeyListener(new KeyAdapter() {
 			public void keyReleased(KeyEvent e) {
 				String keyp = new String(key.getPassword());

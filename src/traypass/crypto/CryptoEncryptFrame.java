@@ -32,6 +32,8 @@ public class CryptoEncryptFrame extends JDialog {
 		setLocationRelativeTo(getParent());
 		setVisible(true);
 
+		text.requestFocus();
+
 		text.addKeyListener(new KeyAdapter() {
 			public void keyReleased(KeyEvent e) {
 				if (e.getKeyCode() == KeyEvent.VK_ENTER) {

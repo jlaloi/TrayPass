@@ -41,6 +41,8 @@ public class CryptoConfigFrame extends JDialog {
 		setResizable(false);
 		setVisible(true);
 
+		key.requestFocus();
+
 		save.addMouseListener(new MouseAdapter() {
 			public void mouseReleased(MouseEvent arg0) {
 				TrayPassObject.secretKey = CryptoEncrypter.getSecretKey(key.getText());
