@@ -1,6 +1,7 @@
 package traypass.syntax.action;
 
 import java.awt.Point;
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.List;
@@ -45,7 +46,7 @@ public class ActionWaitFor extends Action {
 			Interpreter.showError("WaitFor: " + e);
 			e.printStackTrace();
 		}
-		if(isFound){
+		if (isFound) {
 			result = "";
 		}
 		return result;
@@ -56,7 +57,7 @@ public class ActionWaitFor extends Action {
 			Point result = isOnDesktop(image);
 			isFound = result != null;
 			if (click > 0 && result != null) {
-				ToolMouse.doClick(result.x + (image.getWidth() / 2), result.y + (image.getHeight() / 2), click);
+				ToolMouse.doClick(result.x + getScreenMinX() + (image.getWidth() / 2), result.y + (image.getHeight() / 2), click);
 			}
 		}
 		return isFound;
@@ -89,12 +90,10 @@ public class ActionWaitFor extends Action {
 		if (source.getRGB(startX, startY) != pattern.getRGB(0, 0)) {
 			return false;
 		}
-		if (source.getRGB(startX + pattern.getWidth() - 1, startY + pattern.getHeight() - 1) != pattern.getRGB(
-				pattern.getWidth() - 1, pattern.getHeight() - 1)) {
+		if (source.getRGB(startX + pattern.getWidth() - 1, startY + pattern.getHeight() - 1) != pattern.getRGB(pattern.getWidth() - 1, pattern.getHeight() - 1)) {
 			return false;
 		}
-		if (source.getRGB(startX + pattern.getWidth() / 2 - 1, startY + pattern.getHeight() / 2 - 1) != pattern.getRGB(pattern
-				.getWidth() / 2 - 1, pattern.getHeight() / 2 - 1)) {
+		if (source.getRGB(startX + pattern.getWidth() / 2 - 1, startY + pattern.getHeight() / 2 - 1) != pattern.getRGB(pattern.getWidth() / 2 - 1, pattern.getHeight() / 2 - 1)) {
 			return false;
 		}
 		for (int y = 0; y < pattern.getHeight(); y++) {
@@ -105,6 +104,14 @@ public class ActionWaitFor extends Action {
 			}
 		}
 		return true;
+	}
+
+	public static int getScreenMinX() {
+		int result = 0;
+		for (Rectangle b : ToolImage.getScreenBounds()) {
+			result = Math.min(result, b.x);
+		}
+		return result;
 	}
 
 }

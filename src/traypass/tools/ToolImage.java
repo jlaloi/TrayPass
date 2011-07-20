@@ -9,10 +9,11 @@ import java.awt.HeadlessException;
 import java.awt.Image;
 import java.awt.Rectangle;
 import java.awt.RenderingHints;
-import java.awt.Toolkit;
 import java.awt.Transparency;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -21,9 +22,30 @@ import traypass.TrayPassObject;
 
 public class ToolImage {
 
+	public static List<Rectangle> getScreenBounds() {
+		List<Rectangle> result = new ArrayList<Rectangle>();
+		for (GraphicsDevice device : GraphicsEnvironment.getLocalGraphicsEnvironment().getScreenDevices()) {
+			result.add(device.getDefaultConfiguration().getBounds());
+		}
+		return result;
+	}
+
 	public static BufferedImage getScreenCapture() {
-		Rectangle captureSize = new Rectangle(Toolkit.getDefaultToolkit().getScreenSize());
-		BufferedImage desktop = TrayPassObject.getRobot().createScreenCapture(captureSize);
+		int width = 0;
+		int height = 0;
+		int x = 0;
+		int y = 0;
+		for (Rectangle b : getScreenBounds()) {
+			width += b.width;
+			height = Math.max(height, b.height);
+			x = Math.min(x, b.x);
+			y = Math.min(y, b.y);
+		}
+		return getScreenCapture(new Rectangle(x, y, width, height));
+	}
+
+	public static BufferedImage getScreenCapture(Rectangle bounds) {
+		BufferedImage desktop = TrayPassObject.getRobot().createScreenCapture(bounds);
 		return desktop;
 	}
 
