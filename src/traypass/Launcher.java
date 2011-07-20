@@ -9,36 +9,42 @@ import traypass.syntax.Interpreter;
 
 public class Launcher {
 
-	public static void main(String[] args) {
-		if (args.length > 0) {
-			TrayPassObject.passFile = args[0];
-		}
-
-		if (args.length > 1) {
-			TrayPassObject.iconFile = args[1];
-			try {
-				TrayPassObject.trayImageIcon = Toolkit.getDefaultToolkit().getImage(TrayPassObject.iconFile);
-			} catch (Exception e) {
-				Interpreter.showError("Load icon " + args[1] + ":\n" + e);
-				e.printStackTrace();
+	public static void setParameters(String[] args) {
+		for (String arg : args) {
+			if (arg.startsWith("passFile:")) {
+				TrayPassObject.passFile = arg.substring(arg.indexOf(':') + 1);
+			} else if (arg.startsWith("imageFile:")) {
+				TrayPassObject.iconFile = arg.substring(arg.indexOf(':') + 1);
+				try {
+					TrayPassObject.trayImageIcon = Toolkit.getDefaultToolkit().getImage(TrayPassObject.iconFile);
+				} catch (Exception e) {
+					Interpreter.showError("Load icon " + args[1] + ":\n" + e);
+					e.printStackTrace();
+				}
+			} else if (arg.startsWith("configFileName:")) {
+				TrayPassObject.configFileName = arg.substring(arg.indexOf(':') + 1);
+			} else if (arg.startsWith("fileEncode:")) {
+				TrayPassObject.fileEncode = arg.substring(arg.indexOf(':') + 1);
+			} else if (arg.startsWith("consoleEncode:")) {
+				TrayPassObject.consoleEncode = arg.substring(arg.indexOf(':') + 1);
+			} else if (arg.startsWith("captureWidth:")) {
+				TrayPassObject.captureWidth = Integer.valueOf(arg.substring(arg.indexOf(':') + 1));
+			} else if (arg.startsWith("passFile:")) {
+				TrayPassObject.passFile = arg.substring(arg.indexOf(':') + 1);
+			} else if (arg.startsWith("fontName:")) {
+				TrayPassObject.fontName = arg.substring(arg.indexOf(':') + 1);
+			} else if (arg.startsWith("fontSize:")) {
+				TrayPassObject.fontSize = Integer.valueOf(arg.substring(arg.indexOf(':') + 1));
+			} else {
+				System.out.println("Unknown paremeter : " + arg);
 			}
 		}
+	}
 
-		if (args.length > 2) {
-			TrayPassObject.configFileName = args[2];
-		}
+	public static void main(String[] args) {
 
-		if (args.length > 3) {
-			TrayPassObject.fileEncode = args[3];
-		}
-
-		if (args.length > 4) {
-			TrayPassObject.consoleEncode = args[4];
-		}
-
-		if (args.length > 5) {
-			TrayPassObject.captureWidth = Integer.valueOf(args[5]);
-		}
+		setParameters(args);
+		TrayPassObject.computeFont();
 
 		System.out.println("Parameters:");
 		System.out.println("passFile: " + TrayPassObject.passFile);
@@ -47,6 +53,8 @@ public class Launcher {
 		System.out.println("fileEncode: " + TrayPassObject.fileEncode);
 		System.out.println("consoleEncode: " + TrayPassObject.consoleEncode);
 		System.out.println("captureWidth: " + TrayPassObject.captureWidth);
+		System.out.println("fontName: " + TrayPassObject.fontName);
+		System.out.println("fontSize: " + TrayPassObject.fontSize);
 		System.out.println("");
 
 		if (SystemTray.isSupported()) {

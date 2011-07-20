@@ -10,6 +10,7 @@ import javax.swing.JLabel;
 import javax.swing.JPasswordField;
 
 import traypass.TrayPassObject;
+import traypass.misc.TrayLabel;
 
 public class CryptoEnterFrame extends JDialog {
 
@@ -19,7 +20,7 @@ public class CryptoEnterFrame extends JDialog {
 	public CryptoEnterFrame() {
 		key = new JPasswordField();
 		key.setHorizontalAlignment(JPasswordField.CENTER);
-		example = new JLabel();
+		example = new TrayLabel();
 		example.setHorizontalAlignment(JLabel.CENTER);
 
 		setLayout(new GridLayout(2, 1));

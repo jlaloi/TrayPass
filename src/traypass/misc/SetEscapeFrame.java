@@ -16,11 +16,9 @@ public class SetEscapeFrame extends JDialog {
 	private JTextField text, encrypted;
 
 	public SetEscapeFrame() {
-		text = new JTextField();
-		text.setHorizontalAlignment(JTextField.CENTER);
-		encrypted = new JTextField();
+		text = new TrayTextField(JTextField.CENTER);
+		encrypted = new TrayTextField(JTextField.CENTER);
 		encrypted.setEditable(false);
-		encrypted.setHorizontalAlignment(JTextField.CENTER);
 
 		setLayout(new GridLayout(2, 1));
 		add(text);

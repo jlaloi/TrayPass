@@ -8,6 +8,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 
 import traypass.TrayPassObject;
+import traypass.misc.TrayLabel;
 import traypass.syntax.action.ActionClipboard;
 import traypass.syntax.action.ActionConcat;
 import traypass.syntax.action.ActionDecrypt;
@@ -168,18 +169,14 @@ public enum Syntax {
 		frame.setBackground(Color.white);
 		frame.setLayout(new GridLayout(Syntax.values().length + 3, 1));
 		for (Syntax item : Syntax.values()) {
-			JLabel label = new JLabel(" " + item.getExample() + " ==> " + item.getDescription() + " ");
-			label.setFont(TrayPassObject.fontInfo);
+			JLabel label = new TrayLabel(" " + item.getExample() + " ==> " + item.getDescription() + " ");
 			frame.add(label);
 		}
-		JLabel separator = new JLabel(" Function separator is " + functionSeparator);
-		separator.setFont(TrayPassObject.fontInfo);
+		JLabel separator = new TrayLabel(" Function separator is " + functionSeparator);
 		frame.add(separator);
-		JLabel escape = new JLabel(" Escape character is " + escapeChar);
-		escape.setFont(TrayPassObject.fontInfo);
+		JLabel escape = new TrayLabel(" Escape character is " + escapeChar);
 		frame.add(escape);
-		JLabel example = new JLabel(" Example: {example}@execute(notepad);@wait(400);@send(@concat(@prompt(text?),{enter}ok)) ");
-		example.setFont(TrayPassObject.fontInfo);
+		JLabel example = new TrayLabel(" Example: {example}@execute(notepad);@wait(400);@send(@concat(@prompt(text?),{enter}ok)) ");
 		frame.add(example);
 		frame.setIconImage(TrayPassObject.trayImageIcon);
 		frame.pack();

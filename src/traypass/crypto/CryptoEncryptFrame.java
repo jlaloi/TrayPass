@@ -8,6 +8,7 @@ import javax.swing.JDialog;
 import javax.swing.JTextField;
 
 import traypass.TrayPassObject;
+import traypass.misc.TrayTextField;
 import traypass.syntax.Syntax;
 import traypass.tools.ToolClipboard;
 
@@ -16,11 +17,9 @@ public class CryptoEncryptFrame extends JDialog {
 	private JTextField text, encrypted;
 
 	public CryptoEncryptFrame() {
-		text = new JTextField();
-		text.setHorizontalAlignment(JTextField.CENTER);
-		encrypted = new JTextField();
+		text = new TrayTextField(JTextField.CENTER);
+		encrypted = new TrayTextField(JTextField.CENTER);
 		encrypted.setEditable(false);
-		encrypted.setHorizontalAlignment(JTextField.CENTER);
 
 		setLayout(new GridLayout(2, 1));
 		add(text);
@@ -39,8 +38,7 @@ public class CryptoEncryptFrame extends JDialog {
 					if (TrayPassObject.secretKey == null) {
 						result = "Encrypter not set!";
 					} else {
-						result = Syntax.DECRYPT.getPattern() + Syntax.functionParamStart
-								+ CryptoEncrypter.encrypt(text.getText(), TrayPassObject.secretKey) + Syntax.functionParamEnd;
+						result = Syntax.DECRYPT.getPattern() + Syntax.functionParamStart + CryptoEncrypter.encrypt(text.getText(), TrayPassObject.secretKey) + Syntax.functionParamEnd;
 						ToolClipboard.setClipboard(result);
 					}
 					encrypted.setText(result);

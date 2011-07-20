@@ -6,10 +6,12 @@ import java.awt.event.MouseEvent;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
-import javax.swing.JLabel;
 import javax.swing.JTextField;
 
 import traypass.TrayPassObject;
+import traypass.misc.TrayButton;
+import traypass.misc.TrayLabel;
+import traypass.misc.TrayTextField;
 
 public class CryptoConfigFrame extends JDialog {
 
@@ -17,19 +19,19 @@ public class CryptoConfigFrame extends JDialog {
 	private JButton save;
 
 	public CryptoConfigFrame() {
-		key = new JTextField();
-		example = new JTextField();
-		save = new JButton("Save");
+		key = new TrayTextField();
+		example = new TrayTextField();
+		save = new TrayButton("Save");
 
 		setLayout(new GridLayout(3, 2));
 
-		add(new JLabel(" Your key:"));
+		add(new TrayLabel(" Your key:"));
 		add(key);
 
-		add(new JLabel(" Your test sentence:"));
+		add(new TrayLabel(" Your test sentence:"));
 		add(example);
 
-		add(new JLabel(""));
+		add(new TrayLabel(""));
 		add(save);
 
 		pack();

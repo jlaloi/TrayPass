@@ -18,11 +18,13 @@ public class TrayPassObject {
 
 	public static String fontName = "Calibri";
 
-	public static Font font = new Font(fontName, Font.PLAIN, 11);
+	public static int fontSize = 11;
 
-	public static Font fontInfo = new Font(fontName, Font.PLAIN, 12);
+	public static Font font = null;
 
-	public static Font fontBold = new Font(fontName, Font.BOLD, 11);
+	public static Font fontInfo = null;
+
+	public static Font fontBold = null;
 
 	public static final String algorithm = "AES";
 
@@ -53,5 +55,11 @@ public class TrayPassObject {
 			}
 		}
 		return robot;
+	}
+
+	public static void computeFont() {
+		font = new Font(fontName, Font.PLAIN, fontSize);
+		fontInfo = new Font(fontName, Font.PLAIN, fontSize + 1);
+		fontBold = new Font(fontName, Font.BOLD, fontSize);
 	}
 }
