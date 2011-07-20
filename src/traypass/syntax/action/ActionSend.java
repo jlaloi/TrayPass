@@ -165,13 +165,13 @@ public class ActionSend extends Action {
 		case 'z':
 			doType(KeyEvent.VK_Z);
 			break;
-		case 'Ã©':
+		case 'é':
 			doType(KeyEvent.VK_2);
 			break;
-		case 'Ã¨':
+		case 'è':
 			doType(KeyEvent.VK_7);
 			break;
-		case 'Ã ':
+		case 'à':
 			doType(KeyEvent.VK_0);
 			break;
 		case 'A':

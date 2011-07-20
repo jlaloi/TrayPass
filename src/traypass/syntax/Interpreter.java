@@ -17,7 +17,10 @@ public class Interpreter {
 		try {
 			List<String> functions = splitFunctions(line);
 			for (String function : functions) {
-				computeFunction(function);
+				if(computeFunction(function) == null){
+					showError("Error while executing: " + function);
+					break;
+				}
 			}
 		} catch (Exception e) {
 			showError("Exception while computeFunctions:" + line + ":\n" + e);

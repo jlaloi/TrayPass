@@ -28,6 +28,7 @@ public class ActionWaitFor extends Action {
 	private final int checkWait = 500;
 
 	public String execute(List<String> parameters) {
+		String result = null;
 		this.click = Integer.valueOf(parameters.get(1));
 		isFound = false;
 		imagePath = parameters.get(0);
@@ -39,14 +40,15 @@ public class ActionWaitFor extends Action {
 					TrayPass.trayIcon.setToolTip("Looking for " + imagePath + " (" + i + "/" + maxCheck + ")");
 					ActionWait.waitMS(checkWait);
 				}
-			} else {
-				Interpreter.showError("No image: " + imagePath);
 			}
 		} catch (Exception e) {
 			Interpreter.showError("WaitFor: " + e);
 			e.printStackTrace();
 		}
-		return "";
+		if(isFound){
+			result = "";
+		}
+		return result;
 	}
 
 	public boolean isOnDesktop() {
