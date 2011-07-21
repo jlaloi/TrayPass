@@ -6,14 +6,17 @@ import java.awt.event.MouseEvent;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import traypass.TrayPassObject;
 import traypass.crypto.CryptoEncrypter;
+import traypass.syntax.Interpreter;
 
 public class ConfigFrame extends JDialog {
 
-	private JTextField cryptoKey, cryptoExample, proxyHost, proxyPort, proxyUser, proxyPass;
+	private JTextField cryptoKey, cryptoExample, proxyHost, proxyPort, proxyUser;
+	private JPasswordField proxyPass;
 	private JButton save;
 
 	public ConfigFrame() {
@@ -22,7 +25,16 @@ public class ConfigFrame extends JDialog {
 		proxyHost = new TrayTextField(TrayPassObject.trayConfig.getProxyHost());
 		proxyPort = new TrayTextField(TrayPassObject.trayConfig.getProxyPort() + "");
 		proxyUser = new TrayTextField(TrayPassObject.trayConfig.getProxyUser());
-		proxyPass = new TrayTextField();
+		proxyPass = new JPasswordField();
+		if (TrayPassObject.trayConfig.getProxyPass() != null && TrayPassObject.trayConfig.getProxyPass().trim().length() > 0) {
+			if (TrayPassObject.secretKey != null) {
+				proxyPass.setText(CryptoEncrypter.decrypt(TrayPassObject.trayConfig.getProxyPass(), TrayPassObject.secretKey));
+			} else {
+				Interpreter.showError("You need to set your encryption key to save the proxy password.");
+				return;
+			}
+		}
+
 		save = new TrayButton("Save");
 
 		setLayout(new GridLayout(7, 2));
@@ -55,12 +67,14 @@ public class ConfigFrame extends JDialog {
 		setResizable(false);
 		setVisible(true);
 
-		cryptoKey.requestFocus();
+		proxyHost.requestFocus();
 
 		save.addMouseListener(new MouseAdapter() {
 			public void mouseReleased(MouseEvent arg0) {
-				TrayPassObject.secretKey = CryptoEncrypter.getSecretKey(cryptoKey.getText());
-				TrayPassObject.trayConfig.setCryptoExample(CryptoEncrypter.encrypt(cryptoExample.getText(), TrayPassObject.secretKey));
+				if (cryptoKey.getText().trim().length() > 0) {
+					TrayPassObject.secretKey = CryptoEncrypter.getSecretKey(cryptoKey.getText());
+					TrayPassObject.trayConfig.setCryptoExample(CryptoEncrypter.encrypt(cryptoExample.getText(), TrayPassObject.secretKey));
+				}
 				TrayPassObject.trayConfig.setProxyHost(proxyHost.getText());
 				TrayPassObject.trayConfig.setProxyUser(proxyUser.getText());
 				try {
@@ -68,7 +82,16 @@ public class ConfigFrame extends JDialog {
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
-				TrayPassObject.trayConfig.setProxyPass(CryptoEncrypter.encrypt(proxyPass.getText(), TrayPassObject.secretKey));
+				if (new String(proxyPass.getPassword()).trim().length() > 0) {
+					if (TrayPassObject.secretKey != null) {
+						TrayPassObject.trayConfig.setProxyPass(CryptoEncrypter.encrypt(new String(proxyPass.getPassword()), TrayPassObject.secretKey));
+					} else {
+						Interpreter.showError("You need to set or configure your encryption key to save the proxy password.");
+						return;
+					}
+				} else {
+					TrayPassObject.trayConfig.setProxyPass("");
+				}
 				TrayPassObject.trayConfig.save();
 				dispose();
 			}
