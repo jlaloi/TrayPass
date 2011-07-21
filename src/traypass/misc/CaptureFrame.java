@@ -71,9 +71,9 @@ public class CaptureFrame extends JDialog {
 					double propW = (double) image.getWidth() / label.getIcon().getIconWidth();
 					double propH = (double) image.getHeight() / label.getIcon().getIconHeight();
 					double x1 = Math.min(e.getX(), c1.getX());
-					double y1 = Math.min(e.getY() - 1, c1.getY());
+					double y1 = Math.min(e.getY(), c1.getY());
 					double x2 = Math.max(e.getX(), c1.getX());
-					double y2 = Math.max(e.getY() - 1, c1.getY());
+					double y2 = Math.max(e.getY(), c1.getY());
 					int x = Math.min((int) (x1 * propW), image.getWidth() - 1);
 					int y = Math.min((int) (y1 * propH), image.getHeight() - 1);
 					int w = Math.min((int) ((x2 - x1) * propW), image.getWidth() - 1 - x);

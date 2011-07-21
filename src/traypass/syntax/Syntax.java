@@ -12,6 +12,7 @@ import traypass.misc.TrayLabel;
 import traypass.syntax.action.ActionClipboard;
 import traypass.syntax.action.ActionConcat;
 import traypass.syntax.action.ActionDecrypt;
+import traypass.syntax.action.ActionDownload;
 import traypass.syntax.action.ActionExecute;
 import traypass.syntax.action.ActionExecuteResult;
 import traypass.syntax.action.ActionFile;
@@ -114,7 +115,16 @@ public enum Syntax {
 			-1,
 			new ActionConcat(),
 			"@concat(<text>,<text>)",
-			"Concatenate specified text");
+			"Concatenate specified text"),
+
+	DOWNLOAD(
+			"@download",
+			2,
+			new ActionDownload(),
+			"@download(<url>,<file>)",
+			"Download specified url in the specified file")
+
+	;
 
 	public static final Pattern functionPattern = Pattern.compile("\\@([a-z])*\\((.*)\\)");
 

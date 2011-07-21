@@ -15,10 +15,10 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 
-import traypass.crypto.CryptoConfigFrame;
 import traypass.crypto.CryptoEncryptFrame;
 import traypass.crypto.CryptoEnterFrame;
 import traypass.misc.CaptureFrame;
+import traypass.misc.ConfigFrame;
 import traypass.misc.SetEscapeFrame;
 import traypass.syntax.Interpreter;
 import traypass.syntax.Syntax;
@@ -90,6 +90,9 @@ public class TrayPass {
 			if (pass.contains(Syntax.DECRYPT.getPattern())) {
 				useEncryption = true;
 			}
+			if (pass.contains(Syntax.DOWNLOAD.getPattern()) && TrayPassObject.trayConfig.getProxyPass() != null && TrayPassObject.trayConfig.getProxyPass().trim().length() > 0) {
+				useEncryption = true;
+			}
 			if (pass.equals("line")) {
 				popup.addSeparator();
 			} else if (pass.startsWith("title:")) {
@@ -112,11 +115,11 @@ public class TrayPass {
 		configMenu.setFont(TrayPassObject.font);
 
 		// Adding Crypto items
-		MenuItem cryptoItem = new MenuItem("Crypto Config");
+		MenuItem cryptoItem = new MenuItem("Config");
 		cryptoItem.setFont(TrayPassObject.font);
 		cryptoItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new CryptoConfigFrame();
+				new ConfigFrame();
 			}
 		});
 		configMenu.add(cryptoItem);
@@ -199,7 +202,7 @@ public class TrayPass {
 			if (TrayPassObject.trayConfig.getCryptoExample() != null && TrayPassObject.trayConfig.getCryptoExample().trim().length() > 0) {
 				new CryptoEnterFrame();
 			} else if (TrayPassObject.secretKey == null) {
-				new CryptoConfigFrame();
+				new ConfigFrame();
 			}
 		}
 
