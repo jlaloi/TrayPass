@@ -33,6 +33,8 @@ public class CaptureFrame extends JDialog {
 	private Rectangle rectangle = new Rectangle();
 	private int padX, padY;
 
+	public static int nbCapture = 0;
+
 	public CaptureFrame(BufferedImage inputImage) {
 		super();
 		getContentPane().setBackground(Color.black);
@@ -150,7 +152,8 @@ public class CaptureFrame extends JDialog {
 	private boolean saveFile() {
 		JFileChooser chooser = new JFileChooser();
 		chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
-		chooser.setSelectedFile(new File(TrayPassObject.trayConfig.getCaptureDir() + "Capture" + ".png"));
+		chooser.setSelectedFile(new File(TrayPassObject.trayConfig.getCaptureDir() + "Capture" + nbCapture + ".png"));
+		nbCapture++;
 		chooser.setApproveButtonText("Save");
 		chooser.setDialogTitle("Save image");
 		int returnVal = chooser.showOpenDialog(this);
