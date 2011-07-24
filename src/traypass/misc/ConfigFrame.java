@@ -6,6 +6,7 @@ import java.awt.event.MouseEvent;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JFileChooser;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
@@ -97,6 +98,9 @@ public class ConfigFrame extends JDialog {
 
 		proxyHost.requestFocus();
 
+		iconFile.addMouseListener(new FileAdapater(iconFile));
+		passFile.addMouseListener(new FileAdapater(passFile));
+
 		save.addMouseListener(new MouseAdapter() {
 			public void mouseReleased(MouseEvent arg0) {
 				if (cryptoKey.getText().trim().length() > 0) {
@@ -143,4 +147,30 @@ public class ConfigFrame extends JDialog {
 			}
 		});
 	}
+
+	public String saveFile() {
+		String result = "";
+		JFileChooser chooser = new JFileChooser();
+		chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+		chooser.setApproveButtonText("Select");
+		chooser.setDialogTitle("Select");
+		int returnVal = chooser.showOpenDialog(this);
+		if (returnVal == JFileChooser.APPROVE_OPTION) {
+			result = chooser.getSelectedFile().getAbsolutePath();
+		}
+		return result;
+	}
+
+	class FileAdapater extends MouseAdapter {
+		private JTextField label;
+
+		public FileAdapater(JTextField label) {
+			this.label = label;
+		}
+
+		public void mouseReleased(MouseEvent e) {
+			label.setText(saveFile());
+		}
+	}
+
 }

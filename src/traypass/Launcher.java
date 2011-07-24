@@ -19,10 +19,7 @@ public class Launcher {
 	public static void main(String[] args) {
 
 		setParameters(args);
-
-		System.out.println("Parameters:");
 		System.out.println("configFileName: " + TrayPassObject.configFileName);
-		System.out.println("");
 
 		if (SystemTray.isSupported()) {
 			try {
@@ -34,5 +31,6 @@ public class Launcher {
 			TrayPassObject.compute();
 			TrayPassObject.trayPass = new TrayPass();
 		}
+
 	}
 }
