@@ -15,7 +15,7 @@ import traypass.syntax.Interpreter;
 
 public class ConfigFrame extends JDialog {
 
-	private JTextField cryptoKey, cryptoExample, proxyHost, proxyPort, proxyUser;
+	private JTextField cryptoKey, cryptoExample, proxyHost, proxyPort, proxyUser, font, fontSize, captureWidth, fileEncode, consoleEncode, passFile, iconFile;
 	private JPasswordField proxyPass;
 	private JButton save;
 
@@ -34,16 +34,44 @@ public class ConfigFrame extends JDialog {
 				return;
 			}
 		}
+		font = new TrayTextField(TrayPassObject.trayConfig.getFont());
+		fontSize = new TrayTextField(TrayPassObject.trayConfig.getFontSize() + "");
+		captureWidth = new TrayTextField(TrayPassObject.trayConfig.getCaptureWidth() + "");
+		fileEncode = new TrayTextField(TrayPassObject.trayConfig.getFileEncode());
+		consoleEncode = new TrayTextField(TrayPassObject.trayConfig.getConsoleEncode());
+		passFile = new TrayTextField(TrayPassObject.trayConfig.getPassFile());
+		iconFile = new TrayTextField(TrayPassObject.trayConfig.getIconFile());
 
 		save = new TrayButton("Save");
 
-		setLayout(new GridLayout(7, 2));
+		setLayout(new GridLayout(14, 2));
+
+		add(new TrayLabel(" Pass file:"));
+		add(passFile);
+
+		add(new TrayLabel(" Icon:"));
+		add(iconFile);
 
 		add(new TrayLabel(" Your key:"));
 		add(cryptoKey);
 
 		add(new TrayLabel(" Your test sentence:"));
 		add(cryptoExample);
+
+		add(new TrayLabel(" Font Name:"));
+		add(font);
+
+		add(new TrayLabel(" Font Size:"));
+		add(fontSize);
+
+		add(new TrayLabel(" Capture window width:"));
+		add(captureWidth);
+
+		add(new TrayLabel(" File Encoding:"));
+		add(fileEncode);
+
+		add(new TrayLabel(" Console Encoding:"));
+		add(consoleEncode);
 
 		add(new TrayLabel(" Proxy Host:"));
 		add(proxyHost);
@@ -77,8 +105,23 @@ public class ConfigFrame extends JDialog {
 				}
 				TrayPassObject.trayConfig.setProxyHost(proxyHost.getText());
 				TrayPassObject.trayConfig.setProxyUser(proxyUser.getText());
+				TrayPassObject.trayConfig.setFont(font.getText());
+				TrayPassObject.trayConfig.setFileEncode(fileEncode.getText());
+				TrayPassObject.trayConfig.setConsoleEncode(consoleEncode.getText());
+				TrayPassObject.trayConfig.setPassFile(passFile.getText());
+				TrayPassObject.trayConfig.setIconFile(iconFile.getText());
 				try {
 					TrayPassObject.trayConfig.setProxyPort(Integer.valueOf(proxyPort.getText()));
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				try {
+					TrayPassObject.trayConfig.setCaptureWidth(Integer.valueOf(captureWidth.getText()));
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				try {
+					TrayPassObject.trayConfig.setFontSize(Integer.valueOf(fontSize.getText()));
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -93,6 +136,9 @@ public class ConfigFrame extends JDialog {
 					TrayPassObject.trayConfig.setProxyPass("");
 				}
 				TrayPassObject.trayConfig.save();
+				TrayPassObject.compute();
+				TrayPassObject.trayPass.loadIcon();
+				TrayPassObject.trayPass.setMenu();
 				dispose();
 			}
 		});

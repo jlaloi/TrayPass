@@ -20,6 +20,20 @@ public class TrayPassConfig implements Serializable {
 
 	private int proxyPort = 8080;
 
+	private String font = "Calibri";
+
+	private int fontSize = 11;
+
+	private String fileEncode = "UTF-8";
+
+	private String consoleEncode = "CP850";
+
+	private int captureWidth = 1024;
+
+	private String passFile = "c:\\TrayPass.txt";
+
+	private String iconFile = "Tatane.png";
+
 	public String getSaveFile() {
 		String home = System.getenv("USERPROFILE");
 		if (home == null || home.trim().length() == 0) {
@@ -68,6 +82,13 @@ public class TrayPassConfig implements Serializable {
 				this.setProxyPass(tmp.getProxyPass());
 				this.setProxyUser(tmp.getProxyUser());
 				this.setProxyPort(tmp.getProxyPort());
+				this.setCaptureWidth(tmp.getCaptureWidth());
+				this.setConsoleEncode(tmp.getConsoleEncode());
+				this.setFileEncode(tmp.getFileEncode());
+				this.setFont(tmp.getFont());
+				this.setFontSize(tmp.getFontSize());
+				this.setIconFile(tmp.getIconFile());
+				this.setPassFile(tmp.getPassFile());
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -120,6 +141,62 @@ public class TrayPassConfig implements Serializable {
 
 	public void setProxyPort(int proxyPort) {
 		this.proxyPort = proxyPort;
+	}
+
+	public String getFont() {
+		return font;
+	}
+
+	public void setFont(String font) {
+		this.font = font;
+	}
+
+	public int getFontSize() {
+		return fontSize;
+	}
+
+	public void setFontSize(int fontSize) {
+		this.fontSize = fontSize;
+	}
+
+	public String getFileEncode() {
+		return fileEncode;
+	}
+
+	public void setFileEncode(String fileEncode) {
+		this.fileEncode = fileEncode;
+	}
+
+	public String getConsoleEncode() {
+		return consoleEncode;
+	}
+
+	public void setConsoleEncode(String consoleEncode) {
+		this.consoleEncode = consoleEncode;
+	}
+
+	public int getCaptureWidth() {
+		return captureWidth;
+	}
+
+	public void setCaptureWidth(int captureWidth) {
+		this.captureWidth = captureWidth;
+	}
+
+	public String getPassFile() {
+		return passFile;
+	}
+
+	public void setPassFile(String passFile) {
+		this.passFile = passFile;
+	}
+
+	public String getIconFile() {
+		return iconFile;
+	}
+
+	public void setIconFile(String iconFile) {
+		this.iconFile = iconFile;
 	}
 
 }

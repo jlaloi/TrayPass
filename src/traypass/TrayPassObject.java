@@ -44,6 +44,8 @@ public class TrayPassObject {
 
 	public static int captureWidth = 1024;
 
+	public static TrayPass trayPass;
+
 	private static Robot robot;
 
 	public static Robot getRobot() {
@@ -57,7 +59,14 @@ public class TrayPassObject {
 		return robot;
 	}
 
-	public static void computeFont() {
+	public static void compute() {
+		passFile = trayConfig.getPassFile();
+		iconFile = trayConfig.getIconFile();
+		fileEncode = trayConfig.getFileEncode();
+		consoleEncode = trayConfig.getConsoleEncode();
+		fontName = trayConfig.getFont();
+		fontSize = trayConfig.getFontSize();
+		captureWidth = trayConfig.getCaptureWidth();
 		font = new Font(fontName, Font.PLAIN, fontSize);
 		fontInfo = new Font(fontName, Font.PLAIN, fontSize + 1);
 		fontBold = new Font(fontName, Font.BOLD, fontSize);

@@ -20,6 +20,8 @@ import traypass.syntax.action.ActionMouse;
 import traypass.syntax.action.ActionNote;
 import traypass.syntax.action.ActionPack;
 import traypass.syntax.action.ActionPrompt;
+import traypass.syntax.action.ActionReplace;
+import traypass.syntax.action.ActionSelect;
 import traypass.syntax.action.ActionSend;
 import traypass.syntax.action.ActionWait;
 import traypass.syntax.action.ActionWaitFor;
@@ -30,7 +32,7 @@ public enum Syntax {
 			"@wait",
 			1,
 			new ActionWait(),
-			"@wait(ms)",
+			"@wait(<time>)",
 			"Wait specified millisecond"),
 
 	PROMPT(
@@ -122,7 +124,21 @@ public enum Syntax {
 			2,
 			new ActionDownload(),
 			"@download(<url>,<file>)",
-			"Download specified url in the specified file")
+			"Download specified url in the specified file"),
+
+	REPLACE(
+			"@replace",
+			3,
+			new ActionReplace(),
+			"@replace(<in>,<what>,<by>)",
+			"Replace in what by"),
+
+	SELECT(
+			"@select",
+			-1,
+			new ActionSelect(),
+			"@select(<message>,<option 1>,<option2>,..)",
+			"Return the selected option")
 
 	;
 

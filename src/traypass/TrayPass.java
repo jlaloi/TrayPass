@@ -49,17 +49,25 @@ public class TrayPass {
 		}
 	}
 
+	public void loadIcon() {
+		if (!TrayPassObject.iconFile.contains(TrayPassObject.fileSeparator)) {
+			TrayPassObject.trayImageIcon = Toolkit.getDefaultToolkit().getImage(getClass().getResource(TrayPassObject.iconFile));
+		} else {
+			TrayPassObject.trayImageIcon = Toolkit.getDefaultToolkit().getImage(TrayPassObject.iconFile);
+		}
+		workingIcon = ToolImage.toBufferedImage(TrayPassObject.trayImageIcon);
+		Graphics g = workingIcon.getGraphics();
+		int rectSize = 6;
+		g.setColor(Color.GREEN);
+		g.fillOval(workingIcon.getWidth() - rectSize, workingIcon.getHeight() - rectSize, rectSize, rectSize);
+		if (trayIcon != null) {
+			trayIcon.setImage(TrayPassObject.trayImageIcon);
+		}
+	}
+
 	public TrayPass() {
 		try {
-			if (TrayPassObject.trayImageIcon == null) {
-				TrayPassObject.trayImageIcon = Toolkit.getDefaultToolkit().getImage(getClass().getResource(TrayPassObject.iconFile));
-			}
-			workingIcon = ToolImage.toBufferedImage(TrayPassObject.trayImageIcon);
-			Graphics g = workingIcon.getGraphics();
-			int rectSize = 6;
-			g.setColor(Color.GREEN);
-			g.fillOval(workingIcon.getWidth() - rectSize, workingIcon.getHeight() - rectSize, rectSize, rectSize);
-
+			loadIcon();
 			trayIcon = new TrayIcon(TrayPassObject.trayImageIcon, title);
 			SystemTray tray = SystemTray.getSystemTray();
 			setMenu();
@@ -80,8 +88,7 @@ public class TrayPass {
 		}
 	}
 
-	private void setMenu() {
-		TrayPassObject.trayConfig.load();
+	public void setMenu() {
 		PopupMenu popup = new PopupMenu();
 		boolean useEncryption = false;
 
