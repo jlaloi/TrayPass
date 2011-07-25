@@ -5,6 +5,7 @@ import java.io.BufferedWriter;
 import java.io.DataInputStream;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -133,5 +134,34 @@ public class ToolFile {
 		}
 		size /= d1024;
 		return myformat.format(size) + " To";
+	}
+
+	public static void copyFile(String currentFile, String newFile) {
+		int bufferSize = 2048;
+		BufferedReader in = null;
+		BufferedWriter out = null;
+		try {
+			in = new BufferedReader(new FileReader(currentFile), bufferSize);
+			out = new BufferedWriter(new FileWriter(newFile), bufferSize);
+			int s = in.read();
+			while (s != -1) {
+				out.write(s);
+				s = in.read();
+			}
+			out.flush();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				out.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			try {
+				in.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
 	}
 }

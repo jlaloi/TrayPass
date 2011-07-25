@@ -21,6 +21,7 @@ import traypass.syntax.action.ActionMouse;
 import traypass.syntax.action.ActionNote;
 import traypass.syntax.action.ActionPack;
 import traypass.syntax.action.ActionPrompt;
+import traypass.syntax.action.ActionReadFile;
 import traypass.syntax.action.ActionReplace;
 import traypass.syntax.action.ActionSelect;
 import traypass.syntax.action.ActionSend;
@@ -64,12 +65,19 @@ public enum Syntax {
 			"@send(<keys>)",
 			"Simulate a keyboard to send specified keys"),
 
+	READFILE(
+			"@readfile",
+			1,
+			new ActionReadFile(),
+			"@readfile(<file path>)",
+			"Read the content of the specified file"),
+
 	FILE(
 			"@file",
-			1,
+			-1,
 			new ActionFile(),
-			"@file(<file path>)",
-			"Read the content of the specified file"),
+			"@file(<copy/move/delete>,<file path>,<new file path>)",
+			"Copy, move or delete a file"),
 
 	DECRYPT(
 			"@decrypt",

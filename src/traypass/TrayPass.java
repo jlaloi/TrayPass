@@ -17,10 +17,10 @@ import java.awt.image.BufferedImage;
 
 import traypass.crypto.CryptoEncryptFrame;
 import traypass.crypto.CryptoEnterFrame;
-import traypass.misc.CaptureFrame;
-import traypass.misc.ConfigFrame;
-import traypass.misc.CreatorFrame;
-import traypass.misc.SetEscapeFrame;
+import traypass.frame.CaptureFrame;
+import traypass.frame.ConfigFrame;
+import traypass.frame.CreatorFrame;
+import traypass.frame.SetEscapeFrame;
 import traypass.syntax.Interpreter;
 import traypass.syntax.Syntax;
 import traypass.syntax.action.ActionExecute;

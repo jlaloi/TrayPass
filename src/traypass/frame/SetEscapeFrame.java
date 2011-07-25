@@ -1,4 +1,4 @@
-package traypass.misc;
+package traypass.frame;
 
 import java.awt.GridLayout;
 import java.awt.event.KeyAdapter;
@@ -8,6 +8,7 @@ import javax.swing.JDialog;
 import javax.swing.JTextField;
 
 import traypass.TrayPassObject;
+import traypass.misc.TrayTextField;
 import traypass.syntax.Syntax;
 import traypass.tools.ToolClipboard;
 

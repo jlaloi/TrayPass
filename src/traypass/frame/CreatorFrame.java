@@ -1,4 +1,4 @@
-package traypass.misc;
+package traypass.frame;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
@@ -12,8 +12,10 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextArea;
 
 import traypass.TrayPassObject;
+import traypass.misc.TrayButton;
 import traypass.syntax.Interpreter;
 import traypass.syntax.Syntax;
+import traypass.tools.ToolClipboard;
 
 public class CreatorFrame extends JFrame {
 
@@ -37,6 +39,13 @@ public class CreatorFrame extends JFrame {
 		});
 		line = new JTextArea(20, 60);
 		line.setFont(TrayPassObject.font);
+		line.addMouseListener(new MouseAdapter() {
+			public void mouseReleased(MouseEvent e) {
+				if (e.getButton() == MouseEvent.BUTTON3) {
+					ToolClipboard.setClipboard(line.getText());
+				}
+			}
+		});
 		butt = new TrayButton("Execute");
 		butt.addMouseListener(new MouseAdapter() {
 			public void mouseReleased(MouseEvent e) {

@@ -1,4 +1,4 @@
-package traypass.misc;
+package traypass.frame;
 
 import java.awt.Color;
 import java.awt.Dimension;

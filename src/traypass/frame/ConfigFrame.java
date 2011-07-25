@@ -1,4 +1,4 @@
-package traypass.misc;
+package traypass.frame;
 
 import java.awt.GridLayout;
 import java.awt.event.MouseAdapter;
@@ -13,6 +13,9 @@ import javax.swing.JTextField;
 
 import traypass.TrayPassObject;
 import traypass.crypto.CryptoEncrypter;
+import traypass.misc.TrayButton;
+import traypass.misc.TrayLabel;
+import traypass.misc.TrayTextField;
 import traypass.syntax.Interpreter;
 
 public class ConfigFrame extends JDialog {
