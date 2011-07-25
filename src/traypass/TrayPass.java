@@ -19,6 +19,7 @@ import traypass.crypto.CryptoEncryptFrame;
 import traypass.crypto.CryptoEnterFrame;
 import traypass.misc.CaptureFrame;
 import traypass.misc.ConfigFrame;
+import traypass.misc.CreatorFrame;
 import traypass.misc.SetEscapeFrame;
 import traypass.syntax.Interpreter;
 import traypass.syntax.Syntax;
@@ -180,6 +181,14 @@ public class TrayPass {
 			}
 		});
 		configMenu.add(helpItem);
+		MenuItem creator = new MenuItem("Line creator");
+		creator.setFont(TrayPassObject.font);
+		creator.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new CreatorFrame();
+			}
+		});
+		configMenu.add(creator);
 		MenuItem clearItem = new MenuItem("Escape help");
 		clearItem.setFont(TrayPassObject.font);
 		clearItem.addActionListener(new ActionListener() {

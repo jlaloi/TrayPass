@@ -198,6 +198,10 @@ public enum Syntax {
 		return description;
 	}
 
+	public String toString() {
+		return name() + " : " + getDescription();
+	}
+
 	public static void showSyntaxFrame() {
 		JFrame frame = new JFrame("Syntax Description");
 		frame.setBackground(Color.white);
