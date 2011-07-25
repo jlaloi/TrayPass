@@ -12,6 +12,7 @@ public class ActionSend extends Action {
 		String characters = parameters.get(0);
 		System.out.println("Typing: " + characters);
 		for (int i = 0; i < characters.length(); i++) {
+			ActionWait.waitMS(5);
 			if (characters.substring(i, i + 1).equals("{") && characters.indexOf("}", i) != -1) {
 				if (typeSpecial(characters.substring(i, characters.indexOf("}", i) + 1))) {
 					i = characters.indexOf("}", i);
@@ -343,7 +344,7 @@ public class ActionSend extends Action {
 			doType(KeyEvent.VK_CLOSE_BRACKET);
 			break;
 		case '\\':
-			doType(KeyEvent.VK_4);
+			doType(KeyEvent.VK_ALT, KeyEvent.VK_CONTROL, KeyEvent.VK_8);
 			break;
 		case '{':
 			doType(KeyEvent.VK_ALT, KeyEvent.VK_CONTROL, KeyEvent.VK_4);
@@ -361,7 +362,7 @@ public class ActionSend extends Action {
 			doType(KeyEvent.VK_COLON);
 			break;
 		case '\'':
-			doType(KeyEvent.VK_QUOTE);
+			doType(KeyEvent.VK_4);
 			break;
 		case '"':
 			doType(KeyEvent.VK_3);
@@ -373,7 +374,7 @@ public class ActionSend extends Action {
 			doType(KeyEvent.VK_LESS);
 			break;
 		case '.':
-			doType(KeyEvent.VK_PERIOD);
+			doType(KeyEvent.VK_SHIFT, KeyEvent.VK_SEMICOLON);
 			break;
 		case '>':
 			doType(KeyEvent.VK_GREATER);

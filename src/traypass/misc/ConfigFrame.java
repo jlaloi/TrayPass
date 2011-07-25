@@ -3,6 +3,7 @@ package traypass.misc;
 import java.awt.GridLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -148,12 +149,13 @@ public class ConfigFrame extends JDialog {
 		});
 	}
 
-	public String saveFile() {
-		String result = "";
+	public String saveFile(String defaultFile) {
+		String result = defaultFile;
 		JFileChooser chooser = new JFileChooser();
 		chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
 		chooser.setApproveButtonText("Select");
 		chooser.setDialogTitle("Select");
+		chooser.setSelectedFile(new File(defaultFile));
 		int returnVal = chooser.showOpenDialog(this);
 		if (returnVal == JFileChooser.APPROVE_OPTION) {
 			result = chooser.getSelectedFile().getAbsolutePath();
@@ -169,7 +171,7 @@ public class ConfigFrame extends JDialog {
 		}
 
 		public void mouseReleased(MouseEvent e) {
-			label.setText(saveFile());
+			label.setText(saveFile(label.getText()));
 		}
 	}
 

@@ -10,6 +10,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -108,5 +109,29 @@ public class ToolFile {
 				e.printStackTrace();
 			}
 		}
+	}
+
+	public static String formatSize(double size) {
+		double d1024 = new Double(1024);
+		NumberFormat myformat = NumberFormat.getInstance();
+		myformat.setMaximumFractionDigits(2);
+		myformat.setMinimumFractionDigits(2);
+		if (size < d1024) {
+			return myformat.format(size) + " Byte";
+		}
+		size /= d1024;
+		if (size < 1024) {
+			return myformat.format(size) + " Ko";
+		}
+		size /= d1024;
+		if (size < 1024) {
+			return myformat.format(size) + " Mo";
+		}
+		size /= d1024;
+		if (size < 1024) {
+			return myformat.format(size) + " Go";
+		}
+		size /= d1024;
+		return myformat.format(size) + " To";
 	}
 }

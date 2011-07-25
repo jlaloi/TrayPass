@@ -16,6 +16,7 @@ import traypass.syntax.action.ActionDownload;
 import traypass.syntax.action.ActionExecute;
 import traypass.syntax.action.ActionExecuteResult;
 import traypass.syntax.action.ActionFile;
+import traypass.syntax.action.ActionListDir;
 import traypass.syntax.action.ActionMouse;
 import traypass.syntax.action.ActionNote;
 import traypass.syntax.action.ActionPack;
@@ -138,7 +139,14 @@ public enum Syntax {
 			-1,
 			new ActionSelect(),
 			"@select(<message>,<option 1>,<option2>,..)",
-			"Return the selected option")
+			"Return the selected option"),
+
+	LISTDIR(
+			"@listdir",
+			1,
+			new ActionListDir(),
+			"@listdir(<path>)",
+			"List all files in the selected path")
 
 	;
 
