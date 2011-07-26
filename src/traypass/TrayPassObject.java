@@ -44,6 +44,10 @@ public class TrayPassObject {
 
 	public static int captureWidth = 1024;
 
+	public static int imageCheckNumber = 20;
+
+	public static int imageCheckInterval = 500;
+
 	public static TrayPass trayPass;
 
 	private static Robot robot;
@@ -67,6 +71,8 @@ public class TrayPassObject {
 		fontName = trayConfig.getFont();
 		fontSize = trayConfig.getFontSize();
 		captureWidth = trayConfig.getCaptureWidth();
+		imageCheckInterval = trayConfig.getImageCheckInterval();
+		imageCheckNumber = trayConfig.getImageCheckNumber();
 		font = new Font(fontName, Font.PLAIN, fontSize);
 		fontInfo = new Font(fontName, Font.PLAIN, fontSize + 1);
 		fontBold = new Font(fontName, Font.BOLD, fontSize);

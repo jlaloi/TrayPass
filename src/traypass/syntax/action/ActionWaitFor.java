@@ -9,6 +9,7 @@ import java.util.List;
 import javax.imageio.ImageIO;
 
 import traypass.TrayPass;
+import traypass.TrayPassObject;
 import traypass.syntax.Action;
 import traypass.syntax.Interpreter;
 import traypass.tools.ToolImage;
@@ -24,15 +25,13 @@ public class ActionWaitFor extends Action {
 
 	private int click = 0;
 
-	private final int maxCheck = 20;
-
-	private final int checkWait = 500;
-
 	public String execute(List<String> parameters) {
 		String result = null;
 		this.click = Integer.valueOf(parameters.get(1));
 		isFound = false;
 		imagePath = parameters.get(0);
+		int maxCheck = TrayPassObject.imageCheckNumber;
+		int checkWait = TrayPassObject.imageCheckInterval;
 		try {
 			File file = new File(imagePath);
 			if (file.exists()) {

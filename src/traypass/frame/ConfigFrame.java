@@ -20,7 +20,7 @@ import traypass.syntax.Interpreter;
 
 public class ConfigFrame extends JDialog {
 
-	private JTextField cryptoKey, cryptoExample, proxyHost, proxyPort, proxyUser, font, fontSize, captureWidth, fileEncode, consoleEncode, passFile, iconFile;
+	private JTextField cryptoKey, cryptoExample, proxyHost, proxyPort, proxyUser, font, fontSize, captureWidth, fileEncode, consoleEncode, passFile, iconFile, imageCheckNumber, imageCheckInterval;
 	private JPasswordField proxyPass;
 	private JButton save;
 
@@ -46,10 +46,12 @@ public class ConfigFrame extends JDialog {
 		consoleEncode = new TrayTextField(TrayPassObject.trayConfig.getConsoleEncode());
 		passFile = new TrayTextField(TrayPassObject.trayConfig.getPassFile());
 		iconFile = new TrayTextField(TrayPassObject.trayConfig.getIconFile());
+		imageCheckNumber = new TrayTextField(TrayPassObject.trayConfig.getImageCheckNumber() + "");
+		imageCheckInterval = new TrayTextField(TrayPassObject.trayConfig.getImageCheckInterval() + "");
 
 		save = new TrayButton("Save");
 
-		setLayout(new GridLayout(14, 2));
+		setLayout(new GridLayout(16, 2));
 
 		add(new TrayLabel(" Pass file:"));
 		add(passFile);
@@ -77,6 +79,12 @@ public class ConfigFrame extends JDialog {
 
 		add(new TrayLabel(" Console Encoding:"));
 		add(consoleEncode);
+
+		add(new TrayLabel(" Number of image checking:"));
+		add(imageCheckNumber);
+
+		add(new TrayLabel(" Interval between image checking (ms):"));
+		add(imageCheckInterval);
 
 		add(new TrayLabel(" Proxy Host:"));
 		add(proxyHost);
@@ -130,6 +138,16 @@ public class ConfigFrame extends JDialog {
 				}
 				try {
 					TrayPassObject.trayConfig.setFontSize(Integer.valueOf(fontSize.getText()));
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				try {
+					TrayPassObject.trayConfig.setImageCheckInterval(Integer.valueOf(imageCheckInterval.getText()));
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				try {
+					TrayPassObject.trayConfig.setImageCheckNumber(Integer.valueOf(imageCheckNumber.getText()));
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

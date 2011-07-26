@@ -34,6 +34,10 @@ public class TrayPassConfig implements Serializable {
 
 	private String iconFile = "Tatane.png";
 
+	private int imageCheckNumber = 20;
+
+	private int imageCheckInterval = 500;
+
 	public String getSaveFile() {
 		String home = System.getenv("USERPROFILE");
 		if (home == null || home.trim().length() == 0) {
@@ -89,6 +93,8 @@ public class TrayPassConfig implements Serializable {
 				this.setFontSize(tmp.getFontSize());
 				this.setIconFile(tmp.getIconFile());
 				this.setPassFile(tmp.getPassFile());
+				this.setImageCheckInterval(tmp.getImageCheckInterval());
+				this.setImageCheckNumber(tmp.getImageCheckNumber());
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -197,6 +203,22 @@ public class TrayPassConfig implements Serializable {
 
 	public void setIconFile(String iconFile) {
 		this.iconFile = iconFile;
+	}
+
+	public int getImageCheckInterval() {
+		return imageCheckInterval;
+	}
+
+	public void setImageCheckInterval(int imageCheckInterval) {
+		this.imageCheckInterval = imageCheckInterval;
+	}
+
+	public int getImageCheckNumber() {
+		return imageCheckNumber;
+	}
+
+	public void setImageCheckNumber(int imageCheckNumber) {
+		this.imageCheckNumber = imageCheckNumber;
 	}
 
 }
