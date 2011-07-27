@@ -2,18 +2,16 @@ package traypass;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Menu;
-import java.awt.MenuItem;
-import java.awt.PopupMenu;
 import java.awt.SystemTray;
-import java.awt.Toolkit;
 import java.awt.TrayIcon;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.InputEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
+
+import javax.swing.JMenu;
+import javax.swing.JPopupMenu;
 
 import traypass.crypto.CryptoEncryptFrame;
 import traypass.crypto.CryptoEnterFrame;
@@ -21,7 +19,6 @@ import traypass.frame.CaptureFrame;
 import traypass.frame.ConfigFrame;
 import traypass.frame.CreatorFrame;
 import traypass.frame.SetEscapeFrame;
-import traypass.syntax.Interpreter;
 import traypass.syntax.Syntax;
 import traypass.syntax.action.ActionExecute;
 import traypass.tools.ToolFile;
@@ -35,27 +32,10 @@ public class TrayPass {
 
 	public static TrayIcon trayIcon;
 
-	class PassItem extends MenuItem {
-		public PassItem(String label, final String line) {
-			super(label);
-			setFont(TrayPassObject.font);
-			addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					trayIcon.setImage(workingIcon);
-					Interpreter.computeFunctions(line);
-					trayIcon.setImage(TrayPassObject.trayImageIcon);
-					trayIcon.setToolTip(title);
-				}
-			});
-		}
-	}
+	private JPopupMenu popup;
 
 	public void loadIcon() {
-		if (!TrayPassObject.iconFile.contains(TrayPassObject.fileSeparator)) {
-			TrayPassObject.trayImageIcon = Toolkit.getDefaultToolkit().getImage(getClass().getResource(TrayPassObject.iconFile));
-		} else {
-			TrayPassObject.trayImageIcon = Toolkit.getDefaultToolkit().getImage(TrayPassObject.iconFile);
-		}
+		TrayPassObject.trayImageIcon = ToolImage.getImage(TrayPassObject.iconFile, getClass());
 		workingIcon = ToolImage.toBufferedImage(TrayPassObject.trayImageIcon);
 		Graphics g = workingIcon.getGraphics();
 		int rectSize = 6;
@@ -69,19 +49,20 @@ public class TrayPass {
 	public TrayPass() {
 		try {
 			loadIcon();
-			trayIcon = new TrayIcon(TrayPassObject.trayImageIcon, title);
+			trayIcon = new TrayIcon(TrayPassObject.trayImageIcon, title, null);
+			trayIcon.setImageAutoSize(true);
 			SystemTray tray = SystemTray.getSystemTray();
 			setMenu();
 			tray.add(trayIcon);
-
 			trayIcon.addMouseListener(new MouseAdapter() {
 				public void mouseReleased(MouseEvent e) {
-					if (e.getButton() == MouseEvent.BUTTON1) {
-						TrayPassObject.getRobot().mouseRelease(InputEvent.BUTTON3_MASK);
-					} else if (e.getButton() == MouseEvent.BUTTON2) {
+					if (e.getButton() == MouseEvent.BUTTON2) {
 						new CaptureFrame(ToolImage.getScreenCapture());
+					} else {
+						popup.setLocation(e.getX(), e.getY());
+						popup.setInvoker(popup);
+						popup.setVisible(true);
 					}
-
 				}
 			});
 		} catch (Exception e) {
@@ -90,7 +71,7 @@ public class TrayPass {
 	}
 
 	public void setMenu() {
-		PopupMenu popup = new PopupMenu();
+		popup = new JPopupMenu();
 		boolean useEncryption = false;
 
 		// Adding pass
@@ -104,43 +85,47 @@ public class TrayPass {
 			if (pass.equals("line")) {
 				popup.addSeparator();
 			} else if (pass.startsWith("title:")) {
-				MenuItem item = new MenuItem(pass.substring(pass.indexOf(":") + 1));
+				PassMenuItem item = new PassMenuItem(pass.substring(pass.indexOf(":") + 1), null, "");
 				item.setFont(TrayPassObject.fontBold);
 				popup.add(item);
 			} else {
 				String label = pass;
+				String icon = null;
 				if (pass.startsWith("{")) {
 					label = pass.substring(1, pass.indexOf("}"));
 					pass = pass.substring(pass.indexOf("}") + 1);
+					if (label.contains(Syntax.functionParamSeparator + "")) {
+						String[] split = label.split(Syntax.functionParamSeparator + "");
+						label = split[0];
+						icon = split[1];
+					}
 				}
-				MenuItem item = new PassItem(label, pass);
+				PassMenuItem item = new PassMenuItem(label, pass, icon);
 				popup.add(item);
 			}
 		}
 
 		popup.addSeparator();
-		Menu configMenu = new Menu("Configuration");
+		JMenu configMenu = new JMenu("Configuration");
 		configMenu.setFont(TrayPassObject.font);
+		configMenu.setIcon(PassMenuItem.getImageIcon("config.png", this.getClass()));
 
 		// Adding Crypto items
-		MenuItem cryptoItem = new MenuItem("Config");
-		cryptoItem.setFont(TrayPassObject.font);
+		PassMenuItem cryptoItem = new PassMenuItem("Config", null, "config.png");
 		cryptoItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				new ConfigFrame();
 			}
 		});
 		configMenu.add(cryptoItem);
-		MenuItem cryptoItem3 = new MenuItem("Crypto Generate");
-		cryptoItem3.setFont(TrayPassObject.font);
+		PassMenuItem cryptoItem3 = new PassMenuItem("Crypto Generate", null, "config.png");
 		cryptoItem3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				new CryptoEncryptFrame();
 			}
 		});
 		configMenu.add(cryptoItem3);
-		MenuItem cryptoItem2 = new MenuItem("Crypto Set");
-		cryptoItem2.setFont(TrayPassObject.font);
+		PassMenuItem cryptoItem2 = new PassMenuItem("Crypto Set", null, "config.png");
 		cryptoItem2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				new CryptoEnterFrame();
@@ -149,48 +134,35 @@ public class TrayPass {
 		configMenu.add(cryptoItem2);
 
 		// Misc
-		MenuItem editItem = new MenuItem("Edit Menu");
-		editItem.setFont(TrayPassObject.font);
+		PassMenuItem editItem = new PassMenuItem("Edit Menu", null, "config.png");
 		editItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ActionExecute.execute(new String[] { "notepad", TrayPassObject.passFile });
 			}
 		});
 		configMenu.add(editItem);
-		MenuItem reloadItem = new MenuItem("Reload Menu");
-		reloadItem.setFont(TrayPassObject.font);
+		PassMenuItem reloadItem = new PassMenuItem("Reload Menu", null, "config.png");
 		reloadItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				setMenu();
 			}
 		});
 		configMenu.add(reloadItem);
-		MenuItem captureItem = new MenuItem("Screen Capture");
-		captureItem.setFont(TrayPassObject.font);
-		captureItem.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				new CaptureFrame(ToolImage.getScreenCapture());
-			}
-		});
-		configMenu.add(captureItem);
-		MenuItem helpItem = new MenuItem("Syntax help");
-		helpItem.setFont(TrayPassObject.font);
+		PassMenuItem helpItem = new PassMenuItem("Syntax help", null, "help.png");
 		helpItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Syntax.showSyntaxFrame();
 			}
 		});
 		configMenu.add(helpItem);
-		MenuItem creator = new MenuItem("Line creator");
-		creator.setFont(TrayPassObject.font);
+		PassMenuItem creator = new PassMenuItem("Line creator", null, "help.png");
 		creator.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				new CreatorFrame();
 			}
 		});
 		configMenu.add(creator);
-		MenuItem clearItem = new MenuItem("Escape help");
-		clearItem.setFont(TrayPassObject.font);
+		PassMenuItem clearItem = new PassMenuItem("Escape help", null, "help.png");
 		clearItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				new SetEscapeFrame();
@@ -201,17 +173,13 @@ public class TrayPass {
 		popup.add(configMenu);
 
 		// Adding exit item
-		MenuItem exitItem = new MenuItem("Exit");
-		exitItem.setFont(TrayPassObject.font);
+		PassMenuItem exitItem = new PassMenuItem("Exit", null, "close.png");
 		exitItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				exit();
 			}
 		});
 		popup.add(exitItem);
-
-		// Display
-		trayIcon.setPopupMenu(popup);
 
 		// Crypto
 		if (useEncryption) {
@@ -222,6 +190,15 @@ public class TrayPass {
 			}
 		}
 
+	}
+
+	public void setWorking(boolean bool) {
+		if (bool) {
+			trayIcon.setImage(workingIcon);
+		} else {
+			trayIcon.setImage(TrayPassObject.trayImageIcon);
+			trayIcon.setToolTip(title);
+		}
 	}
 
 	private void exit() {

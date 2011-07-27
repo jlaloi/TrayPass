@@ -9,6 +9,7 @@ import java.awt.HeadlessException;
 import java.awt.Image;
 import java.awt.Rectangle;
 import java.awt.RenderingHints;
+import java.awt.Toolkit;
 import java.awt.Transparency;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -16,7 +17,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.imageio.ImageIO;
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import javax.swing.filechooser.FileSystemView;
 
 import traypass.TrayPassObject;
 
@@ -66,6 +69,10 @@ public class ToolImage {
 		return scaledImage;
 	}
 
+	public static BufferedImage resizeImage(Image image, int width, int height) {
+		return resizeImage(toBufferedImage(image), width, height);
+	}
+
 	public static BufferedImage toBufferedImage(Image image) {
 		if (image instanceof BufferedImage) {
 			return (BufferedImage) image;
@@ -88,6 +95,58 @@ public class ToolImage {
 		g.drawImage(image, 0, 0, null);
 		g.dispose();
 		return bimage;
+	}
+
+	public static Image iconToImage(Icon icon) {
+		if (icon instanceof ImageIcon) {
+			return ((ImageIcon) icon).getImage();
+		}
+		BufferedImage image = new BufferedImage(icon.getIconWidth(), icon.getIconHeight(), BufferedImage.TYPE_INT_ARGB);
+		icon.paintIcon(null, image.getGraphics(), 0, 0);
+		return image;
+	}
+
+	@SuppressWarnings("unchecked")
+	public static Image getImage(String path, Class c) {
+		Image result = null;
+		try {
+			if (isImageFile(path)) {
+				if (!path.contains(TrayPassObject.fileSeparator)) {
+					result = Toolkit.getDefaultToolkit().getImage(c.getResource(path));
+				} else {
+					result = Toolkit.getDefaultToolkit().getImage(path);
+				}
+			} else {
+				result = iconToImage(getIconFile(path));
+			}
+		} catch (Exception e) {
+			System.out.println("getImage exception " + path);
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+	public static boolean isImageFile(String path) {
+		boolean result = false;
+		if (path.toLowerCase().endsWith(".png")) {
+			result = true;
+		} else if (path.toLowerCase().endsWith(".jpg")) {
+			result = true;
+		} else if (path.toLowerCase().endsWith(".jpeg")) {
+			result = true;
+		} else if (path.toLowerCase().endsWith(".bmp")) {
+			result = true;
+		}
+		return result;
+	}
+
+	public static Icon getIconFile(String path) {
+		Icon result = null;
+		File file = new File(path);
+		if (file.exists() && file.isFile()) {
+			result = FileSystemView.getFileSystemView().getSystemIcon(file);
+		}
+		return result;
 	}
 
 }

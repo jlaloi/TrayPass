@@ -38,6 +38,8 @@ public class TrayPassConfig implements Serializable {
 
 	private int imageCheckInterval = 500;
 
+	private int iconSize = 16;
+
 	public String getSaveFile() {
 		String home = System.getenv("USERPROFILE");
 		if (home == null || home.trim().length() == 0) {
@@ -95,6 +97,7 @@ public class TrayPassConfig implements Serializable {
 				this.setPassFile(tmp.getPassFile());
 				this.setImageCheckInterval(tmp.getImageCheckInterval());
 				this.setImageCheckNumber(tmp.getImageCheckNumber());
+				this.setIconSize(tmp.getIconSize());
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -219,6 +222,14 @@ public class TrayPassConfig implements Serializable {
 
 	public void setImageCheckNumber(int imageCheckNumber) {
 		this.imageCheckNumber = imageCheckNumber;
+	}
+
+	public int getIconSize() {
+		return iconSize;
+	}
+
+	public void setIconSize(int iconSize) {
+		this.iconSize = iconSize;
 	}
 
 }

@@ -48,6 +48,8 @@ public class TrayPassObject {
 
 	public static int imageCheckInterval = 500;
 
+	public static int iconSize = 16;
+
 	public static TrayPass trayPass;
 
 	private static Robot robot;
@@ -73,8 +75,10 @@ public class TrayPassObject {
 		captureWidth = trayConfig.getCaptureWidth();
 		imageCheckInterval = trayConfig.getImageCheckInterval();
 		imageCheckNumber = trayConfig.getImageCheckNumber();
+		iconSize = trayConfig.getIconSize();
 		font = new Font(fontName, Font.PLAIN, fontSize);
 		fontInfo = new Font(fontName, Font.PLAIN, fontSize + 1);
 		fontBold = new Font(fontName, Font.BOLD, fontSize);
+		PassMenuItem.defaultIcon = null;
 	}
 }

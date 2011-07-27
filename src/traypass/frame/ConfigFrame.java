@@ -20,7 +20,7 @@ import traypass.syntax.Interpreter;
 
 public class ConfigFrame extends JDialog {
 
-	private JTextField cryptoKey, cryptoExample, proxyHost, proxyPort, proxyUser, font, fontSize, captureWidth, fileEncode, consoleEncode, passFile, iconFile, imageCheckNumber, imageCheckInterval;
+	private JTextField cryptoKey, cryptoExample, proxyHost, proxyPort, proxyUser, font, fontSize, captureWidth, fileEncode, consoleEncode, passFile, iconFile, imageCheckNumber, imageCheckInterval, iconSize;
 	private JPasswordField proxyPass;
 	private JButton save;
 
@@ -48,10 +48,11 @@ public class ConfigFrame extends JDialog {
 		iconFile = new TrayTextField(TrayPassObject.trayConfig.getIconFile());
 		imageCheckNumber = new TrayTextField(TrayPassObject.trayConfig.getImageCheckNumber() + "");
 		imageCheckInterval = new TrayTextField(TrayPassObject.trayConfig.getImageCheckInterval() + "");
+		iconSize = new TrayTextField(TrayPassObject.trayConfig.getIconSize() + "");
 
 		save = new TrayButton("Save");
 
-		setLayout(new GridLayout(16, 2));
+		setLayout(new GridLayout(17, 2));
 
 		add(new TrayLabel(" Pass file:"));
 		add(passFile);
@@ -70,6 +71,9 @@ public class ConfigFrame extends JDialog {
 
 		add(new TrayLabel(" Font Size:"));
 		add(fontSize);
+
+		add(new TrayLabel(" Icon Size:"));
+		add(iconSize);
 
 		add(new TrayLabel(" Capture window width:"));
 		add(captureWidth);
@@ -143,6 +147,11 @@ public class ConfigFrame extends JDialog {
 				}
 				try {
 					TrayPassObject.trayConfig.setImageCheckInterval(Integer.valueOf(imageCheckInterval.getText()));
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				try {
+					TrayPassObject.trayConfig.setIconSize(Integer.valueOf(iconSize.getText()));
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
