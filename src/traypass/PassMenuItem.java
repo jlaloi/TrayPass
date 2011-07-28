@@ -1,7 +1,6 @@
 package traypass;
 
 import java.awt.Image;
-import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
@@ -43,7 +42,6 @@ public class PassMenuItem extends JMenuItem {
 
 	private void init(final String line) {
 		setFont(TrayPassObject.font);
-		setMargin(new Insets(0, 0, 0, 0));
 		if (line != null && line.trim().length() > 0) {
 			addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
