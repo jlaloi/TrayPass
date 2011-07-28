@@ -201,6 +201,10 @@ public class TrayPass {
 		}
 	}
 
+	public void showError(String text) {
+		trayIcon.displayMessage(title, text, TrayIcon.MessageType.ERROR);
+	}
+
 	private void exit() {
 		TrayPassObject.trayConfig.save();
 		System.exit(0);

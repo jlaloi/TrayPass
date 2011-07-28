@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 
-import javax.swing.JOptionPane;
+import traypass.TrayPassObject;
 
 public class Interpreter {
 
@@ -121,7 +121,8 @@ public class Interpreter {
 	}
 
 	public static void showError(String text) {
-		JOptionPane.showMessageDialog(null, text, "TrayPass error!", JOptionPane.ERROR_MESSAGE);
+		//JOptionPane.showMessageDialog(null, text, "TrayPass error!", JOptionPane.ERROR_MESSAGE);
+		TrayPassObject.trayPass.showError(text);
 	}
 
 }

@@ -8,7 +8,6 @@ import java.util.List;
 
 import javax.imageio.ImageIO;
 
-import traypass.TrayPass;
 import traypass.TrayPassObject;
 import traypass.syntax.Action;
 import traypass.syntax.Interpreter;
@@ -36,8 +35,7 @@ public class ActionWaitFor extends Action {
 			File file = new File(imagePath);
 			if (file.exists()) {
 				image = ImageIO.read(file);
-				for (int i = 0; i < maxCheck && !isOnDesktop(); i++) {
-					TrayPass.trayIcon.setToolTip("Looking for " + imagePath + " (" + i + "/" + maxCheck + ")");
+				for (int i = 0; image != null && i < maxCheck && !isOnDesktop(); i++) {
 					ActionWait.waitMS(checkWait);
 				}
 			}
