@@ -136,6 +136,8 @@ public class ToolImage {
 			result = true;
 		} else if (path.toLowerCase().endsWith(".bmp")) {
 			result = true;
+		} else if (path.toLowerCase().endsWith(".ico")) {
+			result = true;
 		}
 		return result;
 	}
