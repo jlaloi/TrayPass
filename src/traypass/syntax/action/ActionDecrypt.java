@@ -8,7 +8,7 @@ import traypass.syntax.Action;
 
 public class ActionDecrypt extends Action {
 
-	public String execute(List<String> parameters) {
+	public String doAction(List<String> parameters) {
 		return CryptoEncrypter.decrypt(parameters.get(0), TrayPassObject.secretKey);
 	}
 

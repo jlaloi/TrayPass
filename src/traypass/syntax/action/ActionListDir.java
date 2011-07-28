@@ -10,7 +10,7 @@ import traypass.tools.ToolFile;
 
 public class ActionListDir extends Action {
 
-	public String execute(List<String> parameters) {
+	public String doAction(List<String> parameters) {
 		String result = "";
 		for (String file : list(new File(parameters.get(0)))) {
 			result += file + TrayPassObject.lineSeparator;

@@ -17,7 +17,7 @@ public class Interpreter {
 		try {
 			List<String> functions = splitFunctions(line);
 			for (String function : functions) {
-				if(computeFunction(function) == null){
+				if (computeFunction(function) == null) {
 					showError("Error while executing: " + function);
 					break;
 				}
@@ -67,12 +67,8 @@ public class Interpreter {
 
 			Action action = getAction(methodName, params.size());
 			if (action != null) {
-				List<String> computedParams = new ArrayList<String>();
-				for (String param : params) {
-					computedParams.add(clearEscapeChar(computeFunction(param)));
-				}
 				System.out.println("Executing " + methodName);
-				result = action.execute(computedParams);
+				result = action.execute(params);
 			}
 
 		} catch (Exception e) {
@@ -85,8 +81,7 @@ public class Interpreter {
 	public static Action getAction(String functionName, int nbParameters) {
 		Action result = null;
 		for (Syntax syntax : Syntax.values()) {
-			if (syntax.getPattern().toLowerCase().equals(functionName.toLowerCase())
-					&& (syntax.getNbParameter() == -1 || syntax.getNbParameter() == nbParameters)) {
+			if (syntax.getPattern().toLowerCase().equals(functionName.toLowerCase()) && (syntax.getNbParameter() == -1 || syntax.getNbParameter() == nbParameters)) {
 				result = syntax.getAction();
 				break;
 			}

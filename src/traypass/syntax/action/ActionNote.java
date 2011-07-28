@@ -9,7 +9,7 @@ import traypass.tools.ToolFile;
 
 public class ActionNote extends Action {
 
-	public String execute(List<String> parameters) {
+	public String doAction(List<String> parameters) {
 		String file = parameters.get(0);
 		String text = parameters.get(1);
 		String srt = "----------- " + Calendar.getInstance().getTime() + " ----------- " + TrayPassObject.lineSeparator;

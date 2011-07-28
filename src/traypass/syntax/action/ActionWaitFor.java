@@ -25,7 +25,7 @@ public class ActionWaitFor extends Action {
 
 	private int click = 0;
 
-	public String execute(List<String> parameters) {
+	public String doAction(List<String> parameters) {
 		String result = null;
 		this.click = Integer.valueOf(parameters.get(1));
 		isFound = false;

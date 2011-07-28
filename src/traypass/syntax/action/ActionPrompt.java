@@ -8,7 +8,7 @@ import traypass.syntax.Action;
 
 public class ActionPrompt extends Action {
 
-	public String execute(List<String> parameters) {
+	public String doAction(List<String> parameters) {
 		return (String) JOptionPane.showInputDialog(null, null, parameters.get(0), JOptionPane.PLAIN_MESSAGE, null, null, null);
 	}
 

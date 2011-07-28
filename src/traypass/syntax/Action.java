@@ -1,10 +1,25 @@
 package traypass.syntax;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Action {
 
-	public abstract String execute(List<String> parameters);
+	public String execute(List<String> parameters) {
+		String result = "";
+		List<String> computedParams = new ArrayList<String>();
+		for (String param : parameters) {
+			computedParams.add(executeParam(param));
+		}
+		result = doAction(computedParams);
+		return result;
+	}
+
+	protected String executeParam(String param) {
+		return Interpreter.clearEscapeChar(Interpreter.computeFunction(param));
+	}
+
+	public abstract String doAction(List<String> parameters);
 
 	public static String[] listToArray(List<String> parameters) {
 		String[] cmdArray = new String[parameters.size()];

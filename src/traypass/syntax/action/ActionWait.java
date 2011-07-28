@@ -6,7 +6,7 @@ import traypass.syntax.Action;
 
 public class ActionWait extends Action {
 
-	public String execute(List<String> parameters) {
+	public String doAction(List<String> parameters) {
 		try {
 			long ms = Long.valueOf(parameters.get(0));
 			System.out.println("Wait for " + ms + " ms");

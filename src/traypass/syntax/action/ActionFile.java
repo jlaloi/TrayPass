@@ -14,7 +14,7 @@ public class ActionFile extends Action {
 
 	public static final String move = "move";
 
-	public String execute(List<String> parameters) {
+	public String doAction(List<String> parameters) {
 		String action = parameters.get(0);
 		File file = new File(parameters.get(1));
 		if (file.exists() && file.isFile()) {

@@ -9,7 +9,7 @@ import traypass.syntax.Action;
 
 public class ActionExecuteResult extends Action {
 
-	public String execute(List<String> parameters) {
+	public String doAction(List<String> parameters) {
 		String result = execute(listToArray(parameters));
 		return result;
 	}

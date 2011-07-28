@@ -8,7 +8,7 @@ import traypass.syntax.Action;
 
 public class ActionSend extends Action {
 
-	public String execute(List<String> parameters) {
+	public String doAction(List<String> parameters) {
 		String characters = parameters.get(0);
 		System.out.println("Typing: " + characters);
 		for (int i = 0; i < characters.length(); i++) {

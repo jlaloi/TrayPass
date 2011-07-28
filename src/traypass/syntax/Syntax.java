@@ -172,6 +172,10 @@ public enum Syntax {
 
 	public static final char escapeChar = '\\';
 
+	public static final String boolTrue = "true";
+
+	public static final String boolFalse = "false";
+
 	private String pattern;
 	private int nbParameter;
 	private Action action;
@@ -208,6 +212,14 @@ public enum Syntax {
 
 	public String toString() {
 		return name() + " : " + getDescription();
+	}
+
+	public static boolean isTrue(String bool) {
+		boolean result = false;
+		if (bool != null && bool.toLowerCase().equals(boolTrue)) {
+			result = true;
+		}
+		return result;
 	}
 
 	public static void showSyntaxFrame() {

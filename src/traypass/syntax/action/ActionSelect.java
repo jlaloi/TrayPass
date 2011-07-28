@@ -9,7 +9,7 @@ import traypass.syntax.Action;
 
 public class ActionSelect extends Action {
 
-	public String execute(List<String> parameters) {
+	public String doAction(List<String> parameters) {
 		String title = parameters.get(0);
 		parameters.remove(0);
 		Object[] possibleValues = parameters.toArray();

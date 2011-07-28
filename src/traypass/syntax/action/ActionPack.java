@@ -21,7 +21,7 @@ public class ActionPack extends Action {
 
 	public static String lineFile = "line.txt";
 
-	public String execute(List<String> parameters) {
+	public String doAction(List<String> parameters) {
 		String pack = parameters.get(0);
 		HashMap<String, String> files = preparePack(pack);
 		String result = "";
