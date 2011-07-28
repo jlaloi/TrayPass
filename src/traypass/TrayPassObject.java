@@ -80,5 +80,6 @@ public class TrayPassObject {
 		fontInfo = new Font(fontName, Font.PLAIN, fontSize + 1);
 		fontBold = new Font(fontName, Font.BOLD, fontSize);
 		PassMenuItem.defaultIcon = null;
+		PassMenuItem.library.clear();
 	}
 }
