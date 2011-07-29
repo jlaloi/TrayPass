@@ -106,7 +106,9 @@ public class ActionWaitFor extends Action {
 	public static int getScreenMinX() {
 		int result = 0;
 		for (Rectangle b : ToolImage.getScreenBounds()) {
-			result = Math.min(result, b.x);
+			if (b.x < 0) {
+				result += b.x;
+			}
 		}
 		return result;
 	}
