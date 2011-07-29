@@ -59,9 +59,10 @@ public class TrayPass {
 					if (e.getButton() == MouseEvent.BUTTON2) {
 						new CaptureFrame(ToolImage.getScreenCapture());
 					} else {
-						popup.setLocation(e.getX(), e.getY());
 						popup.setInvoker(popup);
 						popup.setVisible(true);
+						popup.setLocation(e.getX(), e.getY() - popup.getHeight());
+
 					}
 				}
 			});
@@ -170,8 +171,6 @@ public class TrayPass {
 		});
 		configMenu.add(clearItem);
 
-		popup.add(configMenu);
-
 		// Adding exit item
 		PassMenuItem exitItem = new PassMenuItem("Exit", null, "close.png");
 		exitItem.addActionListener(new ActionListener() {
@@ -179,7 +178,17 @@ public class TrayPass {
 				exit();
 			}
 		});
-		popup.add(exitItem);
+		configMenu.add(exitItem);
+		configMenu.setOpaque(true);
+		popup.add(configMenu);
+
+		popup.addMouseListener(new MouseAdapter() {
+			public void mouseExited(MouseEvent e) {
+				if (e.getX() < popup.getLocation().x || e.getX() > popup.getSize().getWidth() || e.getY() < popup.getLocation().y || e.getY() > popup.getSize().getHeight()) {
+					popup.setVisible(false);
+				}
+			}
+		});
 
 		// Crypto
 		if (useEncryption) {
