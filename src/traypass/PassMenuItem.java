@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.util.HashMap;
 
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JMenuItem;
 
@@ -34,7 +35,10 @@ public class PassMenuItem extends JMenuItem {
 		super(label);
 		init(line);
 		if (iconPath != null && iconPath.trim().length() > 0) {
-			setIcon(getImageIcon(iconPath, this.getClass()));
+			Icon icon = getImageIcon(iconPath, this.getClass());
+			if (icon != null) {
+				setIcon(icon);
+			}
 		} else if (iconPath == null) {
 			setIcon(defaultIcon);
 		}
@@ -69,7 +73,9 @@ public class PassMenuItem extends JMenuItem {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			library.put(path, result);
+			if (result != null) {
+				library.put(path, result);
+			}
 		}
 		return result;
 	}
