@@ -25,6 +25,7 @@ import traypass.syntax.action.ActionReadFile;
 import traypass.syntax.action.ActionReplace;
 import traypass.syntax.action.ActionSelect;
 import traypass.syntax.action.ActionSend;
+import traypass.syntax.action.ActionVar;
 import traypass.syntax.action.ActionWait;
 import traypass.syntax.action.ActionWaitFor;
 
@@ -154,7 +155,14 @@ public enum Syntax {
 			1,
 			new ActionListDir(),
 			"@listdir(<path>)",
-			"List all files in the selected path")
+			"List all files in the selected path"),
+
+	VAR(
+			"@var",
+			-1,
+			new ActionVar(),
+			"@var(<var name>,<var value>)",
+			"Set a var or get a var")
 
 	;
 

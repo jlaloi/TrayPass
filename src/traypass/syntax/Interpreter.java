@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 
 import traypass.TrayPassObject;
+import traypass.syntax.action.ActionVar;
 
 public class Interpreter {
 
@@ -15,6 +16,7 @@ public class Interpreter {
 
 	public static void computeFunctions(String line) {
 		try {
+			ActionVar.clear();
 			List<String> functions = splitFunctions(line);
 			for (String function : functions) {
 				if (computeFunction(function) == null) {
@@ -121,7 +123,8 @@ public class Interpreter {
 	}
 
 	public static void showError(String text) {
-		//JOptionPane.showMessageDialog(null, text, "TrayPass error!", JOptionPane.ERROR_MESSAGE);
+		// JOptionPane.showMessageDialog(null, text, "TrayPass error!",
+		// JOptionPane.ERROR_MESSAGE);
 		TrayPassObject.trayPass.showError(text);
 	}
 
