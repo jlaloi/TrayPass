@@ -17,6 +17,7 @@ import traypass.syntax.action.ActionEquals;
 import traypass.syntax.action.ActionExecute;
 import traypass.syntax.action.ActionExecuteResult;
 import traypass.syntax.action.ActionFile;
+import traypass.syntax.action.ActionIf;
 import traypass.syntax.action.ActionInfo;
 import traypass.syntax.action.ActionListDir;
 import traypass.syntax.action.ActionMouse;
@@ -30,6 +31,7 @@ import traypass.syntax.action.ActionSend;
 import traypass.syntax.action.ActionVar;
 import traypass.syntax.action.ActionWait;
 import traypass.syntax.action.ActionWaitFor;
+import traypass.syntax.action.ActionWhile;
 
 public enum Syntax {
 
@@ -176,9 +178,16 @@ public enum Syntax {
 	IF(
 			"@if",
 			-1,
-			new ActionEquals(),
+			new ActionIf(),
 			"@if(<bool>,<then>,<else>)",
 			"If bool then else"),
+
+	WHILE(
+			"@while",
+			2,
+			new ActionWhile(),
+			"@while(<bool>,<action>)",
+			"while bool action"),
 
 	INFO(
 			"@info",
