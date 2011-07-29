@@ -34,6 +34,10 @@ public class TrayPass {
 
 	private JPopupMenu popup;
 
+	public static String helpIcon = "help.png";
+
+	public static String configIcon = "config.png";
+
 	public void loadIcon() {
 		TrayPassObject.trayImageIcon = ToolImage.getImage(TrayPassObject.iconFile, getClass());
 		workingIcon = ToolImage.toBufferedImage(TrayPassObject.trayImageIcon);
@@ -112,21 +116,21 @@ public class TrayPass {
 		configMenu.setIcon(PassMenuItem.getImageIcon("config.png", this.getClass()));
 
 		// Adding Crypto items
-		PassMenuItem cryptoItem = new PassMenuItem("Config", null, "config.png");
+		PassMenuItem cryptoItem = new PassMenuItem("Config", null, configIcon);
 		cryptoItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				new ConfigFrame();
 			}
 		});
 		configMenu.add(cryptoItem);
-		PassMenuItem cryptoItem3 = new PassMenuItem("Crypto Generate", null, "config.png");
+		PassMenuItem cryptoItem3 = new PassMenuItem("Crypto Generate", null, configIcon);
 		cryptoItem3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				new CryptoEncryptFrame();
 			}
 		});
 		configMenu.add(cryptoItem3);
-		PassMenuItem cryptoItem2 = new PassMenuItem("Crypto Set", null, "config.png");
+		PassMenuItem cryptoItem2 = new PassMenuItem("Crypto Set", null, configIcon);
 		cryptoItem2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				new CryptoEnterFrame();
@@ -135,35 +139,35 @@ public class TrayPass {
 		configMenu.add(cryptoItem2);
 
 		// Misc
-		PassMenuItem editItem = new PassMenuItem("Edit Menu", null, "config.png");
+		PassMenuItem editItem = new PassMenuItem("Edit Menu", null, configIcon);
 		editItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ActionExecute.execute(new String[] { "notepad", TrayPassObject.passFile });
 			}
 		});
 		configMenu.add(editItem);
-		PassMenuItem reloadItem = new PassMenuItem("Reload Menu", null, "config.png");
+		PassMenuItem reloadItem = new PassMenuItem("Reload Menu", null, configIcon);
 		reloadItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				setMenu();
 			}
 		});
 		configMenu.add(reloadItem);
-		PassMenuItem helpItem = new PassMenuItem("Syntax help", null, "help.png");
+		PassMenuItem helpItem = new PassMenuItem("Syntax help", null, helpIcon);
 		helpItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Syntax.showSyntaxFrame();
 			}
 		});
 		configMenu.add(helpItem);
-		PassMenuItem creator = new PassMenuItem("Line creator", null, "help.png");
+		PassMenuItem creator = new PassMenuItem("Line creator", null, helpIcon);
 		creator.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				new CreatorFrame();
 			}
 		});
 		configMenu.add(creator);
-		PassMenuItem clearItem = new PassMenuItem("Escape help", null, "help.png");
+		PassMenuItem clearItem = new PassMenuItem("Escape help", null, helpIcon);
 		clearItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				new SetEscapeFrame();
@@ -172,7 +176,7 @@ public class TrayPass {
 		configMenu.add(clearItem);
 
 		// Adding exit item
-		PassMenuItem exitItem = new PassMenuItem("Exit", null, "close.png");
+		PassMenuItem exitItem = new PassMenuItem("Exit");
 		exitItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				exit();
@@ -212,6 +216,10 @@ public class TrayPass {
 
 	public void showError(String text) {
 		trayIcon.displayMessage(title, text, TrayIcon.MessageType.ERROR);
+	}
+
+	public void showInfo(String text) {
+		trayIcon.displayMessage(title, text, TrayIcon.MessageType.INFO);
 	}
 
 	private void exit() {

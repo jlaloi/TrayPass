@@ -13,9 +13,11 @@ import traypass.syntax.action.ActionClipboard;
 import traypass.syntax.action.ActionConcat;
 import traypass.syntax.action.ActionDecrypt;
 import traypass.syntax.action.ActionDownload;
+import traypass.syntax.action.ActionEquals;
 import traypass.syntax.action.ActionExecute;
 import traypass.syntax.action.ActionExecuteResult;
 import traypass.syntax.action.ActionFile;
+import traypass.syntax.action.ActionInfo;
 import traypass.syntax.action.ActionListDir;
 import traypass.syntax.action.ActionMouse;
 import traypass.syntax.action.ActionNote;
@@ -120,7 +122,7 @@ public enum Syntax {
 			2,
 			new ActionWaitFor(),
 			"@waitfor(<image path>,<click type>)",
-			"Waiting to find the image on the screen and then perform the specified mouse click"),
+			"Waiting to find the image on the screen and then perform the specified mouse click, return bool"),
 
 	CONCAT(
 			"@concat",
@@ -162,7 +164,28 @@ public enum Syntax {
 			-1,
 			new ActionVar(),
 			"@var(<var name>,<var value>)",
-			"Set a var or get a var")
+			"Set a var or get a var"),
+
+	EQUAL(
+			"@equal",
+			2,
+			new ActionEquals(),
+			"@equal(<value>,<value>)",
+			"Compare two values, return bool"),
+
+	IF(
+			"@if",
+			-1,
+			new ActionEquals(),
+			"@if(<bool>,<then>,<else>)",
+			"If bool then else"),
+
+	INFO(
+			"@info",
+			1,
+			new ActionInfo(),
+			"@info(<Text>)",
+			"Display the text as info")
 
 	;
 
@@ -233,7 +256,7 @@ public enum Syntax {
 	public static void showSyntaxFrame() {
 		JFrame frame = new JFrame("Syntax Description");
 		frame.setBackground(Color.white);
-		frame.setLayout(new GridLayout(Syntax.values().length + 3, 1));
+		frame.setLayout(new GridLayout(Syntax.values().length + 4, 1));
 		for (Syntax item : Syntax.values()) {
 			JLabel label = new TrayLabel(" " + item.getExample() + " ==> " + item.getDescription() + " ");
 			frame.add(label);
@@ -242,6 +265,8 @@ public enum Syntax {
 		frame.add(separator);
 		JLabel escape = new TrayLabel(" Escape character is " + escapeChar);
 		frame.add(escape);
+		JLabel bool = new TrayLabel(" Bools are  " + boolTrue + " and " + boolFalse);
+		frame.add(bool);
 		JLabel example = new TrayLabel(" Example: {example}@execute(notepad);@wait(400);@send(@concat(@prompt(text?),{enter}ok)) ");
 		frame.add(example);
 		frame.setIconImage(TrayPassObject.trayImageIcon);

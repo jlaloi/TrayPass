@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.regex.Matcher;
 
 import traypass.TrayPassObject;
-import traypass.syntax.action.ActionVar;
 
 public class Interpreter {
 
@@ -14,12 +13,13 @@ public class Interpreter {
 		return matcher.find() && matcher.group().equals(function);
 	}
 
-	public static void computeFunctions(String line) {
+	public static String computeFunctions(String line) {
+		String result = "";
 		try {
-			ActionVar.clear();
 			List<String> functions = splitFunctions(line);
 			for (String function : functions) {
-				if (computeFunction(function) == null) {
+				result = computeFunction(function);
+				if (result == null) {
 					showError("Error while executing: " + function);
 					break;
 				}
@@ -28,6 +28,7 @@ public class Interpreter {
 			showError("Exception while computeFunctions:" + line + ":\n" + e);
 			e.printStackTrace();
 		}
+		return result;
 	}
 
 	public static String computeFunction(String function) {

@@ -11,6 +11,7 @@ import javax.imageio.ImageIO;
 import traypass.TrayPassObject;
 import traypass.syntax.Action;
 import traypass.syntax.Interpreter;
+import traypass.syntax.Syntax;
 import traypass.tools.ToolImage;
 import traypass.tools.ToolMouse;
 
@@ -25,7 +26,7 @@ public class ActionWaitFor extends Action {
 	private int click = 0;
 
 	public String doAction(List<String> parameters) {
-		String result = null;
+		String result = Syntax.boolFalse;
 		this.click = Integer.valueOf(parameters.get(1));
 		isFound = false;
 		imagePath = parameters.get(0);
@@ -44,7 +45,7 @@ public class ActionWaitFor extends Action {
 			e.printStackTrace();
 		}
 		if (isFound) {
-			result = "";
+			result = Syntax.boolTrue;
 		}
 		return result;
 	}
