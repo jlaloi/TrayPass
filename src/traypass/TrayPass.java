@@ -185,7 +185,7 @@ public class TrayPass {
 		updateItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				TrayUpdate trayUpdate = new TrayUpdate();
-				if (!trayUpdate.isUpdate()) {
+				if (trayUpdate.isUpdate()) {
 					Object[] options = { "Yes, update it!", "No, thanks" };
 					int n = JOptionPane.showOptionDialog(null, "A new update is available.\n" + "Local : " + trayUpdate.getLocalVersion() + "\n" + "Server : " + trayUpdate.getServerVersion() + "\n"
 							+ "Do you wants to update?", "TrayPass update", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[2]);
