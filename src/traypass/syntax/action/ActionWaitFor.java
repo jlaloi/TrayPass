@@ -8,6 +8,7 @@ import java.util.List;
 
 import javax.imageio.ImageIO;
 
+import traypass.TrayPass;
 import traypass.TrayPassObject;
 import traypass.syntax.Action;
 import traypass.syntax.Interpreter;
@@ -27,7 +28,11 @@ public class ActionWaitFor extends Action {
 
 	public String doAction(List<String> parameters) {
 		String result = null;
-		this.click = Integer.valueOf(parameters.get(1));
+		if (parameters.size() > 1) {
+			this.click = Integer.valueOf(parameters.get(1));
+		} else {
+			result = Syntax.boolFalse;
+		}
 		isFound = false;
 		imagePath = parameters.get(0);
 		int maxCheck = TrayPassObject.imageCheckNumber;
@@ -37,6 +42,9 @@ public class ActionWaitFor extends Action {
 			if (file.exists()) {
 				image = ImageIO.read(file);
 				for (int i = 0; image != null && i < maxCheck && !isOnDesktop(); i++) {
+					if(TrayPass.trayIcon != null){
+						TrayPass.trayIcon.setToolTip("Looking for " + imagePath + " every " + checkWait + "(" + i + "/" + maxCheck + ")");
+					}
 					ActionWait.waitMS(checkWait);
 				}
 			}
