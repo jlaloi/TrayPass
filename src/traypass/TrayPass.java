@@ -207,7 +207,6 @@ public class TrayPass {
 				new ConfigFrame();
 			}
 		}
-
 	}
 
 	public void setWorking(boolean bool) {

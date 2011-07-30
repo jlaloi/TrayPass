@@ -68,25 +68,44 @@ public class ToolFile {
 		}
 	}
 
-	public static void downloadFile(String host, String file) {
-		InputStream input = null;
-		FileOutputStream writeFile = null;
+	public static URLConnection getURConnection(String host) {
+		URLConnection connection = null;
 		try {
 			URL url = new URL(host);
-			URLConnection connection = url.openConnection();
-
-			// Proxy
+			connection = url.openConnection();
 			TrayPassConfig config = TrayPassObject.trayConfig;
 			if (config != null && config.getProxyHost() != null && config.getProxyHost().trim().length() > 0 && config.getProxyPort() > 0) {
 				System.setProperty("http.proxyHost", config.getProxyHost());
 				System.setProperty("http.proxyPort", config.getProxyPort() + "");
 			}
-			if (config != null && config.getProxyUser() != null && config.getProxyUser().trim().length() > 0 && config.getProxyPass() != null && config.getProxyPass().trim().length() > 0 && TrayPassObject.secretKey != null) {
+			if (config != null && config.getProxyUser() != null && config.getProxyUser().trim().length() > 0 && config.getProxyPass() != null && config.getProxyPass().trim().length() > 0
+					&& TrayPassObject.secretKey != null) {
 				String password = CryptoEncrypter.decrypt(config.getProxyPass(), TrayPassObject.secretKey);
 				String encoded = new String(Base64.encode(new String(config.getProxyUser() + ":" + password).getBytes()));
 				connection.setRequestProperty("Proxy-Authorization", "Basic " + encoded);
 			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return connection;
+	}
 
+	public static int getDownloadSize(String url) {
+		int result = 0;
+		try {
+			URLConnection connection = getURConnection(url);
+			result = connection.getContentLength();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+	public static void downloadFile(String host, String file) {
+		InputStream input = null;
+		FileOutputStream writeFile = null;
+		try {
+			URLConnection connection = getURConnection(host);
 			input = connection.getInputStream();
 			writeFile = new FileOutputStream(file);
 			byte[] buffer = new byte[1024];
