@@ -124,7 +124,7 @@ public enum Syntax {
 			2,
 			new ActionWaitFor(),
 			"@waitfor(<image path>,<click type>)",
-			"Waiting to find the image on the screen and then perform the specified mouse click, return bool"),
+			"Waiting to find the image on the screen and then perform the specified mouse click"),
 
 	CONCAT(
 			"@concat",

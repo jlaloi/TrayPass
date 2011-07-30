@@ -106,8 +106,7 @@ public class ToolImage {
 		return image;
 	}
 
-	@SuppressWarnings("unchecked")
-	public static Image getImage(String path, Class c) {
+	public static Image getImage(String path, @SuppressWarnings("rawtypes") Class c) {
 		Image result = null;
 		try {
 			if (isImageFile(path)) {
