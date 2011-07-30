@@ -10,7 +10,6 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JMenuItem;
 
-import traypass.syntax.Interpreter;
 import traypass.tools.ToolImage;
 
 public class PassMenuItem extends JMenuItem {
@@ -49,9 +48,7 @@ public class PassMenuItem extends JMenuItem {
 		if (line != null && line.trim().length() > 0) {
 			addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					TrayPassObject.trayPass.setWorking(true);
-					Interpreter.computeFunctions(line);
-					TrayPassObject.trayPass.setWorking(false);
+					TrayPassObject.trayPass.compute(line);
 				}
 			});
 		}

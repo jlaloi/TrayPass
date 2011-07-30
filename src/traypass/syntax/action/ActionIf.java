@@ -3,11 +3,13 @@ package traypass.syntax.action;
 import java.util.List;
 
 import traypass.syntax.Action;
+import traypass.syntax.Interpreter;
 import traypass.syntax.Syntax;
 
 public class ActionIf extends Action {
 
-	public String execute(List<String> parameters) {
+	public String execute(Interpreter interpreter, List<String> parameters) {
+		this.interpreter = interpreter;
 		String result = "";
 		String test = executeParam(parameters.get(0));
 		if (Syntax.isTrue(test)) {

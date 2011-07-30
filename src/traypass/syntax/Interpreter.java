@@ -6,18 +6,33 @@ import java.util.regex.Matcher;
 
 import traypass.TrayPassObject;
 
-public class Interpreter {
-
-	private static boolean checkSyntax(String function) {
-		Matcher matcher = Syntax.functionPattern.matcher(function);
-		return matcher.find() && matcher.group().equals(function);
+public class Interpreter extends Thread{
+	
+	private String line;
+	
+	private boolean stop = false;
+	
+	public Interpreter(String line){
+		this.line = line; 
+	}
+	
+	public void run(){
+		stop = false;
+		TrayPassObject.trayPass.setWorking(true);
+		computeFunctions(line);
+		TrayPassObject.trayPass.setWorking(false);
+		stop = true;
 	}
 
-	public static String computeFunctions(String line) {
+	public String computeFunctions(String line) {
 		String result = "";
 		try {
 			List<String> functions = splitFunctions(line);
 			for (String function : functions) {
+				if(stop){
+					TrayPassObject.trayPass.showError("Stopped before executing"+ function);
+					break;
+				}
 				result = computeFunction(function);
 				if (result == null) {
 					showError("Error while executing: " + function);
@@ -31,10 +46,10 @@ public class Interpreter {
 		return result;
 	}
 
-	public static String computeFunction(String function) {
+	public String computeFunction(String function) {
 		String result = function;
 		try {
-			if (!checkSyntax(function)) {
+			if (stop || !checkSyntax(function)) {
 				return function;
 			}
 			int indexOfParam = function.indexOf(Syntax.functionParamStart);
@@ -71,7 +86,7 @@ public class Interpreter {
 			Action action = getAction(methodName, params.size());
 			if (action != null) {
 				System.out.println("Executing " + methodName);
-				result = action.execute(params);
+				result = action.execute(this,params);
 			}
 
 		} catch (Exception e) {
@@ -100,6 +115,12 @@ public class Interpreter {
 		return result;
 	}
 
+
+	private static boolean checkSyntax(String function) {
+		Matcher matcher = Syntax.functionPattern.matcher(function);
+		return matcher.find() && matcher.group().equals(function);
+	}
+
 	public static List<String> splitFunctions(String functions) {
 		List<String> result = new ArrayList<String>();
 		int lastPos = 0;
@@ -124,9 +145,23 @@ public class Interpreter {
 	}
 
 	public static void showError(String text) {
-		// JOptionPane.showMessageDialog(null, text, "TrayPass error!",
-		// JOptionPane.ERROR_MESSAGE);
 		TrayPassObject.trayPass.showError(text);
 	}
 
+	public String getLine() {
+		return line;
+	}
+
+	public void setLine(String line) {
+		this.line = line;
+	}
+
+	public boolean isStop() {
+		return stop;
+	}
+
+	public void setStop(boolean stop) {
+		this.stop = stop;
+	}
+	
 }

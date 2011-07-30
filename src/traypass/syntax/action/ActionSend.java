@@ -11,7 +11,7 @@ public class ActionSend extends Action {
 	public String doAction(List<String> parameters) {
 		String characters = parameters.get(0);
 		System.out.println("Typing: " + characters);
-		for (int i = 0; i < characters.length(); i++) {
+		for (int i = 0; i < characters.length() && !interpreter.isStop(); i++) {
 			ActionWait.waitMS(5);
 			if (characters.substring(i, i + 1).equals("{") && characters.indexOf("}", i) != -1) {
 				if (typeSpecial(characters.substring(i, characters.indexOf("}", i) + 1))) {

@@ -45,7 +45,7 @@ public class ActionPack extends Action {
 				}
 			}
 			System.out.println("pack:" + result);
-			Interpreter.computeFunctions(result);
+			interpreter.computeFunctions(result);
 		}
 		return "";
 	}

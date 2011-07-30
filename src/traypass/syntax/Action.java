@@ -5,18 +5,24 @@ import java.util.List;
 
 public abstract class Action {
 
-	public String execute(List<String> parameters) {
+	protected Interpreter interpreter;
+
+	public String execute(Interpreter interpreter, List<String> parameters) {
+		this.interpreter = interpreter;
 		String result = "";
 		List<String> computedParams = new ArrayList<String>();
 		for (String param : parameters) {
 			computedParams.add(executeParam(param));
 		}
-		result = doAction(computedParams);
+		if (!interpreter.isStop()) {
+			result = doAction(computedParams);
+		}
 		return result;
 	}
 
 	protected String executeParam(String param) {
-		return Interpreter.clearEscapeChar(Interpreter.computeFunction(param));
+		String result = Interpreter.clearEscapeChar(interpreter.computeFunction(param));
+		return result;
 	}
 
 	public abstract String doAction(List<String> parameters);

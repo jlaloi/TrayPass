@@ -28,6 +28,7 @@ import traypass.syntax.action.ActionReadFile;
 import traypass.syntax.action.ActionReplace;
 import traypass.syntax.action.ActionSelect;
 import traypass.syntax.action.ActionSend;
+import traypass.syntax.action.ActionStop;
 import traypass.syntax.action.ActionVar;
 import traypass.syntax.action.ActionWait;
 import traypass.syntax.action.ActionWaitFor;
@@ -82,7 +83,9 @@ public enum Syntax {
 
 	WHILE("@while", 2, new ActionWhile(), "@while(<bool>,<action>)", "While bool action"),
 
-	INFO("@info", 1, new ActionInfo(), "@info(<Text>)", "Display the text as info")
+	INFO("@info", 1, new ActionInfo(), "@info(<Text>)", "Display the text as info"),
+
+	STOP("@stop", 0, new ActionStop(), "@stop()", "Stop the execution")
 
 	;
 

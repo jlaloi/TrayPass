@@ -19,6 +19,7 @@ import traypass.frame.CaptureFrame;
 import traypass.frame.ConfigFrame;
 import traypass.frame.CreatorFrame;
 import traypass.frame.SetEscapeFrame;
+import traypass.syntax.Interpreter;
 import traypass.syntax.Syntax;
 import traypass.syntax.action.ActionExecute;
 import traypass.tools.ToolFile;
@@ -37,6 +38,8 @@ public class TrayPass {
 	public static String helpIcon = "help.png";
 
 	public static String configIcon = "config.png";
+
+	public static Interpreter interpreter;
 
 	public void loadIcon() {
 		TrayPassObject.trayImageIcon = ToolImage.getImage(TrayPassObject.iconFile, getClass());
@@ -62,6 +65,8 @@ public class TrayPass {
 				public void mouseReleased(MouseEvent e) {
 					if (e.getButton() == MouseEvent.BUTTON2) {
 						new CaptureFrame(ToolImage.getScreenCapture());
+					} else if (e.getClickCount() > 1) {
+						stopCompute();
 					} else {
 						popup.setInvoker(popup);
 						popup.setVisible(true);
@@ -220,6 +225,19 @@ public class TrayPass {
 
 	public void showInfo(String text) {
 		trayIcon.displayMessage(title, text, TrayIcon.MessageType.INFO);
+	}
+
+	public void compute(String line) {
+		if (interpreter == null || interpreter.isStop()) {
+			interpreter = new Interpreter(line);
+			interpreter.start();
+		}
+	}
+
+	public void stopCompute() {
+		if (interpreter != null) {
+			interpreter.setStop(true);
+		}
 	}
 
 	private void exit() {

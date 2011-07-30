@@ -13,7 +13,6 @@ import javax.swing.JTextArea;
 
 import traypass.TrayPassObject;
 import traypass.misc.TrayButton;
-import traypass.syntax.Interpreter;
 import traypass.syntax.Syntax;
 import traypass.tools.ToolClipboard;
 
@@ -49,7 +48,7 @@ public class CreatorFrame extends JFrame {
 		butt = new TrayButton("Execute");
 		butt.addMouseListener(new MouseAdapter() {
 			public void mouseReleased(MouseEvent e) {
-				Interpreter.computeFunctions(line.getText());
+				TrayPassObject.trayPass.compute(line.getText());
 			}
 		});
 

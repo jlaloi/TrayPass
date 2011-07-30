@@ -41,7 +41,7 @@ public class ActionWaitFor extends Action {
 			File file = new File(imagePath);
 			if (file.exists()) {
 				image = ImageIO.read(file);
-				for (int i = 0; image != null && i < maxCheck && !isOnDesktop(); i++) {
+				for (int i = 0; image != null && i < maxCheck && !isOnDesktop() && !interpreter.isStop(); i++) {
 					if(TrayPass.trayIcon != null){
 						TrayPass.trayIcon.setToolTip("Looking for " + imagePath + " every " + checkWait + "(" + i + "/" + maxCheck + ")");
 					}
