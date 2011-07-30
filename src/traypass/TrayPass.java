@@ -11,6 +11,7 @@ import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 
 import javax.swing.JMenu;
+import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
 
 import traypass.crypto.CryptoEncryptFrame;
@@ -19,6 +20,7 @@ import traypass.frame.CaptureFrame;
 import traypass.frame.ConfigFrame;
 import traypass.frame.CreatorFrame;
 import traypass.frame.SetEscapeFrame;
+import traypass.misc.TrayUpdate;
 import traypass.syntax.Interpreter;
 import traypass.syntax.Syntax;
 import traypass.syntax.action.ActionExecute;
@@ -179,8 +181,21 @@ public class TrayPass {
 			}
 		});
 		configMenu.add(clearItem);
-
-		// Adding exit item
+		PassMenuItem updateItem = new PassMenuItem("Update");
+		updateItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				TrayUpdate trayUpdate = new TrayUpdate();
+				if (!trayUpdate.isUpdate()) {
+					Object[] options = { "Yes, update it!", "No, thanks" };
+					int n = JOptionPane.showOptionDialog(null, "A new update is available.\n" + "Local : " + trayUpdate.getLocalVersion() + "\n" + "Server : " + trayUpdate.getServerVersion() + "\n"
+							+ "Do you wants to update?", "TrayPass update", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[2]);
+					if (n == 0) {
+						new TrayUpdate().update();
+					}
+				}
+			}
+		});
+		configMenu.add(updateItem);
 		PassMenuItem exitItem = new PassMenuItem("Exit");
 		exitItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -188,7 +203,6 @@ public class TrayPass {
 			}
 		});
 		configMenu.add(exitItem);
-		configMenu.setOpaque(true);
 		popup.add(configMenu);
 
 		popup.addMouseListener(new MouseAdapter() {

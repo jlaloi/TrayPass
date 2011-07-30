@@ -145,7 +145,11 @@ public class Interpreter extends Thread{
 	}
 
 	public static void showError(String text) {
-		TrayPassObject.trayPass.showError(text);
+		if(TrayPassObject.trayPass != null){
+			TrayPassObject.trayPass.showError(text);
+		}else{
+			System.out.println("ERROR " + text);
+		}
 	}
 
 	public String getLine() {

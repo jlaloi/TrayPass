@@ -183,4 +183,14 @@ public class ToolFile {
 			}
 		}
 	}
+
+	public static String getTmpDir(){
+		String result;
+		if (System.getenv("TMP") != null && System.getenv("TMP").trim().length() > 0) {
+			result = System.getenv("TMP") + TrayPassObject.fileSeparator + TrayPassObject.tmpDir + TrayPassObject.fileSeparator;
+		} else {
+			result = "/tmp" + TrayPassObject.fileSeparator + TrayPassObject.tmpDir + TrayPassObject.fileSeparator;
+		}
+		return result;
+	}
 }

@@ -87,14 +87,7 @@ public class ActionPack extends Action {
 	}
 
 	private String getTmpDir(String path) {
-		String result;
-		if (System.getenv("TMP") != null && System.getenv("TMP").trim().length() > 0) {
-			result = System.getenv("TMP") + TrayPassObject.fileSeparator + TrayPassObject.tmpDir + TrayPassObject.fileSeparator
-					+ path + TrayPassObject.fileSeparator;
-		} else {
-			result = "/tmp" + TrayPassObject.fileSeparator + TrayPassObject.tmpDir + TrayPassObject.fileSeparator + path
-					+ TrayPassObject.fileSeparator;
-		}
+		String result = ToolFile.getTmpDir() + path + TrayPassObject.fileSeparator;
 		File tmp = new File(result);
 		if (!tmp.exists() || !tmp.isDirectory()) {
 			tmp.mkdirs();
