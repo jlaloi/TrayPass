@@ -34,7 +34,7 @@ public class Interpreter extends Thread{
 					break;
 				}
 				result = computeFunction(function);
-				if (result == null) {
+				if (result == null && !stop) {
 					showError("Error while executing: " + function);
 					break;
 				}
@@ -84,7 +84,7 @@ public class Interpreter extends Thread{
 			}
 
 			Action action = getAction(methodName, params.size());
-			if (action != null) {
+			if (!stop && action != null) {
 				System.out.println("Executing " + methodName);
 				result = action.execute(this,params);
 			}

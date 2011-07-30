@@ -231,11 +231,14 @@ public class TrayPass {
 		if (interpreter == null || interpreter.isStop()) {
 			interpreter = new Interpreter(line);
 			interpreter.start();
+		} else {
+			showError("You need to wait for/stop the current execution!\n" + interpreter.getLine());
 		}
 	}
 
 	public void stopCompute() {
 		if (interpreter != null) {
+			showInfo("Trying to stop the execution...");
 			interpreter.setStop(true);
 		}
 	}
