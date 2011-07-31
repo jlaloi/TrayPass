@@ -36,56 +36,180 @@ import traypass.syntax.action.ActionWhile;
 
 public enum Syntax {
 
-	WAIT("@wait", 1, new ActionWait(), "@wait(<time>)", "Wait specified millisecond"),
+	WAIT(
+			"@wait",
+			1,
+			new ActionWait(),
+			"@wait(<time>)",
+			"Wait specified millisecond"),
 
-	PROMPT("@prompt", 1, new ActionPrompt(), "@prompt(<label>)", "Display a prompt to enter a value"),
+	PROMPT(
+			"@prompt",
+			1,
+			new ActionPrompt(),
+			"@prompt(<label>)",
+			"Display a prompt to enter a value"),
 
-	EXECUTE("@execute", -1, new ActionExecute(), "@execute(<executable>,<Parameter>,<Parameter>)", "Execute the specified executable with specified parameter(s)"),
+	EXECUTE(
+			"@execute",
+			-1,
+			new ActionExecute(),
+			"@execute(<executable>,<Parameter>,<Parameter>)",
+			"Execute the specified executable with specified parameter(s)"),
 
-	EXECUTERESULT("@executeresult", -1, new ActionExecuteResult(), "@executeresult(<executable>,<Parameter>,<Parameter>)",
+	EXECUTERESULT(
+			"@executeresult",
+			-1,
+			new ActionExecuteResult(),
+			"@executeresult(<executable>,<Parameter>,<Parameter>)",
 			"Return the execution result of the specified executable with specified parameter(s)"),
 
-	SEND("@send", 1, new ActionSend(), "@send(<keys>)", "Simulate a keyboard to send specified keys"),
+	SEND(
+			"@send",
+			1,
+			new ActionSend(),
+			"@send(<keys>)",
+			"Simulate a keyboard to send specified keys"),
 
-	READFILE("@readfile", 1, new ActionReadFile(), "@readfile(<file path>)", "Read the content of the specified file"),
+	READFILE(
+			"@readfile",
+			1,
+			new ActionReadFile(),
+			"@readfile(<file path>)",
+			"Read the content of the specified file"),
 
-	FILE("@file", -1, new ActionFile(), "@file(<copy/move/delete>,<file path>,<new file path>)", "Copy, move or delete a file"),
+	FILE(
+			"@file",
+			-1,
+			new ActionFile(),
+			"@file(<copy/move/delete>,<file path>,<new file path>)",
+			"Copy, move or delete a file"),
 
-	DECRYPT("@decrypt", 1, new ActionDecrypt(), "@decrypt(<Encrypted text>)", "Decrypt the encrypted text"),
+	DECRYPT(
+			"@decrypt",
+			1,
+			new ActionDecrypt(),
+			"@decrypt(<Encrypted text>)",
+			"Decrypt the encrypted text"),
 
-	CLIPBOARD("@clipboard", -1, new ActionClipboard(), "@clipboard(<text>)", "Set the clipboard content with the specified text or without parameter to get the clipboard content"),
+	CLIPBOARD(
+			"@clipboard",
+			-1,
+			new ActionClipboard(),
+			"@clipboard(<text>)",
+			"Set the clipboard content with the specified text or without parameter to get the clipboard content"),
 
-	NOTE("@note", 2, new ActionNote(), "@note(<file path>,<text>)", "Add the specified text to the specified file"),
+	NOTE(
+			"@note",
+			2,
+			new ActionNote(),
+			"@note(<file path>,<text>)",
+			"Add the specified text to the specified file"),
 
-	PACK("@pack", -1, new ActionPack(), "@pack(<file path>,<param>)", "Execute the specified pack"),
+	PACK(
+			"@pack",
+			-1,
+			new ActionPack(),
+			"@pack(<file path>,<param>)",
+			"Execute the specified pack"),
 
-	MOUSE("@mouse", 3, new ActionMouse(), "@mouse(<x>,<y>,<click>)", "Click on the specified position"),
+	MOUSE(
+			"@mouse",
+			3,
+			new ActionMouse(),
+			"@mouse(<x>,<y>,<click>)",
+			"Click on the specified position"),
 
-	FIND("@find", 1, new ActionWaitFor(), "@find(<image path>)", "Waiting to find the image on the screen, return bool"),
+	FIND(
+			"@find",
+			1,
+			new ActionWaitFor(),
+			"@find(<image path>)",
+			"Waiting to find the image on the screen, return bool"),
 
-	WAITFOR("@waitfor", 2, new ActionWaitFor(), "@waitfor(<image path>,<click type>)", "Waiting to find the image on the screen and then perform the specified mouse click"),
+	WAITFOR(
+			"@waitfor",
+			2,
+			new ActionWaitFor(),
+			"@waitfor(<image path>,<click type>)",
+			"Waiting to find the image on the screen and then perform the specified mouse click"),
 
-	CONCAT("@concat", -1, new ActionConcat(), "@concat(<text>,<text>)", "Concatenate specified text"),
+	CONCAT(
+			"@concat",
+			-1,
+			new ActionConcat(),
+			"@concat(<text>,<text>)",
+			"Concatenate specified text"),
 
-	DOWNLOAD("@download", 2, new ActionDownload(), "@download(<url>,<file>)", "Download specified url in the specified file"),
+	DOWNLOAD(
+			"@download",
+			2,
+			new ActionDownload(),
+			"@download(<url>,<file>)",
+			"Download specified url in the specified file"),
 
-	REPLACE("@replace", 3, new ActionReplace(), "@replace(<in>,<what>,<by>)", "Replace in what by"),
+	REPLACE(
+			"@replace",
+			3,
+			new ActionReplace(),
+			"@replace(<in>,<what>,<by>)",
+			"Replace in what by"),
 
-	SELECT("@select", -1, new ActionSelect(), "@select(<message>,<option 1>,<option2>,..)", "Return the selected option"),
+	SELECT(
+			"@select",
+			-1,
+			new ActionSelect(),
+			"@select(<message>,<option 1>,<option2>,..)",
+			"Return the selected option"),
 
-	LISTDIR("@listdir", 1, new ActionListDir(), "@listdir(<path>)", "List all files in the selected path"),
+	LISTDIR(
+			"@listdir",
+			1,
+			new ActionListDir(),
+			"@listdir(<path>)",
+			"List all files in the selected path"),
 
-	VAR("@var", -1, new ActionVar(), "@var(<var name>,<var value>)", "Set a var or get a var"),
+	VAR(
+			"@var",
+			-1,
+			new ActionVar(),
+			"@var(<var name>,<var value>)",
+			"Set a var or get a var"),
 
-	EQUALS("@equals", 2, new ActionEquals(), "@equals(<value>,<value>)", "Compare two values, return bool"),
+	EQUALS(
+			"@equals",
+			2,
+			new ActionEquals(),
+			"@equals(<value>,<value>)",
+			"Compare two values, return bool"),
 
-	IF("@if", -1, new ActionIf(), "@if(<bool>,<then>,<else>)", "If bool then else"),
+	IF(
+			"@if",
+			-1,
+			new ActionIf(),
+			"@if(<bool>,<then>,<else>)",
+			"If bool then else"),
 
-	WHILE("@while", 2, new ActionWhile(), "@while(<bool>,<action>)", "While bool action"),
+	WHILE(
+			"@while",
+			2,
+			new ActionWhile(),
+			"@while(<bool>,<action>)",
+			"While bool action"),
 
-	INFO("@info", 1, new ActionInfo(), "@info(<Text>)", "Display the text as info"),
+	INFO(
+			"@info",
+			1,
+			new ActionInfo(),
+			"@info(<Text>)",
+			"Display the text as info"),
 
-	STOP("@stop", 0, new ActionStop(), "@stop()", "Stop the execution")
+	STOP(
+			"@stop",
+			0,
+			new ActionStop(),
+			"@stop()",
+			"Stop the execution")
 
 	;
 
@@ -167,7 +291,7 @@ public enum Syntax {
 		frame.add(escape);
 		JLabel bool = new TrayLabel(" Bools are  " + boolTrue + " and " + boolFalse);
 		frame.add(bool);
-		JLabel example = new TrayLabel(" Example: {example}@execute(notepad);@wait(400);@send(@concat(@prompt(text?),{enter}ok)) ");
+		JLabel example = new TrayLabel(" Middle click : Screen Capture - Double click : Stop Current Execution ");
 		frame.add(example);
 		frame.setIconImage(TrayPassObject.trayImageIcon);
 		frame.pack();
