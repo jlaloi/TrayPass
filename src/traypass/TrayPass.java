@@ -27,7 +27,7 @@ import traypass.tools.ToolImage;
 
 public class TrayPass {
 
-	public static String title = "Tray Pass - Middle Click: Screen Capture - Double Click : Stop current execution";
+	public static String title = "Tray Pass";
 
 	public static BufferedImage workingIcon;
 

@@ -106,6 +106,7 @@ public class ToolImage {
 		return image;
 	}
 
+	@SuppressWarnings("unchecked")
 	public static Image getImage(String path, Class c) {
 		Image result = null;
 		try {

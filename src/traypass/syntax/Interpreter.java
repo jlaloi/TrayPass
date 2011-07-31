@@ -6,17 +6,17 @@ import java.util.regex.Matcher;
 
 import traypass.TrayPassObject;
 
-public class Interpreter extends Thread{
-	
+public class Interpreter extends Thread {
+
 	private String line;
-	
+
 	private boolean stop = false;
-	
-	public Interpreter(String line){
-		this.line = line; 
+
+	public Interpreter(String line) {
+		this.line = line;
 	}
-	
-	public void run(){
+
+	public void run() {
 		stop = false;
 		TrayPassObject.trayPass.setWorking(true);
 		computeFunctions(line);
@@ -29,8 +29,10 @@ public class Interpreter extends Thread{
 		try {
 			List<String> functions = splitFunctions(line);
 			for (String function : functions) {
-				if(stop){
-					TrayPassObject.trayPass.showError("Stopped before executing"+ function);
+				if (stop) {
+					if (function != null && function.trim().length() > 0) {
+						TrayPassObject.trayPass.showError("Stopped before executing" + function);
+					}
 					break;
 				}
 				result = computeFunction(function);
@@ -86,7 +88,7 @@ public class Interpreter extends Thread{
 			Action action = getAction(methodName, params.size());
 			if (!stop && action != null) {
 				System.out.println("Executing " + methodName);
-				result = action.execute(this,params);
+				result = action.execute(this, params);
 			}
 
 		} catch (Exception e) {
@@ -114,7 +116,6 @@ public class Interpreter extends Thread{
 		}
 		return result;
 	}
-
 
 	private static boolean checkSyntax(String function) {
 		Matcher matcher = Syntax.functionPattern.matcher(function);
@@ -145,9 +146,9 @@ public class Interpreter extends Thread{
 	}
 
 	public static void showError(String text) {
-		if(TrayPassObject.trayPass != null){
+		if (TrayPassObject.trayPass != null) {
 			TrayPassObject.trayPass.showError(text);
-		}else{
+		} else {
 			System.out.println("ERROR " + text);
 		}
 	}
@@ -167,5 +168,5 @@ public class Interpreter extends Thread{
 	public void setStop(boolean stop) {
 		this.stop = stop;
 	}
-	
+
 }

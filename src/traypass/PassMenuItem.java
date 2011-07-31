@@ -57,6 +57,7 @@ public class PassMenuItem extends JMenuItem {
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	public static ImageIcon getImageIcon(String path, Class c) {
 		ImageIcon result = null;
 		if (library.containsKey(path)) {

@@ -78,8 +78,7 @@ public class ToolFile {
 				System.setProperty("http.proxyHost", config.getProxyHost());
 				System.setProperty("http.proxyPort", config.getProxyPort() + "");
 			}
-			if (config != null && config.getProxyUser() != null && config.getProxyUser().trim().length() > 0 && config.getProxyPass() != null && config.getProxyPass().trim().length() > 0
-					&& TrayPassObject.secretKey != null) {
+			if (config != null && config.getProxyUser() != null && config.getProxyUser().trim().length() > 0 && config.getProxyPass() != null && config.getProxyPass().trim().length() > 0 && TrayPassObject.secretKey != null) {
 				String password = CryptoEncrypter.decrypt(config.getProxyPass(), TrayPassObject.secretKey);
 				String encoded = new String(Base64.encode(new String(config.getProxyUser() + ":" + password).getBytes()));
 				connection.setRequestProperty("Proxy-Authorization", "Basic " + encoded);
@@ -115,7 +114,6 @@ public class ToolFile {
 			}
 			writeFile.flush();
 		} catch (Exception e) {
-			Interpreter.showError("Error while downloading " + host + ": " + e);
 			e.printStackTrace();
 		} finally {
 			try {
@@ -184,7 +182,7 @@ public class ToolFile {
 		}
 	}
 
-	public static String getTmpDir(){
+	public static String getTmpDir() {
 		String result;
 		if (System.getenv("TMP") != null && System.getenv("TMP").trim().length() > 0) {
 			result = System.getenv("TMP") + TrayPassObject.fileSeparator + TrayPassObject.tmpDir + TrayPassObject.fileSeparator;
