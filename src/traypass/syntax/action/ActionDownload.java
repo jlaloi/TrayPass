@@ -8,6 +8,7 @@ import java.util.List;
 import traypass.TrayPassObject;
 import traypass.syntax.Action;
 import traypass.syntax.Interpreter;
+import traypass.tools.ToolDownload;
 import traypass.tools.ToolFile;
 
 public class ActionDownload extends Action {
@@ -23,7 +24,7 @@ public class ActionDownload extends Action {
 		long lastDl = 0;
 		long progress = 0;
 		try {
-			URLConnection connection = ToolFile.getURConnection(url);
+			URLConnection connection = ToolDownload.getURConnection(url);
 			fullSize = connection.getContentLength();
 			input = connection.getInputStream();
 			writeFile = new FileOutputStream(file);

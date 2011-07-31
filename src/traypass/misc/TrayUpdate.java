@@ -5,6 +5,7 @@ import java.util.jar.JarFile;
 import javax.swing.JOptionPane;
 
 import traypass.TrayPassObject;
+import traypass.tools.ToolDownload;
 import traypass.tools.ToolFile;
 
 public class TrayUpdate {
@@ -44,7 +45,7 @@ public class TrayUpdate {
 		String result = "";
 		try {
 			String tmpFile = ToolFile.getTmpDir() + "trayPass.version";
-			ToolFile.downloadFile(updateVersionUrl, tmpFile);
+			ToolDownload.downloadFile(updateVersionUrl, tmpFile);
 			result = ToolFile.getFileLines(tmpFile).get(0);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -69,7 +70,7 @@ public class TrayUpdate {
 	}
 
 	public void update() {
-		ToolFile.downloadFile(updateJarUrl, getJarLocation());
+		ToolDownload.downloadFile(updateJarUrl, getJarLocation());
 	}
 
 	public void manage() {

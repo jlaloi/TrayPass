@@ -4,23 +4,15 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.DataInputStream;
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
-import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.net.URL;
-import java.net.URLConnection;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-import traypass.TrayPassConfig;
 import traypass.TrayPassObject;
-import traypass.crypto.CryptoEncrypter;
 import traypass.syntax.Interpreter;
-
-import com.sun.org.apache.xml.internal.security.utils.Base64;
 
 public class ToolFile {
 
@@ -64,67 +56,6 @@ public class ToolFile {
 				bw.close();
 			} catch (Exception ioe2) {
 				ioe2.printStackTrace();
-			}
-		}
-	}
-
-	public static URLConnection getURConnection(String host) {
-		URLConnection connection = null;
-		try {
-			URL url = new URL(host);
-			connection = url.openConnection();
-			TrayPassConfig config = TrayPassObject.trayConfig;
-			if (config != null && config.getProxyHost() != null && config.getProxyHost().trim().length() > 0 && config.getProxyPort() > 0) {
-				System.setProperty("http.proxyHost", config.getProxyHost());
-				System.setProperty("http.proxyPort", config.getProxyPort() + "");
-			}
-			if (config != null && config.getProxyUser() != null && config.getProxyUser().trim().length() > 0 && config.getProxyPass() != null && config.getProxyPass().trim().length() > 0 && TrayPassObject.secretKey != null) {
-				String password = CryptoEncrypter.decrypt(config.getProxyPass(), TrayPassObject.secretKey);
-				String encoded = new String(Base64.encode(new String(config.getProxyUser() + ":" + password).getBytes()));
-				connection.setRequestProperty("Proxy-Authorization", "Basic " + encoded);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return connection;
-	}
-
-	public static int getDownloadSize(String url) {
-		int result = 0;
-		try {
-			URLConnection connection = getURConnection(url);
-			result = connection.getContentLength();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return result;
-	}
-
-	public static void downloadFile(String host, String file) {
-		InputStream input = null;
-		FileOutputStream writeFile = null;
-		try {
-			URLConnection connection = getURConnection(host);
-			input = connection.getInputStream();
-			writeFile = new FileOutputStream(file);
-			byte[] buffer = new byte[1024];
-			int read;
-			while ((read = input.read(buffer)) > 0) {
-				writeFile.write(buffer, 0, read);
-			}
-			writeFile.flush();
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				if (writeFile != null) {
-					writeFile.close();
-				}
-				if (input != null) {
-					input.close();
-				}
-			} catch (Exception e) {
-				e.printStackTrace();
 			}
 		}
 	}
