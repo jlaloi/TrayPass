@@ -2,14 +2,16 @@ package traypass.misc;
 
 import java.util.jar.JarFile;
 
+import javax.swing.JOptionPane;
+
 import traypass.TrayPassObject;
 import traypass.tools.ToolFile;
 
 public class TrayUpdate {
 
-	public static String updateJarUrl = "http://loul.org/traypass/TrayPass.jar";
+	public static String updateJarUrl = "";
 
-	public static String updateVersionUrl = "http://loul.org/traypass/version.txt";
+	public static String updateVersionUrl = "";
 
 	public static String manifestAttribute = "Implementation-Version";
 
@@ -22,8 +24,8 @@ public class TrayUpdate {
 		}
 		return result;
 	}
-	
-	public String getLocalVersion(){
+
+	public String getLocalVersion() {
 		return getLocalVersion(getJarLocation());
 	}
 
@@ -67,9 +69,17 @@ public class TrayUpdate {
 	}
 
 	public void update() {
+		ToolFile.downloadFile(updateJarUrl, getJarLocation());
+	}
+
+	public void manage() {
 		if (isUpdate()) {
-			ToolFile.downloadFile(updateJarUrl, getJarLocation());
-			TrayPassObject.trayPass.showInfo(getJarLocation() + " updated.\nYou need to restart the application!");
+			Object[] options = { "Yes, update it!", "No, thanks" };
+			int n = JOptionPane.showOptionDialog(null, "A new update is available.\n" + "Local : " + getLocalVersion() + "\n" + "Server : " + getServerVersion() + "\n" + "Do you wants to update?", "TrayPass update", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[2]);
+			if (n == 0) {
+				update();
+				TrayPassObject.trayPass.showInfo(getJarLocation() + " updated.\nYou need to restart the application!");
+			}
 		} else {
 			TrayPassObject.trayPass.showInfo("No update available!");
 		}

@@ -106,7 +106,7 @@ public class ToolImage {
 		return image;
 	}
 
-	public static Image getImage(String path, @SuppressWarnings("rawtypes") Class c) {
+	public static Image getImage(String path, Class c) {
 		Image result = null;
 		try {
 			if (isImageFile(path)) {
