@@ -15,18 +15,21 @@ public class ActionFile extends Action {
 	public static final String move = "move";
 
 	public String doAction(List<String> parameters) {
+		String result = "";
 		String action = parameters.get(0);
 		File file = new File(parameters.get(1));
 		if (file.exists() && file.isFile()) {
-			if (move.equals(action)) {
-				file.renameTo(new File(parameters.get(2)));
-			} else if (copy.equals(action)) {
-				ToolFile.copyFile(parameters.get(1), parameters.get(2));
-			} else if (delete.equals(action)) {
-				file.delete();
+			if (move.equals(action) && !file.renameTo(new File(parameters.get(2)))) {
+				result = null;
+			} else if (copy.equals(action) && !ToolFile.copyFile(parameters.get(1), parameters.get(2))) {
+				result = null;
+			} else if (delete.equals(action) && !file.delete()) {
+				result = null;
 			}
+		} else {
+			result = null;
 		}
-		return "";
+		return result;
 	}
 
 }

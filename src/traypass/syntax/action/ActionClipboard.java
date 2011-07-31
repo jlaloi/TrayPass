@@ -11,6 +11,7 @@ public class ActionClipboard extends Action {
 		String result = "";
 		if (parameters != null && parameters.size() == 1) {
 			ToolClipboard.setClipboard(parameters.get(0));
+			result = parameters.get(0);
 		} else {
 			result = ToolClipboard.getClipboardContent();
 		}

@@ -153,7 +153,8 @@ public class ToolFile {
 		return myformat.format(size) + " To";
 	}
 
-	public static void copyFile(String currentFile, String newFile) {
+	public static boolean copyFile(String currentFile, String newFile) {
+		boolean result = true;
 		int bufferSize = 2048;
 		BufferedReader in = null;
 		BufferedWriter out = null;
@@ -168,18 +169,22 @@ public class ToolFile {
 			out.flush();
 		} catch (Exception e) {
 			e.printStackTrace();
+			result = false;
 		} finally {
 			try {
 				out.close();
 			} catch (Exception e) {
 				e.printStackTrace();
+				result = false;
 			}
 			try {
 				in.close();
 			} catch (Exception e) {
 				e.printStackTrace();
+				result = false;
 			}
 		}
+		return result;
 	}
 
 	public static String getTmpDir() {

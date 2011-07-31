@@ -42,6 +42,7 @@ public class ActionDownload extends Action {
 		} catch (Exception e) {
 			Interpreter.showError("Error while downloading " + url + ": " + e);
 			e.printStackTrace();
+			result = null;
 		} finally {
 			try {
 				if (writeFile != null) {
@@ -51,6 +52,7 @@ public class ActionDownload extends Action {
 					input.close();
 				}
 			} catch (Exception e) {
+				result = null;
 				e.printStackTrace();
 			}
 		}

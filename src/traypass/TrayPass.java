@@ -21,7 +21,6 @@ import traypass.frame.CreatorFrame;
 import traypass.frame.SetEscapeFrame;
 import traypass.syntax.Interpreter;
 import traypass.syntax.Syntax;
-import traypass.syntax.action.ActionExecute;
 import traypass.tools.ToolFile;
 import traypass.tools.ToolImage;
 
@@ -144,13 +143,6 @@ public class TrayPass {
 		configMenu.add(cryptoItem2);
 
 		// Misc
-		PassMenuItem editItem = new PassMenuItem("Edit Menu", null, configIcon);
-		editItem.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				ActionExecute.execute(new String[] { "notepad", TrayPassObject.passFile });
-			}
-		});
-		configMenu.add(editItem);
 		PassMenuItem reloadItem = new PassMenuItem("Reload Menu", null, configIcon);
 		reloadItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {

@@ -7,16 +7,14 @@ import traypass.syntax.Action;
 public class ActionExecute extends Action {
 
 	public String doAction(List<String> parameters) {
-		execute(listToArray(parameters));
-		return "";
-	}
-
-	public static void execute(String[] parameters) {
+		String result = "";
 		try {
-			Runtime.getRuntime().exec(parameters);
+			Runtime.getRuntime().exec(listToArray(parameters));
 		} catch (Exception exp) {
 			exp.printStackTrace();
+			result = null;
 		}
+		return result;
 	}
 
 }

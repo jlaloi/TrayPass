@@ -26,6 +26,7 @@ public class ActionExecuteResult extends Action {
 			input.close();
 		} catch (Exception err) {
 			err.printStackTrace();
+			result = null;
 		}
 		return result;
 	}
