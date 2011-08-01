@@ -11,6 +11,7 @@ import traypass.TrayPassObject;
 import traypass.misc.TrayLabel;
 import traypass.syntax.action.ActionClipboard;
 import traypass.syntax.action.ActionConcat;
+import traypass.syntax.action.ActionContains;
 import traypass.syntax.action.ActionDecrypt;
 import traypass.syntax.action.ActionDownload;
 import traypass.syntax.action.ActionEquals;
@@ -21,6 +22,7 @@ import traypass.syntax.action.ActionIf;
 import traypass.syntax.action.ActionInfo;
 import traypass.syntax.action.ActionListDir;
 import traypass.syntax.action.ActionMouse;
+import traypass.syntax.action.ActionNot;
 import traypass.syntax.action.ActionNote;
 import traypass.syntax.action.ActionPack;
 import traypass.syntax.action.ActionPrompt;
@@ -37,179 +39,193 @@ import traypass.syntax.action.ActionWhile;
 public enum Syntax {
 
 	WAIT(
-			"@wait",
+			"wait",
 			1,
 			new ActionWait(),
-			"@wait(<time>)",
+			new String[] { "<time>" },
 			"Wait specified millisecond"),
 
 	PROMPT(
-			"@prompt",
+			"prompt",
 			1,
 			new ActionPrompt(),
-			"@prompt(<label>)",
+			new String[] { "<label>" },
 			"Display a prompt to enter a value"),
 
 	EXECUTE(
-			"@execute",
+			"execute",
 			-1,
 			new ActionExecute(),
-			"@execute(<executable>,<Parameter>,<Parameter>)",
+			new String[] { "<executable>", "<Parameter>", "..." },
 			"Execute the specified executable with specified parameter(s)"),
 
 	EXECUTERESULT(
-			"@executeresult",
+			"executeresult",
 			-1,
 			new ActionExecuteResult(),
-			"@executeresult(<executable>,<Parameter>,<Parameter>)",
+			new String[] { "<executable>", "<Parameter>", "<...>" },
 			"Return the execution result of the specified executable with specified parameter(s)"),
 
 	SEND(
-			"@send",
+			"send",
 			1,
 			new ActionSend(),
-			"@send(<keys>)",
+			new String[] { "<keys>" },
 			"Simulate a keyboard to send specified keys"),
 
 	READFILE(
-			"@readfile",
+			"readfile",
 			1,
 			new ActionReadFile(),
-			"@readfile(<file path>)",
+			new String[] { "<file path>" },
 			"Read the content of the specified file"),
 
 	FILE(
-			"@file",
+			"file",
 			-1,
 			new ActionFile(),
-			"@file(<copy/move/delete>,<file path>,<new file path>)",
+			new String[] { "<copy/move/delete>", "<file path>", "<new file path>" },
 			"Copy, move or delete a file"),
 
 	DECRYPT(
-			"@decrypt",
+			"decrypt",
 			1,
 			new ActionDecrypt(),
-			"@decrypt(<Encrypted text>)",
+			new String[] { "<Encrypted text>" },
 			"Decrypt the encrypted text"),
 
 	CLIPBOARD(
-			"@clipboard",
+			"clipboard",
 			-1,
 			new ActionClipboard(),
-			"@clipboard(<text>)",
+			new String[] { "<text>" },
 			"Set the clipboard content with the specified text or without parameter to get the clipboard content"),
 
 	NOTE(
-			"@note",
+			"note",
 			2,
 			new ActionNote(),
-			"@note(<file path>,<text>)",
+			new String[] { "<file path>", "<text>" },
 			"Add the specified text to the specified file"),
 
 	PACK(
-			"@pack",
+			"pack",
 			-1,
 			new ActionPack(),
-			"@pack(<file path>,<param>)",
+			new String[] { "<file path>", "<param>" },
 			"Execute the specified pack"),
 
 	MOUSE(
-			"@mouse",
+			"mouse",
 			3,
 			new ActionMouse(),
-			"@mouse(<x>,<y>,<click>)",
+			new String[] { "<x>", "<y>", "<click>" },
 			"Click on the specified position"),
 
 	FIND(
-			"@find",
+			"find",
 			1,
 			new ActionWaitFor(),
-			"@find(<image path>)",
+			new String[] { "<image path>" },
 			"Waiting to find the image on the screen, return bool"),
 
 	WAITFOR(
-			"@waitfor",
+			"waitfor",
 			2,
 			new ActionWaitFor(),
-			"@waitfor(<image path>,<click type>)",
+			new String[] { "<image path>", "<click type>" },
 			"Waiting to find the image on the screen and then perform the specified mouse click"),
 
 	CONCAT(
-			"@concat",
+			"concat",
 			-1,
 			new ActionConcat(),
-			"@concat(<text>,<text>)",
+			new String[] { "<text>", "<text>" },
 			"Concatenate specified text"),
 
 	DOWNLOAD(
-			"@download",
+			"download",
 			2,
 			new ActionDownload(),
-			"@download(<url>,<file>)",
+			new String[] { "<url>", "<file>" },
 			"Download specified url in the specified file"),
 
 	REPLACE(
-			"@replace",
+			"replace",
 			3,
 			new ActionReplace(),
-			"@replace(<in>,<what>,<by>)",
+			new String[] { "<in>", "<what>", "<by>" },
 			"Replace in what by"),
 
 	SELECT(
-			"@select",
+			"select",
 			-1,
 			new ActionSelect(),
-			"@select(<message>,<option 1>,<option2>,..)",
+			new String[] { "<message>", "<option 1>", "<option2>", "<...>" },
 			"Return the selected option"),
 
 	LISTDIR(
-			"@listdir",
+			"listdir",
 			1,
 			new ActionListDir(),
-			"@listdir(<path>)",
+			new String[] { "<path>" },
 			"List all files in the selected path"),
 
 	VAR(
-			"@var",
+			"var",
 			-1,
 			new ActionVar(),
-			"@var(<var name>,<var value>)",
+			new String[] { "<var name>", "<var value>" },
 			"Set a var or get a var"),
 
 	EQUALS(
-			"@equals",
+			"equals",
 			2,
 			new ActionEquals(),
-			"@equals(<value>,<value>)",
+			new String[] { "<value>", "<value>" },
 			"Compare two values, return bool"),
 
 	IF(
-			"@if",
+			"if",
 			-1,
 			new ActionIf(),
-			"@if(<bool>,<then>,<else>)",
+			new String[] { "<bool>", "<then>", "<else>" },
 			"If bool then else"),
 
 	WHILE(
-			"@while",
+			"while",
 			2,
 			new ActionWhile(),
-			"@while(<bool>,<action>)",
+			new String[] { "<bool>", "<action>" },
 			"While bool action"),
 
 	INFO(
-			"@info",
+			"info",
 			1,
 			new ActionInfo(),
-			"@info(<Text>)",
+			new String[] { "<Text>" },
 			"Display the text as info"),
 
 	STOP(
-			"@stop",
+			"stop",
 			0,
 			new ActionStop(),
-			"@stop()",
-			"Stop the execution")
+			new String[] {},
+			"Stop the execution"),
+
+	NOT(
+			"not",
+			1,
+			new ActionNot(),
+			new String[] { "<bool>" },
+			"Return bool inverse"),
+
+	CONTAINS(
+			"contains",
+			2,
+			new ActionContains(),
+			new String[] { "<in>", "<what>" },
+			"Return if what is in")
 
 	;
 
@@ -237,11 +253,19 @@ public enum Syntax {
 	private String example;
 	private String description;
 
-	Syntax(String pattern, int nbParameter, Action action, String syntax, String description) {
-		this.pattern = pattern;
+	Syntax(String pattern, int nbParameter, Action action, String[] syntax, String description) {
+		this.pattern = Syntax.functionStart + pattern;
 		this.action = action;
 		this.nbParameter = nbParameter;
-		this.example = syntax;
+		this.example = "";
+		for (String param : syntax) {
+			if (this.example.length() > 0) {
+				example += Syntax.functionParamSeparator + param;
+			} else {
+				example += param;
+			}
+		}
+		example = Syntax.functionStart + pattern + Syntax.functionParamStart + example + Syntax.functionParamEnd;
 		this.description = description;
 	}
 
@@ -282,7 +306,7 @@ public enum Syntax {
 		frame.setBackground(Color.white);
 		frame.setLayout(new GridLayout(Syntax.values().length + 4, 1));
 		for (Syntax item : Syntax.values()) {
-			JLabel label = new TrayLabel(" " + item.getExample() + " ==> " + item.getDescription() + " ");
+			JLabel label = new TrayLabel(" " + item.getExample() + " --> " + item.getDescription() + " ");
 			frame.add(label);
 		}
 		JLabel separator = new TrayLabel(" Function separator is " + functionSeparator);

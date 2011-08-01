@@ -28,21 +28,22 @@ public class ActionWaitFor extends Action {
 
 	public String doAction(List<String> parameters) {
 		String result = null;
+		int maxCheck = TrayPassObject.imageCheckNumber;
+		int checkWait = TrayPassObject.imageCheckInterval;
 		if (parameters.size() > 1) {
 			this.click = Integer.valueOf(parameters.get(1));
 		} else {
 			result = Syntax.boolFalse;
+			maxCheck = 2;
 		}
 		isFound = false;
 		imagePath = parameters.get(0);
-		int maxCheck = TrayPassObject.imageCheckNumber;
-		int checkWait = TrayPassObject.imageCheckInterval;
 		try {
 			File file = new File(imagePath);
 			if (file.exists()) {
 				image = ImageIO.read(file);
 				for (int i = 0; image != null && i < maxCheck && !isOnDesktop() && !interpreter.isStop(); i++) {
-					if(TrayPass.trayIcon != null){
+					if (TrayPass.trayIcon != null) {
 						TrayPass.trayIcon.setToolTip("Looking for " + imagePath + " every " + checkWait + "ms (" + i + "/" + maxCheck + ")");
 					}
 					ActionWait.waitMS(checkWait);

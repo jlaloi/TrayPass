@@ -31,7 +31,7 @@ public class Interpreter extends Thread {
 			for (String function : functions) {
 				if (stop) {
 					if (function != null && function.trim().length() > 0) {
-						TrayPassObject.trayPass.showError("Stopped before executing" + function);
+						TrayPassObject.trayPass.showError("Stopped before executing: " + function);
 					}
 					break;
 				}
