@@ -11,13 +11,25 @@ public class ActionVar extends Action {
 
 	public String doAction(List<String> parameters) {
 		String result = null;
-		if (parameters.size() == 1 && vars.containsKey(parameters.get(0))) {
-			result = vars.get(parameters.get(0));
+		if (parameters.size() == 1) {
+			result = get(parameters.get(0));
 		} else if (parameters.size() == 2) {
-			result = parameters.get(1);
-			vars.put(parameters.get(0), result);
+			result = set(parameters.get(0), result);
 		}
 		return result;
+	}
+
+	public static String get(String varName) {
+		String result = null;
+		if (vars.containsKey(varName)) {
+			result = vars.get(varName);
+		}
+		return result;
+	}
+
+	public static String set(String varName, String value) {
+		vars.put(varName, value);
+		return value;
 	}
 
 	public static void clear() {

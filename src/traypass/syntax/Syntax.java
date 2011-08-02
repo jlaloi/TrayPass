@@ -18,6 +18,8 @@ import traypass.syntax.action.ActionEquals;
 import traypass.syntax.action.ActionExecute;
 import traypass.syntax.action.ActionExecuteResult;
 import traypass.syntax.action.ActionFile;
+import traypass.syntax.action.ActionFileName;
+import traypass.syntax.action.ActionForeach;
 import traypass.syntax.action.ActionIf;
 import traypass.syntax.action.ActionInfo;
 import traypass.syntax.action.ActionListDir;
@@ -225,7 +227,21 @@ public enum Syntax {
 			2,
 			new ActionContains(),
 			new String[] { "<in>", "<what>" },
-			"Return if what is in")
+			"Return if what is in"),
+
+	FOREACH(
+			"foreach",
+			4,
+			new ActionForeach(),
+			new String[] { "<list>", "<list separator>", "<var name>", "<action>" },
+			"Foreach all items of the list execute the action setting the current item list in the var"),
+
+	FILENAME(
+			"filename",
+			1,
+			new ActionFileName(),
+			new String[] { "<file path>" },
+			"Return the file name")
 
 	;
 

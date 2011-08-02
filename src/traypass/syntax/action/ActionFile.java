@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.List;
 
 import traypass.syntax.Action;
+import traypass.syntax.Syntax;
 import traypass.tools.ToolFile;
 
 public class ActionFile extends Action {
@@ -14,20 +15,22 @@ public class ActionFile extends Action {
 
 	public static final String move = "move";
 
+	public static final String exist = "exist";
+
 	public String doAction(List<String> parameters) {
-		String result = "";
+		String result = null;
 		String action = parameters.get(0);
 		File file = new File(parameters.get(1));
 		if (file.exists() && file.isFile()) {
-			if (move.equals(action) && !file.renameTo(new File(parameters.get(2)))) {
-				result = null;
-			} else if (copy.equals(action) && !ToolFile.copyFile(parameters.get(1), parameters.get(2))) {
-				result = null;
+			if (move.equals(action) && file.renameTo(new File(parameters.get(2)))) {
+				result = Syntax.boolTrue;
+			} else if (copy.equals(action) && ToolFile.copyFile(parameters.get(1), parameters.get(2))) {
+				result = Syntax.boolTrue;
 			} else if (delete.equals(action) && !file.delete()) {
-				result = null;
+				result = Syntax.boolTrue;
+			} else if (exist.equals(action)) {
+				result = Syntax.boolTrue;
 			}
-		} else {
-			result = null;
 		}
 		return result;
 	}

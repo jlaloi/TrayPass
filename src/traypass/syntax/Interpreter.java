@@ -40,6 +40,7 @@ public class Interpreter extends Thread {
 					showError("Error while executing: " + function);
 					break;
 				}
+				System.out.println(result);
 			}
 		} catch (Exception e) {
 			showError("Exception while computeFunctions:" + line + ":\n" + e);

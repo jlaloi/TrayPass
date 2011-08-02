@@ -7,6 +7,10 @@ import java.awt.datatransfer.StringSelection;
 import java.awt.datatransfer.Transferable;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.util.List;
+
+import traypass.TrayPassObject;
 
 public class ToolClipboard {
 
@@ -22,12 +26,22 @@ public class ToolClipboard {
 		Toolkit.getDefaultToolkit().getSystemClipboard().setContents(transferable, null);
 	}
 
+	@SuppressWarnings("unchecked")
 	public static String getClipboardContent() {
-		String result = "";
+		String result = null;
 		try {
 			Transferable contents = Toolkit.getDefaultToolkit().getSystemClipboard().getContents(null);
 			if (contents != null && contents.isDataFlavorSupported(DataFlavor.stringFlavor)) {
 				result = (String) contents.getTransferData(DataFlavor.stringFlavor);
+			} else if (contents != null && contents.isDataFlavorSupported(DataFlavor.javaFileListFlavor)) {
+				List<File> files = (List) contents.getTransferData(DataFlavor.javaFileListFlavor);
+				for (File file : files) {
+					if (result == null) {
+						result = file.getAbsolutePath();
+					} else {
+						result += TrayPassObject.lineSeparator + file.getAbsolutePath();
+					}
+				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
