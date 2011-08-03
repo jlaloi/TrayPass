@@ -35,6 +35,7 @@ public class ActionWaitFor extends Action {
 		} else {
 			result = Syntax.boolFalse;
 			maxCheck = 2;
+			click = 0;
 		}
 		isFound = false;
 		imagePath = parameters.get(0);
@@ -42,7 +43,7 @@ public class ActionWaitFor extends Action {
 			File file = new File(imagePath);
 			if (file.exists()) {
 				image = ImageIO.read(file);
-				for (int i = 0; image != null && i < maxCheck && !isOnDesktop() && !interpreter.isStop(); i++) {
+				for (int i = 0; image != null && i < maxCheck && !interpreter.isStop() && !isOnDesktop(); i++) {
 					if (TrayPass.trayIcon != null) {
 						TrayPass.trayIcon.setToolTip("Looking for " + imagePath + " every " + checkWait + "ms (" + i + "/" + maxCheck + ")");
 					}
@@ -71,9 +72,7 @@ public class ActionWaitFor extends Action {
 	}
 
 	public Point isOnDesktop(BufferedImage image) {
-		Point result = null;
-		result = imageIncluded(ToolImage.getScreenCapture(), image);
-		return result;
+		return imageIncluded(ToolImage.getScreenCapture(), image);
 	}
 
 	public Point imageIncluded(BufferedImage desktop, BufferedImage pattern) {
