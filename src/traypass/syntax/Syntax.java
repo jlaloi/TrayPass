@@ -231,9 +231,9 @@ public enum Syntax {
 
 	FOREACH(
 			"foreach",
-			4,
+			-1,
 			new ActionForeach(),
-			new String[] { "<list>", "<list separator>", "<var name>", "<action>" },
+			new String[] { "<list>", "<var name>", "<action>", "<list separator (optional)>" },
 			"Foreach all items of the list execute the action setting the current item list in the var"),
 
 	FILENAME(

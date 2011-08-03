@@ -40,7 +40,6 @@ public class Interpreter extends Thread {
 					showError("Error while executing: " + function);
 					break;
 				}
-				System.out.println(result);
 			}
 		} catch (Exception e) {
 			showError("Exception while computeFunctions:" + line + ":\n" + e);
@@ -112,8 +111,33 @@ public class Interpreter extends Thread {
 
 	public static boolean isSpecialChar(String str, int pos, char c) {
 		boolean result = str.charAt(pos) == c;
-		if (pos > 0 && result) {
-			result = str.charAt(pos - 1) != Syntax.escapeChar;
+		if (result) {
+			int i = pos - 1;
+			while (i >= 0 && str.charAt(i) == Syntax.escapeChar) {
+				i--;
+			}
+			int mod = (pos - 1 - i) % 2;
+			if (mod != 0) {
+				result = false;
+			}
+		}
+		return result;
+	}
+
+	public static boolean isSyntaxChar(char c) {
+		boolean result = false;
+		if (c == Syntax.functionParamEnd) {
+			result = true;
+		} else if (c == Syntax.functionParamStart) {
+			result = true;
+		} else if (c == Syntax.functionParamSeparator) {
+			result = true;
+		} else if (c == Syntax.functionSeparator) {
+			result = true;
+		} else if (c == Syntax.functionStart) {
+			result = true;
+		} else if (c == Syntax.escapeChar) {
+			result = true;
 		}
 		return result;
 	}
@@ -137,12 +161,16 @@ public class Interpreter extends Thread {
 	}
 
 	public static String clearEscapeChar(String str) {
-		String result = str.replace(Syntax.escapeChar + "" + Syntax.functionParamSeparator, Syntax.functionParamSeparator + "");
-		result = result.replace(Syntax.escapeChar + "" + Syntax.functionParamEnd, Syntax.functionParamEnd + "");
-		result = result.replace(Syntax.escapeChar + "" + Syntax.functionParamStart, Syntax.functionParamStart + "");
-		result = result.replace(Syntax.escapeChar + "" + Syntax.functionSeparator, Syntax.functionSeparator + "");
-		result = result.replace(Syntax.escapeChar + "" + Syntax.functionStart, Syntax.functionStart + "");
-		result = result.replace(Syntax.escapeChar + "" + Syntax.escapeChar, Syntax.escapeChar + "");
+		String result = "";
+		for (int i = 0; str != null && i < str.length(); i++) {
+			char c = str.charAt(i);
+			if (c == Syntax.escapeChar && i + 1 < str.length() && isSyntaxChar(str.charAt(i + 1))) {
+				result += str.charAt(i + 1);
+				i++;
+			} else {
+				result += c;
+			}
+		}
 		return result;
 	}
 
@@ -154,20 +182,20 @@ public class Interpreter extends Thread {
 		}
 	}
 
-	public String getLine() {
-		return line;
-	}
-
-	public void setLine(String line) {
-		this.line = line;
-	}
-
 	public boolean isStop() {
 		return stop;
 	}
 
 	public void setStop(boolean stop) {
 		this.stop = stop;
+	}
+
+	public String getLine() {
+		return line;
+	}
+
+	public void setLine(String line) {
+		this.line = line;
 	}
 
 }
