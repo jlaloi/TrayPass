@@ -151,4 +151,8 @@ public class ToolImage {
 		return result;
 	}
 
+	public static Image resizeImage(Icon icon, int width, int height) {
+		return resizeImage(iconToImage(icon), width, height);
+	}
+
 }

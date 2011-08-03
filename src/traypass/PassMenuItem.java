@@ -24,6 +24,12 @@ public class PassMenuItem extends JMenuItem {
 		setIcon(defaultIcon);
 	}
 
+	public PassMenuItem(String label, Image icon) {
+		super(label);
+		init(null);
+		setIcon(new ImageIcon(icon));
+	}
+
 	public PassMenuItem(String label, String line) {
 		super(label);
 		init(line);
