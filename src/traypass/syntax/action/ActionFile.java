@@ -21,10 +21,12 @@ public class ActionFile extends Action {
 		String result = null;
 		String action = parameters.get(0);
 		File file = new File(parameters.get(1));
-		if (file.exists() && file.isFile()) {
+		if (file.exists()) {
 			if (move.equals(action) && file.renameTo(new File(parameters.get(2)))) {
 				result = Syntax.boolTrue;
-			} else if (copy.equals(action) && ToolFile.copyFile(parameters.get(1), parameters.get(2))) {
+			} else if (copy.equals(action) && file.isFile() && ToolFile.copyFile(parameters.get(1), parameters.get(2))) {
+				result = Syntax.boolTrue;
+			} else if (copy.equals(action) && file.isDirectory() && ToolFile.copyDir(parameters.get(1), parameters.get(2))) {
 				result = Syntax.boolTrue;
 			} else if (delete.equals(action) && !file.delete()) {
 				result = Syntax.boolTrue;

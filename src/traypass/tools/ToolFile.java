@@ -3,8 +3,9 @@ package traypass.tools;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.DataInputStream;
+import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileReader;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.InputStreamReader;
 import java.text.NumberFormat;
@@ -87,17 +88,21 @@ public class ToolFile {
 	public static boolean copyFile(String currentFile, String newFile) {
 		boolean result = true;
 		int bufferSize = 2048;
-		BufferedReader in = null;
-		BufferedWriter out = null;
+		System.out.println("Copying " + currentFile + " to " + newFile);
+		File file = new File(newFile);
+		if (!file.getParentFile().exists() && !file.getParentFile().mkdirs()) {
+			return false;
+		}
+		FileInputStream in = null;
+		FileOutputStream out = null;
 		try {
-			in = new BufferedReader(new FileReader(currentFile), bufferSize);
-			out = new BufferedWriter(new FileWriter(newFile), bufferSize);
-			int s = in.read();
-			while (s != -1) {
-				out.write(s);
-				s = in.read();
+			in = new FileInputStream(currentFile);
+			out = new FileOutputStream(newFile);
+			byte[] buffer = new byte[bufferSize];
+			int nbRead;
+			while ((nbRead = in.read(buffer)) != -1) {
+				out.write(buffer, 0, nbRead);
 			}
-			out.flush();
 		} catch (Exception e) {
 			e.printStackTrace();
 			result = false;
@@ -118,6 +123,32 @@ public class ToolFile {
 		return result;
 	}
 
+	public static boolean copyDir(String source, String destination) {
+		boolean result = false;
+		File src = new File(source);
+		File dest = new File(destination);
+		if (src.exists() && src.isDirectory()) {
+			if (!dest.exists() && !dest.mkdirs()) {
+				return false;
+			}
+			for (File file : src.listFiles()) {
+				if (!ignoreFile(file.getName())) {
+					if (file.isFile() && !copyFile(file.getAbsolutePath(), dest.getAbsolutePath() + TrayPassObject.fileSeparator + file.getName())) {
+						return false;
+					} else if (file.isDirectory() && !copyDir(file.getAbsolutePath(), destination + TrayPassObject.fileSeparator + file.getParentFile().getName())) {
+						return false;
+					}
+				}
+			}
+			result = true;
+		}
+		return result;
+	}
+
+	public static boolean ignoreFile(String file) {
+		return file.endsWith("RECYCLE.BIN") || file.endsWith("RECYCLER") || file.endsWith("System Volume Information") || file.endsWith("desktop.ini");
+	}
+
 	public static String getTmpDir() {
 		String result;
 		if (System.getenv("TMP") != null && System.getenv("TMP").trim().length() > 0) {
@@ -127,4 +158,5 @@ public class ToolFile {
 		}
 		return result;
 	}
+
 }
