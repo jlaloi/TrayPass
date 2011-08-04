@@ -15,11 +15,13 @@ import traypass.syntax.action.ActionExecute;
 import traypass.syntax.action.ActionExecuteResult;
 import traypass.syntax.action.ActionFile;
 import traypass.syntax.action.ActionFileName;
+import traypass.syntax.action.ActionFileSize;
 import traypass.syntax.action.ActionForeach;
 import traypass.syntax.action.ActionIf;
 import traypass.syntax.action.ActionInfo;
 import traypass.syntax.action.ActionListDir;
 import traypass.syntax.action.ActionMouse;
+import traypass.syntax.action.ActionNewLine;
 import traypass.syntax.action.ActionNot;
 import traypass.syntax.action.ActionNote;
 import traypass.syntax.action.ActionPack;
@@ -237,9 +239,21 @@ public enum Syntax {
 			1,
 			new ActionFileName(),
 			new String[] { "<file path>" },
-			"Return the file name")
+			"Return the file name"),
 
-	;
+	FILESIZE(
+			"filesize",
+			1,
+			new ActionFileSize(),
+			new String[] { "<file path>" },
+			"Return the file size"),
+
+	NEWLINE(
+			"newline",
+			0,
+			new ActionNewLine(),
+			new String[] {},
+			"Return CR");
 
 	public static final Pattern functionPattern = Pattern.compile("\\@([a-z])*\\((.*)\\)");
 

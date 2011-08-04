@@ -34,7 +34,7 @@ public class Interpreter extends Thread {
 					}
 					break;
 				}
-				if (function != null && function.trim().length() > 0) {
+				if (function != null && function.length() > 0) {
 					result = computeFunction(function);
 				}
 				if (result == null && !stop) {
