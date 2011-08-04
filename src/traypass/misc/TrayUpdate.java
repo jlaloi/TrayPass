@@ -19,7 +19,7 @@ public class TrayUpdate {
 	public String getJarLocation() {
 		String result = "";
 		try {
-			result = this.getClass().getProtectionDomain().getCodeSource().getLocation().toURI().toString();
+			result = this.getClass().getProtectionDomain().getCodeSource().getLocation().toURI().toString().replace("file:/", "").replace("/", TrayPassObject.fileSeparator + "");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
