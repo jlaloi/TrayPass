@@ -42,7 +42,6 @@ public class SetEscapeFrame extends JDialog {
 					result = result.replace(Syntax.functionParamSeparator + "", Syntax.escapeChar + "" + Syntax.functionParamSeparator);
 					result = result.replace(Syntax.functionParamStart + "", Syntax.escapeChar + "" + Syntax.functionParamStart);
 					result = result.replace(Syntax.functionStart + "", Syntax.escapeChar + "" + Syntax.functionStart);
-					result = result.replace(Syntax.functionSeparator + "", Syntax.escapeChar + "" + Syntax.functionSeparator);
 					ToolClipboard.setClipboard(result);
 					encrypted.setText(result);
 				}

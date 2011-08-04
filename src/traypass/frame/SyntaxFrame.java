@@ -16,13 +16,11 @@ public class SyntaxFrame extends JFrame {
 	public SyntaxFrame() {
 		setTitle("Syntax Description");
 		setBackground(Color.white);
-		setLayout(new GridLayout(Syntax.values().length + 5, 1));
+		setLayout(new GridLayout(Syntax.values().length + 4, 1));
 		for (Syntax item : Syntax.getSort()) {
 			JLabel label = new TrayLabel(" " + item.getExample() + " --> " + item.getDescription() + " ");
 			add(label);
 		}
-		JLabel separator = new TrayLabel(" Function separator is " + Syntax.functionSeparator);
-		add(separator);
 		JLabel escape = new TrayLabel(" Escape character is " + Syntax.escapeChar);
 		add(escape);
 		JLabel bool = new TrayLabel(" Bools are  " + Syntax.boolTrue + " and " + Syntax.boolFalse);

@@ -21,7 +21,7 @@ public abstract class Action {
 	}
 
 	protected String executeParam(String param) {
-		String result = Interpreter.clearEscapeChar(interpreter.computeFunction(param));
+		String result = Interpreter.clearEscapeChar(interpreter.computeFunctions(param));
 		return result;
 	}
 

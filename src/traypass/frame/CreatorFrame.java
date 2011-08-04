@@ -81,7 +81,7 @@ public class CreatorFrame extends JFrame {
 				i = i - result.split(Syntax.escapeChar + "" + Syntax.functionParamSeparator).length - 1;
 			}
 		}
-		result += Syntax.functionParamEnd + "" + Syntax.functionSeparator;
+		result += Syntax.functionParamEnd;
 		if (i == selectedItem.getNbParameter() || selectedItem.getNbParameter() == -1) {
 			line.setText(line.getText() + result);
 		}

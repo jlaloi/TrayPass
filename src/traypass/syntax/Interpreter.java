@@ -27,8 +27,7 @@ public class Interpreter extends Thread {
 	public String computeFunctions(String line) {
 		String result = "";
 		try {
-			List<String> functions = splitFunctions(line);
-			for (String function : functions) {
+			for (String function : splitFunctions(line)) {
 				if (stop) {
 					if (function != null && function.trim().length() > 0) {
 						TrayPassObject.trayPass.showError("Stopped before executing: " + function);
@@ -48,7 +47,7 @@ public class Interpreter extends Thread {
 		return result;
 	}
 
-	public String computeFunction(String function) {
+	private String computeFunction(String function) {
 		String result = function;
 		try {
 			if (stop || !checkSyntax(function)) {
@@ -110,7 +109,7 @@ public class Interpreter extends Thread {
 	}
 
 	public static boolean isSpecialChar(String str, int pos, char c) {
-		boolean result = str.charAt(pos) == c;
+		boolean result = str != null && pos >= 0 && pos < str.length() && str.charAt(pos) == c;
 		if (result) {
 			int i = pos - 1;
 			while (i >= 0 && str.charAt(i) == Syntax.escapeChar) {
@@ -132,8 +131,6 @@ public class Interpreter extends Thread {
 			result = true;
 		} else if (c == Syntax.functionParamSeparator) {
 			result = true;
-		} else if (c == Syntax.functionSeparator) {
-			result = true;
 		} else if (c == Syntax.functionStart) {
 			result = true;
 		} else if (c == Syntax.escapeChar) {
@@ -149,14 +146,47 @@ public class Interpreter extends Thread {
 
 	public static List<String> splitFunctions(String functions) {
 		List<String> result = new ArrayList<String>();
-		int lastPos = 0;
-		for (int i = 0; i < functions.length(); i++) {
-			if (isSpecialChar(functions, i, Syntax.functionSeparator)) {
-				result.add(functions.substring(lastPos, i));
-				lastPos = i + 1;
+		int nbIn = 0;
+		int startPos = getNext(functions, 0, Syntax.functionStart);
+		if (startPos > 0) {
+			result.add(functions.substring(0, startPos));
+		} else if (startPos == -1) {
+			result.add(functions);
+		}
+		int pos = getNext(functions, startPos, Syntax.functionParamStart);
+		while (pos < functions.length() && startPos > -1 && pos > 0) {
+			if (isSpecialChar(functions, pos, Syntax.functionParamStart)) {
+				nbIn++;
+			} else if (isSpecialChar(functions, pos, Syntax.functionParamEnd)) {
+				nbIn--;
+			}
+			if (nbIn == 0) {
+				result.add(functions.substring(startPos, pos + 1));
+				startPos = getNext(functions, pos, Syntax.functionStart);
+				if (startPos > 0 && pos + 1 < functions.length() && pos + 1 != startPos) {
+					result.add(functions.substring(pos + 1, startPos));
+				} else if (startPos == -1 && pos + 1 != functions.length()) {
+					result.add(functions.substring(pos + 1, functions.length()));
+				}
+				if (getNext(functions, startPos, Syntax.functionParamStart) == -1 && pos + 1 != functions.length()) {
+					result.add(functions.substring(pos + 1, functions.length()));
+				}
+				pos = getNext(functions, startPos, Syntax.functionParamStart);
+			} else {
+				pos++;
 			}
 		}
-		result.add(functions.substring(lastPos, functions.length()));
+		return result;
+	}
+
+	private static int getNext(String str, int start, char c) {
+		int result = -1;
+		for (int pos = start; str != null && pos < str.length(); pos++) {
+			if (isSpecialChar(str, pos, c)) {
+				result = pos;
+				break;
+			}
+		}
 		return result;
 	}
 
