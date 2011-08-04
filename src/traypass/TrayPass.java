@@ -19,6 +19,7 @@ import traypass.frame.CaptureFrame;
 import traypass.frame.ConfigFrame;
 import traypass.frame.CreatorFrame;
 import traypass.frame.SetEscapeFrame;
+import traypass.frame.SyntaxFrame;
 import traypass.syntax.Interpreter;
 import traypass.syntax.Syntax;
 import traypass.tools.ToolFile;
@@ -153,7 +154,7 @@ public class TrayPass {
 		PassMenuItem helpItem = new PassMenuItem("Syntax help", null, helpIcon);
 		helpItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Syntax.showSyntaxFrame();
+				new SyntaxFrame();
 			}
 		});
 		configMenu.add(helpItem);

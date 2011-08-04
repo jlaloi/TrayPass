@@ -182,6 +182,14 @@ public class Interpreter extends Thread {
 		}
 	}
 
+	public static boolean isTrue(String bool) {
+		boolean result = false;
+		if (bool != null && bool.toLowerCase().equals(Syntax.boolTrue)) {
+			result = true;
+		}
+		return result;
+	}
+
 	public boolean isStop() {
 		return stop;
 	}

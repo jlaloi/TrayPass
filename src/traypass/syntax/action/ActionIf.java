@@ -4,7 +4,6 @@ import java.util.List;
 
 import traypass.syntax.Action;
 import traypass.syntax.Interpreter;
-import traypass.syntax.Syntax;
 
 public class ActionIf extends Action {
 
@@ -12,7 +11,7 @@ public class ActionIf extends Action {
 		this.interpreter = interpreter;
 		String result = "";
 		String test = executeParam(parameters.get(0));
-		if (Syntax.isTrue(test)) {
+		if (Interpreter.isTrue(test)) {
 			result = executeParam(parameters.get(1));
 		} else if (parameters.size() > 2) {
 			result = executeParam(parameters.get(2));

@@ -1,14 +1,10 @@
 package traypass.syntax;
 
-import java.awt.Color;
-import java.awt.GridLayout;
+import java.util.Collection;
+import java.util.SortedMap;
+import java.util.TreeMap;
 import java.util.regex.Pattern;
 
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-
-import traypass.TrayPassObject;
-import traypass.misc.TrayLabel;
 import traypass.syntax.action.ActionClipboard;
 import traypass.syntax.action.ActionConcat;
 import traypass.syntax.action.ActionContains;
@@ -309,33 +305,12 @@ public enum Syntax {
 		return name() + " : " + getDescription();
 	}
 
-	public static boolean isTrue(String bool) {
-		boolean result = false;
-		if (bool != null && bool.toLowerCase().equals(boolTrue)) {
-			result = true;
+	public static Collection<Syntax> getSort() {
+		SortedMap<String, Syntax> map = new TreeMap<String, Syntax>();
+		for (Syntax l : Syntax.values()) {
+			map.put(l.getPattern(), l);
 		}
-		return result;
+		return map.values();
 	}
 
-	public static void showSyntaxFrame() {
-		JFrame frame = new JFrame("Syntax Description");
-		frame.setBackground(Color.white);
-		frame.setLayout(new GridLayout(Syntax.values().length + 4, 1));
-		for (Syntax item : Syntax.values()) {
-			JLabel label = new TrayLabel(" " + item.getExample() + " --> " + item.getDescription() + " ");
-			frame.add(label);
-		}
-		JLabel separator = new TrayLabel(" Function separator is " + functionSeparator);
-		frame.add(separator);
-		JLabel escape = new TrayLabel(" Escape character is " + escapeChar);
-		frame.add(escape);
-		JLabel bool = new TrayLabel(" Bools are  " + boolTrue + " and " + boolFalse);
-		frame.add(bool);
-		JLabel example = new TrayLabel(" Middle click : Screen Capture - Double click : Stop Current Execution ");
-		frame.add(example);
-		frame.setIconImage(TrayPassObject.trayImageIcon);
-		frame.pack();
-		frame.setLocationRelativeTo(frame.getParent());
-		frame.setVisible(true);
-	}
 }
