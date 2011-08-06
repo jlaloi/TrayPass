@@ -43,12 +43,11 @@ public class ToolFile {
 		return result;
 	}
 
-	public static void addToFile(String file, String str) {
+	public static void addToFile(String file, String str, boolean append) {
 		BufferedWriter bw = null;
 		try {
-			bw = new BufferedWriter(new FileWriter(file, true));
+			bw = new BufferedWriter(new FileWriter(file, append));
 			bw.write(str);
-			bw.newLine();
 			bw.flush();
 		} catch (Exception ioe) {
 			ioe.printStackTrace();

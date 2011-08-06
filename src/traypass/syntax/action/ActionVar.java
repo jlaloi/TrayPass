@@ -14,7 +14,7 @@ public class ActionVar extends Action {
 		if (parameters.size() == 1) {
 			result = get(parameters.get(0));
 		} else if (parameters.size() == 2) {
-			result = set(parameters.get(0), result);
+			result = set(parameters.get(0), parameters.get(1));
 		}
 		return result;
 	}

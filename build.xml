@@ -5,6 +5,7 @@
     </tstamp>
     <target name="create_run_jar">
     	<javac srcdir="src" destdir="bin"/>
+    	<delete file="bin/UploadVersion.class"/>
         <jar destfile="TrayPass.jar">
             <manifest>
             	<attribute name="Main-Class" value="traypass.Launcher"/>

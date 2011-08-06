@@ -13,6 +13,7 @@ import traypass.syntax.action.ActionDownload;
 import traypass.syntax.action.ActionEquals;
 import traypass.syntax.action.ActionExecute;
 import traypass.syntax.action.ActionExecuteResult;
+import traypass.syntax.action.ActionFTP;
 import traypass.syntax.action.ActionFile;
 import traypass.syntax.action.ActionFileName;
 import traypass.syntax.action.ActionFileSize;
@@ -84,7 +85,7 @@ public enum Syntax {
 			"file",
 			-1,
 			new ActionFile(),
-			new String[] { "<copy/move/delete>", "<file path>", "<new file path>" },
+			new String[] { "<" + ActionFile.copy + "/" + ActionFile.delete + "/" + ActionFile.exist + "/" + ActionFile.move + ">", "<file path>", "<new file path>" },
 			"Copy, move or delete a file"),
 
 	DECRYPT(
@@ -103,9 +104,9 @@ public enum Syntax {
 
 	NOTE(
 			"note",
-			2,
+			3,
 			new ActionNote(),
-			new String[] { "<file path>", "<text>" },
+			new String[] { "<file path>", "<text>", "<bool append>" },
 			"Add the specified text to the specified file"),
 
 	PACK(
@@ -253,7 +254,14 @@ public enum Syntax {
 			0,
 			new ActionNewLine(),
 			new String[] {},
-			"Return CR");
+			"Return CR"),
+
+	FTP(
+			"ftp",
+			7,
+			new ActionFTP(),
+			new String[] { "<host>", "<port>", "<user>", "<password>", "<" + ActionFTP.download + "/" + ActionFTP.upload + ">", "<Server File>", "Local File>" },
+			"Return if the ftp transfert is ok");
 
 	public static final Pattern functionPattern = Pattern.compile("\\@([a-z])*\\((.*)\\)");
 

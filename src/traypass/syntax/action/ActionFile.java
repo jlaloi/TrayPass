@@ -28,7 +28,7 @@ public class ActionFile extends Action {
 				result = Syntax.boolTrue;
 			} else if (copy.equals(action) && file.isDirectory() && ToolFile.copyDir(parameters.get(1), parameters.get(2))) {
 				result = Syntax.boolTrue;
-			} else if (delete.equals(action) && !file.delete()) {
+			} else if (delete.equals(action) && file.delete()) {
 				result = Syntax.boolTrue;
 			} else if (exist.equals(action)) {
 				result = Syntax.boolTrue;
