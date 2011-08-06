@@ -6,6 +6,7 @@ import java.awt.GridLayout;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
+import traypass.Launcher;
 import traypass.TrayPassObject;
 import traypass.misc.TrayLabel;
 import traypass.misc.TrayUpdate;
@@ -16,7 +17,7 @@ public class SyntaxFrame extends JFrame {
 	public SyntaxFrame() {
 		setTitle("Syntax Description");
 		setBackground(Color.white);
-		setLayout(new GridLayout(Syntax.values().length + 4, 1));
+		setLayout(new GridLayout(Syntax.values().length + 5, 1));
 		for (Syntax item : Syntax.getSort()) {
 			JLabel label = new TrayLabel(" " + item.getExample() + " --> " + item.getDescription() + " ");
 			add(label);
@@ -27,6 +28,8 @@ public class SyntaxFrame extends JFrame {
 		add(bool);
 		JLabel example = new TrayLabel(" Middle click : Screen Capture - Double click : Stop Current Execution ");
 		add(example);
+		JLabel param = new TrayLabel(" Config parameter is " + Launcher.configFileNameParam + "<config name>");
+		add(param);
 		JLabel version = new TrayLabel(" Version : " + new TrayUpdate().getLocalVersion());
 		version.setHorizontalAlignment(JLabel.RIGHT);
 		add(version);

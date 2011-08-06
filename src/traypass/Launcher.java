@@ -6,12 +6,14 @@ import javax.swing.UIManager;
 
 public class Launcher {
 
+	public static final String configFileNameParam = "configFileName:";
+
 	public static void setParameters(String[] args) {
 		for (String arg : args) {
-			if (arg.startsWith("configFileName:")) {
+			if (arg.startsWith(configFileNameParam)) {
 				TrayPassObject.configFileName = arg.substring(arg.indexOf(':') + 1);
 			} else {
-				System.out.println("Unknown paremeter : " + arg);
+				System.out.println("Unknown paremeter: " + arg);
 			}
 		}
 	}
@@ -19,7 +21,7 @@ public class Launcher {
 	public static void main(String[] args) {
 
 		setParameters(args);
-		System.out.println("configFileName: " + TrayPassObject.configFileName);
+		System.out.println(configFileNameParam + " " + TrayPassObject.configFileName);
 
 		if (SystemTray.isSupported()) {
 			try {
