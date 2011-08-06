@@ -10,16 +10,16 @@ import traypass.tools.ToolFile;
 
 public class TrayUpdate {
 
-	public static String updateJarUrl = "";
+	public static String updateJarUrl = "http://tp.loul.org/TrayPass.jar";
 
-	public static String updateVersionUrl = "";
+	public static String updateVersionUrl = "http://tp.loul.org/version.txt";
 
 	public static String manifestAttribute = "Implementation-Version";
 
 	public String getJarLocation() {
 		String result = "";
 		try {
-			result = this.getClass().getProtectionDomain().getCodeSource().getLocation().toURI().toString().replace("file:/", "").replace("/", TrayPassObject.fileSeparator + "");
+			result = this.getClass().getProtectionDomain().getCodeSource().getLocation().toURI().toString().replace("file:/", "").replace("/", TrayPassObject.fileSeparator + "").replace("%20", " ");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -44,7 +44,7 @@ public class TrayUpdate {
 	public String getServerVersion() {
 		String result = "";
 		try {
-			String tmpFile = ToolFile.getTmpDir() + "trayPass.version";
+			String tmpFile = ToolFile.getTmpDir() + "tpversion";
 			ToolDownload.downloadFile(updateVersionUrl, tmpFile);
 			result = ToolFile.getFileLines(tmpFile).get(0);
 		} catch (Exception e) {
@@ -76,7 +76,7 @@ public class TrayUpdate {
 	public void manage() {
 		if (isUpdate()) {
 			Object[] options = { "Yes, update it!", "No, thanks" };
-			int n = JOptionPane.showOptionDialog(null, "A new update is available.\n" + "Local : " + getLocalVersion() + "\n" + "Server : " + getServerVersion() + "\n" + "Do you wants to update?", "TrayPass update", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[2]);
+			int n = JOptionPane.showOptionDialog(null, "A new update is available.\n" + "Local : " + getLocalVersion() + "\n" + "Server : " + getServerVersion() + "\n" + "Do you wants to update?", "TrayPass update", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[1]);
 			if (n == 0) {
 				update();
 				TrayPassObject.trayPass.showInfo(getJarLocation() + " updated.\nYou need to restart the application!");

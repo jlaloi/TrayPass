@@ -20,6 +20,7 @@ import traypass.frame.ConfigFrame;
 import traypass.frame.CreatorFrame;
 import traypass.frame.SetEscapeFrame;
 import traypass.frame.SyntaxFrame;
+import traypass.misc.TrayUpdate;
 import traypass.syntax.Interpreter;
 import traypass.syntax.Syntax;
 import traypass.tools.ToolFile;
@@ -172,6 +173,13 @@ public class TrayPass {
 			}
 		});
 		configMenu.add(clearItem);
+		PassMenuItem updateItem = new PassMenuItem("Check for update");
+		updateItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new TrayUpdate().manage();
+			}
+		});
+		configMenu.add(updateItem);
 		PassMenuItem exitItem = new PassMenuItem("Exit");
 		exitItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
