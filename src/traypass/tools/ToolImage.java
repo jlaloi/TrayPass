@@ -61,12 +61,12 @@ public class ToolImage {
 	}
 
 	public static BufferedImage resizeImage(BufferedImage image, int width, int height) {
-		BufferedImage scaledImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
-		Graphics2D graphics2D = scaledImage.createGraphics();
+		BufferedImage resutl = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+		Graphics2D graphics2D = resutl.createGraphics();
 		graphics2D.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
 		graphics2D.drawImage(image, 0, 0, width, height, null);
 		graphics2D.dispose();
-		return scaledImage;
+		return resutl;
 	}
 
 	public static BufferedImage resizeImage(Image image, int width, int height) {

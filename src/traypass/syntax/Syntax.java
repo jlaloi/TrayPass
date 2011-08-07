@@ -5,6 +5,7 @@ import java.util.SortedMap;
 import java.util.TreeMap;
 import java.util.regex.Pattern;
 
+import traypass.syntax.action.ActionBrowse;
 import traypass.syntax.action.ActionClipboard;
 import traypass.syntax.action.ActionConcat;
 import traypass.syntax.action.ActionContains;
@@ -261,7 +262,14 @@ public enum Syntax {
 			7,
 			new ActionFTP(),
 			new String[] { "<host>", "<port>", "<user>", "<password>", "<" + ActionFTP.download + "/" + ActionFTP.upload + ">", "<Server File>", "Local File>" },
-			"Return if the ftp transfert is ok");
+			"Return if the ftp transfert is ok"),
+
+	BROWSE(
+			"browse",
+			2,
+			new ActionBrowse(),
+			new String[] { "<" + ActionBrowse.file + "/" + ActionBrowse.dir + ">", "<title>" },
+			"Return selected file");
 
 	public static final Pattern functionPattern = Pattern.compile("\\@([a-z])*\\((.*)\\)");
 
@@ -282,23 +290,15 @@ public enum Syntax {
 	private String pattern;
 	private int nbParameter;
 	private Action action;
-	private String example;
+	private String[] params;
 	private String description;
 
-	Syntax(String pattern, int nbParameter, Action action, String[] syntax, String description) {
+	Syntax(String pattern, int nbParameter, Action action, String[] params, String description) {
 		this.pattern = Syntax.functionStart + pattern;
 		this.action = action;
 		this.nbParameter = nbParameter;
-		this.example = "";
-		for (String param : syntax) {
-			if (this.example.length() > 0) {
-				example += Syntax.functionParamSeparator + param;
-			} else {
-				example += param;
-			}
-		}
-		example = Syntax.functionStart + pattern + Syntax.functionParamStart + example + Syntax.functionParamEnd;
 		this.description = description;
+		this.params = params;
 	}
 
 	public String getPattern() {
@@ -314,7 +314,20 @@ public enum Syntax {
 	}
 
 	public String getExample() {
+		String example = "";
+		for (String param : params) {
+			if (example.length() > 0) {
+				example += Syntax.functionParamSeparator + param;
+			} else {
+				example += param;
+			}
+		}
+		example = Syntax.functionStart + pattern + Syntax.functionParamStart + example + Syntax.functionParamEnd;
 		return example;
+	}
+
+	public String[] getParams() {
+		return params;
 	}
 
 	public String getDescription() {
