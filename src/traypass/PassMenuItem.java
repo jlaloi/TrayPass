@@ -17,7 +17,7 @@ public class PassMenuItem extends JMenuItem {
 
 	public static ImageIcon defaultIcon;
 
-	public static String defaultPath = "Default.png";
+	public static String defaultIconPath = "DefaultMenuIcon.png";
 
 	public static HashMap<String, ImageIcon> library = new HashMap<String, ImageIcon>();
 
@@ -54,7 +54,7 @@ public class PassMenuItem extends JMenuItem {
 
 	private void init(final String line) {
 		if (defaultIcon == null) {
-			defaultIcon = getImageIcon(defaultPath, this.getClass());
+			defaultIcon = getImageIcon(defaultIconPath, this.getClass());
 		}
 		setFont(TrayPassObject.font);
 		if (line != null && line.trim().length() > 0) {
@@ -72,7 +72,7 @@ public class PassMenuItem extends JMenuItem {
 		try {
 			if (library.containsKey(path)) {
 				result = library.get(path);
-			} else if (defaultPath.equals(path) || new File(path).exists()) {
+			} else if (defaultIconPath.equals(path) || new File(path).exists()) {
 				Image image = ToolImage.getImage(path, c);
 				BufferedImage icon = ToolImage.resizeImage(image, TrayPassObject.iconSize, TrayPassObject.iconSize);
 				result = new ImageIcon(icon);

@@ -32,7 +32,7 @@ public class TrayPassConfig implements Serializable {
 
 	private String passFile = "c:\\TrayPass.txt";
 
-	private String iconFile = "Tatane.png";
+	private String iconFile = "DefaultIcon.png";
 
 	private int imageCheckNumber = 20;
 

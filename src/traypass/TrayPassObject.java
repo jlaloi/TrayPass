@@ -14,7 +14,7 @@ public class TrayPassObject {
 
 	public static String passFile = "c:\\TrayPass.txt";
 
-	public static String iconFile = "Tatane.png";
+	public static String iconFile = "DefaultIcon.png";
 
 	public static String fontName = "Calibri";
 
