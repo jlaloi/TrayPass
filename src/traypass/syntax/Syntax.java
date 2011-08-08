@@ -322,7 +322,7 @@ public enum Syntax {
 				example += param;
 			}
 		}
-		example = Syntax.functionStart + pattern + Syntax.functionParamStart + example + Syntax.functionParamEnd;
+		example = pattern + Syntax.functionParamStart + example + Syntax.functionParamEnd;
 		return example;
 	}
 
