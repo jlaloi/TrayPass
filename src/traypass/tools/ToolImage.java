@@ -53,8 +53,12 @@ public class ToolImage {
 	}
 
 	public static void saveImage(BufferedImage image, File file) {
+		saveImage(image, file, "png");
+	}
+
+	public static void saveImage(BufferedImage image, File file, String ext) {
 		try {
-			ImageIO.write(image, "png", file);
+			ImageIO.write(image, ext, file);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

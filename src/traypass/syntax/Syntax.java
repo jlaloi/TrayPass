@@ -8,23 +8,18 @@ import java.util.regex.Pattern;
 import traypass.syntax.action.ActionBrowse;
 import traypass.syntax.action.ActionClipboard;
 import traypass.syntax.action.ActionConcat;
-import traypass.syntax.action.ActionContains;
 import traypass.syntax.action.ActionDecrypt;
 import traypass.syntax.action.ActionDownload;
-import traypass.syntax.action.ActionEquals;
 import traypass.syntax.action.ActionExecute;
 import traypass.syntax.action.ActionExecuteResult;
 import traypass.syntax.action.ActionFTP;
 import traypass.syntax.action.ActionFile;
 import traypass.syntax.action.ActionFileName;
 import traypass.syntax.action.ActionFileSize;
-import traypass.syntax.action.ActionForeach;
-import traypass.syntax.action.ActionIf;
 import traypass.syntax.action.ActionInfo;
 import traypass.syntax.action.ActionListDir;
 import traypass.syntax.action.ActionMouse;
 import traypass.syntax.action.ActionNewLine;
-import traypass.syntax.action.ActionNot;
 import traypass.syntax.action.ActionNote;
 import traypass.syntax.action.ActionPack;
 import traypass.syntax.action.ActionPrompt;
@@ -33,10 +28,17 @@ import traypass.syntax.action.ActionReplace;
 import traypass.syntax.action.ActionSelect;
 import traypass.syntax.action.ActionSend;
 import traypass.syntax.action.ActionStop;
-import traypass.syntax.action.ActionVar;
 import traypass.syntax.action.ActionWait;
 import traypass.syntax.action.ActionWaitFor;
-import traypass.syntax.action.ActionWhile;
+import traypass.syntax.action.logical.ActionAnd;
+import traypass.syntax.action.logical.ActionContains;
+import traypass.syntax.action.logical.ActionEquals;
+import traypass.syntax.action.logical.ActionForeach;
+import traypass.syntax.action.logical.ActionIf;
+import traypass.syntax.action.logical.ActionNot;
+import traypass.syntax.action.logical.ActionOr;
+import traypass.syntax.action.logical.ActionVar;
+import traypass.syntax.action.logical.ActionWhile;
 
 public enum Syntax {
 
@@ -269,7 +271,21 @@ public enum Syntax {
 			2,
 			new ActionBrowse(),
 			new String[] { "<" + ActionBrowse.file + "/" + ActionBrowse.dir + ">", "<title>" },
-			"Return selected file");
+			"Return selected file"),
+
+	AND(
+			"and",
+			-1,
+			new ActionAnd(),
+			new String[] { "<bool>", "<bool>", "..." },
+			"Logical AND"),
+
+	OR(
+			"or",
+			-1,
+			new ActionOr(),
+			new String[] { "<bool>", "<bool>", "..." },
+			"Logical OR");
 
 	public static final Pattern functionPattern = Pattern.compile("\\@([a-z])*\\((.*)\\)");
 

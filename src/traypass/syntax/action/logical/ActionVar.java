@@ -1,4 +1,4 @@
-package traypass.syntax.action;
+package traypass.syntax.action.logical;
 
 import java.util.HashMap;
 import java.util.List;

@@ -1,17 +1,20 @@
-package traypass.syntax.action;
+package traypass.syntax.action.logical;
 
 import java.util.List;
 
 import traypass.syntax.Action;
 import traypass.syntax.Interpreter;
 
-public class ActionWhile extends Action {
+public class ActionIf extends Action {
 
 	public String execute(Interpreter interpreter, List<String> parameters) {
 		this.interpreter = interpreter;
 		String result = "";
-		while (!interpreter.isStop() && Interpreter.isTrue(executeParam(parameters.get(0)))) {
+		String test = executeParam(parameters.get(0));
+		if (Interpreter.isTrue(test)) {
 			result = executeParam(parameters.get(1));
+		} else if (parameters.size() > 2) {
+			result = executeParam(parameters.get(2));
 		}
 		return result;
 	}
