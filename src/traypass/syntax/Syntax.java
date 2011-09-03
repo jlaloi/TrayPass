@@ -165,8 +165,8 @@ public enum Syntax {
 			"select",
 			-1,
 			new ActionSelect(),
-			new String[] { "<message>", "<option 1>", "<option2>", "<...>" },
-			"Return the selected option"),
+			new String[] { "<message>", "<selected label>", "<label 1>", "<value 1>", "<label 2>", "<value 2>", "<...>" },
+			"Return the value associated to the selected label"),
 
 	LISTDIR(
 			"listdir",

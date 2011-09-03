@@ -13,7 +13,7 @@ public class ActionNote extends Action {
 	public String doAction(List<String> parameters) {
 		String file = parameters.get(0);
 		String text = parameters.get(1);
-		String append = parameters.get(0);
+		String append = parameters.get(2);
 		String srt = "";
 		if (Interpreter.isTrue(append)) {
 			srt = "----------- " + Calendar.getInstance().getTime() + " ----------- " + TrayPassObject.lineSeparator;
