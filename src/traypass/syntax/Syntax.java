@@ -7,7 +7,6 @@ import java.util.regex.Pattern;
 
 import traypass.syntax.action.ActionBrowse;
 import traypass.syntax.action.ActionClipboard;
-import traypass.syntax.action.ActionConcat;
 import traypass.syntax.action.ActionDecrypt;
 import traypass.syntax.action.ActionDownload;
 import traypass.syntax.action.ActionExecute;
@@ -24,14 +23,12 @@ import traypass.syntax.action.ActionNote;
 import traypass.syntax.action.ActionPack;
 import traypass.syntax.action.ActionPrompt;
 import traypass.syntax.action.ActionReadFile;
-import traypass.syntax.action.ActionReplace;
 import traypass.syntax.action.ActionSelect;
 import traypass.syntax.action.ActionSend;
 import traypass.syntax.action.ActionStop;
 import traypass.syntax.action.ActionWait;
 import traypass.syntax.action.ActionWaitFor;
 import traypass.syntax.action.logical.ActionAnd;
-import traypass.syntax.action.logical.ActionContains;
 import traypass.syntax.action.logical.ActionEquals;
 import traypass.syntax.action.logical.ActionForeach;
 import traypass.syntax.action.logical.ActionIf;
@@ -39,6 +36,15 @@ import traypass.syntax.action.logical.ActionNot;
 import traypass.syntax.action.logical.ActionOr;
 import traypass.syntax.action.logical.ActionVar;
 import traypass.syntax.action.logical.ActionWhile;
+import traypass.syntax.action.str.ActionCaseLower;
+import traypass.syntax.action.str.ActionCaseUpper;
+import traypass.syntax.action.str.ActionConcat;
+import traypass.syntax.action.str.ActionContains;
+import traypass.syntax.action.str.ActionIndexOf;
+import traypass.syntax.action.str.ActionLastIndexOf;
+import traypass.syntax.action.str.ActionLenght;
+import traypass.syntax.action.str.ActionReplace;
+import traypass.syntax.action.str.ActionSub;
 
 public enum Syntax {
 
@@ -285,7 +291,51 @@ public enum Syntax {
 			-1,
 			new ActionOr(),
 			new String[] { "<bool>", "<bool>", "..." },
-			"Logical OR");
+			"Logical OR"),
+
+	UPPERCASE(
+			"uppercase",
+			1,
+			new ActionCaseUpper(),
+			new String[] { "<String>" },
+			"To upper case"),
+
+	LOWERCASE(
+			"lowercase",
+			1,
+			new ActionCaseLower(),
+			new String[] { "<String>" },
+			"To lower case"),
+
+	SUBSTR(
+			"substr",
+			3,
+			new ActionSub(),
+			new String[] { "<String>,<from>,<to>" },
+			"Substr"),
+
+	INDEXOF(
+			"indexof",
+			-1,
+			new ActionIndexOf(),
+			new String[] { "<String>,<str>,<from*>" },
+			"Index of"),
+
+	LASTINDEXOF(
+			"lastindexof",
+			-1,
+			new ActionLastIndexOf(),
+			new String[] { "<String>,<str>,<from*>" },
+			"Last index of"),
+
+	LENGHT(
+			"lenght",
+			-1,
+			new ActionLenght(),
+			new String[] { "<String>" },
+			"The string lenght")
+
+	;
 
 	public static final Pattern functionPattern = Pattern.compile("\\@([a-z])*\\((.*)\\)");
 

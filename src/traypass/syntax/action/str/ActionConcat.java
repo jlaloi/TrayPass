@@ -1,4 +1,4 @@
-package traypass.syntax.action;
+package traypass.syntax.action.str;
 
 import java.util.List;
 
