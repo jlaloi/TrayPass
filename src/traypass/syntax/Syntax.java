@@ -31,6 +31,7 @@ import traypass.syntax.action.ActionWaitFor;
 import traypass.syntax.action.logical.ActionAnd;
 import traypass.syntax.action.logical.ActionEquals;
 import traypass.syntax.action.logical.ActionForeach;
+import traypass.syntax.action.logical.ActionFunction;
 import traypass.syntax.action.logical.ActionIf;
 import traypass.syntax.action.logical.ActionNot;
 import traypass.syntax.action.logical.ActionOr;
@@ -41,10 +42,12 @@ import traypass.syntax.action.str.ActionCaseLower;
 import traypass.syntax.action.str.ActionCaseUpper;
 import traypass.syntax.action.str.ActionConcat;
 import traypass.syntax.action.str.ActionContains;
+import traypass.syntax.action.str.ActionEndsWith;
 import traypass.syntax.action.str.ActionIndexOf;
 import traypass.syntax.action.str.ActionLastIndexOf;
 import traypass.syntax.action.str.ActionLenght;
 import traypass.syntax.action.str.ActionReplace;
+import traypass.syntax.action.str.ActionStartsWith;
 import traypass.syntax.action.str.ActionSub;
 
 public enum Syntax {
@@ -341,7 +344,30 @@ public enum Syntax {
 			-1,
 			new ActionSwitch(),
 			new String[] { "<value>", "<test 1>", "<result 1>", "<...>" },
-			"Logical switch");
+			"Logical switch"),
+
+	FUNCTION(
+			"function",
+			-1,
+			new ActionFunction(),
+			new String[] { "<function name>", "<function actions>" },
+			"Declare a function or execute a function"),
+
+	STARTSWITH(
+			"startswith",
+			-1,
+			new ActionStartsWith(),
+			new String[] { "<String>", "<Pattern>", "<Offset>" },
+			"Starts with"),
+
+	ENDSSWITH(
+			"endswith",
+			-1,
+			new ActionEndsWith(),
+			new String[] { "<String>", "<Pattern>" },
+			"Ends with")
+
+	;
 
 	public static final Pattern functionPattern = Pattern.compile("\\@([a-z])*\\((.*)\\)");
 
