@@ -19,10 +19,10 @@ import traypass.syntax.action.ActionInfo;
 import traypass.syntax.action.ActionListDir;
 import traypass.syntax.action.ActionMouse;
 import traypass.syntax.action.ActionNewLine;
-import traypass.syntax.action.ActionNote;
 import traypass.syntax.action.ActionPack;
 import traypass.syntax.action.ActionPrompt;
 import traypass.syntax.action.ActionReadFile;
+import traypass.syntax.action.ActionSave;
 import traypass.syntax.action.ActionSelect;
 import traypass.syntax.action.ActionSend;
 import traypass.syntax.action.ActionStop;
@@ -34,6 +34,7 @@ import traypass.syntax.action.logical.ActionForeach;
 import traypass.syntax.action.logical.ActionIf;
 import traypass.syntax.action.logical.ActionNot;
 import traypass.syntax.action.logical.ActionOr;
+import traypass.syntax.action.logical.ActionSwitch;
 import traypass.syntax.action.logical.ActionVar;
 import traypass.syntax.action.logical.ActionWhile;
 import traypass.syntax.action.str.ActionCaseLower;
@@ -111,10 +112,10 @@ public enum Syntax {
 			new String[] { "<text>" },
 			"Set the clipboard content with the specified text or without parameter to get the clipboard content"),
 
-	NOTE(
-			"note",
+	SAVE(
+			"save",
 			3,
-			new ActionNote(),
+			new ActionSave(),
 			new String[] { "<file path>", "<text>", "<bool append>" },
 			"Add the specified text to the specified file"),
 
@@ -333,9 +334,14 @@ public enum Syntax {
 			-1,
 			new ActionLenght(),
 			new String[] { "<String>" },
-			"The string lenght")
+			"The string lenght"),
 
-	;
+	SWITCH(
+			"switch",
+			-1,
+			new ActionSwitch(),
+			new String[] { "<value>", "<test 1>", "<result 1>", "<...>" },
+			"Logical switch");
 
 	public static final Pattern functionPattern = Pattern.compile("\\@([a-z])*\\((.*)\\)");
 

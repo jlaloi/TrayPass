@@ -8,7 +8,7 @@ import traypass.syntax.Action;
 import traypass.syntax.Interpreter;
 import traypass.tools.ToolFile;
 
-public class ActionNote extends Action {
+public class ActionSave extends Action {
 
 	public String doAction(List<String> parameters) {
 		String file = parameters.get(0);
