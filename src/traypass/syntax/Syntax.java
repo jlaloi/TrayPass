@@ -34,6 +34,7 @@ import traypass.syntax.action.logical.ActionEquals;
 import traypass.syntax.action.logical.ActionForeach;
 import traypass.syntax.action.logical.ActionFunction;
 import traypass.syntax.action.logical.ActionIf;
+import traypass.syntax.action.logical.ActionIs;
 import traypass.syntax.action.logical.ActionNot;
 import traypass.syntax.action.logical.ActionOr;
 import traypass.syntax.action.logical.ActionSwitch;
@@ -367,6 +368,13 @@ public enum Syntax {
 			new ActionStartsWith(),
 			new String[] { "<String>", "<Pattern>", "<Offset>" },
 			"Starts with"),
+
+	IS(
+			"is",
+			2,
+			new ActionIs(),
+			new String[] { "<" + ActionIs.file + "/" + ActionIs.directory + ">", "<File>" },
+			"Is file/directory"),
 
 	ENDSSWITH(
 			"endswith",
