@@ -206,7 +206,7 @@ public class TrayPass {
 	}
 
 	public void stopCompute() {
-		if (interpreter != null) {
+		if (interpreter != null && !interpreter.isStop()) {
 			showInfo("Trying to stop the execution...");
 			interpreter.setStop(true);
 		}

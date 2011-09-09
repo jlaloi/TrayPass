@@ -26,7 +26,11 @@ public class ActionPack extends Action {
 		HashMap<String, String> files = preparePack(pack);
 		String result = "";
 		if (files.containsKey(lineFile)) {
-			String[] lines = ToolFile.getFileLines(files.get(lineFile)).get(0).split(paramPattern);
+			String line = "";
+			for (String l : ToolFile.getFileLines(files.get(lineFile))) {
+				line += l + " ";
+			}
+			String[] lines = line.split(paramPattern);
 			// Parameters
 			if (lines.length > 1 && parameters.size() > 1) {
 				for (int i = 0; i < lines.length; i++) {
