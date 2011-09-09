@@ -7,6 +7,7 @@ import java.util.regex.Pattern;
 
 import traypass.syntax.action.ActionBrowse;
 import traypass.syntax.action.ActionClipboard;
+import traypass.syntax.action.ActionDate;
 import traypass.syntax.action.ActionDecrypt;
 import traypass.syntax.action.ActionDownload;
 import traypass.syntax.action.ActionExecute;
@@ -184,6 +185,13 @@ public enum Syntax {
 			new ActionListDir(),
 			new String[] { "<path>" },
 			"List all files in the selected path"),
+
+	DATE(
+			"date",
+			1,
+			new ActionDate(),
+			new String[] {},
+			"The current date"),
 
 	VAR(
 			"var",
