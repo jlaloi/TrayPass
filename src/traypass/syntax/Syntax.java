@@ -189,7 +189,7 @@ public enum Syntax {
 
 	DATE(
 			"date",
-			1,
+			0,
 			new ActionDate(),
 			new String[] {},
 			"The current date"),
