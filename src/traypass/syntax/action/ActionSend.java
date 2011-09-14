@@ -31,18 +31,6 @@ public class ActionSend extends Action {
 		return "";
 	}
 
-	public static int[] merge(int[] a, int[] b) {
-		int[] result = new int[a.length + b.length];
-		int i = 0;
-		for (; i < a.length; i++) {
-			result[i] = a[i];
-		}
-		for (int j = 0; j < b.length; j++) {
-			result[i + j] = b[j];
-		}
-		return result;
-	}
-
 	private Pair<Integer, int[]> getCode(String characters, int i) {
 		Pair<Integer, int[]> result = null;
 		int[] array = null;
@@ -128,6 +116,13 @@ public class ActionSend extends Action {
 			result = new int[] { KeyEvent.VK_RIGHT };
 		} else if (v.equals("{left}")) {
 			result = new int[] { KeyEvent.VK_LEFT };
+		} else if (v.startsWith("{code:")) {
+			try {
+				String code = v.substring(v.indexOf(':') + 1, v.indexOf('}'));
+				result = new int[] { Integer.valueOf(code) };
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 		return result;
 	}
@@ -453,6 +448,18 @@ public class ActionSend extends Action {
 			} catch (Exception e) {
 			}
 		}
+	}
+
+	public static int[] merge(int[] a, int[] b) {
+		int[] result = new int[a.length + b.length];
+		int i = 0;
+		for (; i < a.length; i++) {
+			result[i] = a[i];
+		}
+		for (int j = 0; j < b.length; j++) {
+			result[i + j] = b[j];
+		}
+		return result;
 	}
 
 }
