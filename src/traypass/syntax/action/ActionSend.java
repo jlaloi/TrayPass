@@ -120,6 +120,14 @@ public class ActionSend extends Action {
 			result = new int[] { KeyEvent.VK_F11 };
 		} else if (v.equals("{f12}")) {
 			result = new int[] { KeyEvent.VK_F12 };
+		} else if (v.equals("{up}")) {
+			result = new int[] { KeyEvent.VK_UP };
+		} else if (v.equals("{down}")) {
+			result = new int[] { KeyEvent.VK_DOWN };
+		} else if (v.equals("{right}")) {
+			result = new int[] { KeyEvent.VK_RIGHT };
+		} else if (v.equals("{left}")) {
+			result = new int[] { KeyEvent.VK_LEFT };
 		}
 		return result;
 	}
