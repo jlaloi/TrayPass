@@ -84,7 +84,7 @@ public enum Syntax {
 
 	SEND(
 			"send",
-			1,
+			-1,
 			new ActionSend(),
 			new String[] { "<keys>" },
 			"Simulate a keyboard to send specified keys"),
