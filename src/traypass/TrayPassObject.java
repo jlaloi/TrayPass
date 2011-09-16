@@ -44,9 +44,9 @@ public class TrayPassObject {
 
 	public static int captureWidth = 1024;
 
-	public static int imageCheckNumber = 20;
+	public static int imageCheckNumber = 60;
 
-	public static int imageCheckInterval = 500;
+	public static int imageCheckInterval = 400;
 
 	public static int iconSize = 16;
 

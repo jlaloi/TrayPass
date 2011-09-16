@@ -34,9 +34,9 @@ public class TrayPassConfig implements Serializable {
 
 	private String iconFile = "DefaultIcon.png";
 
-	private int imageCheckNumber = 20;
+	private int imageCheckNumber = 60;
 
-	private int imageCheckInterval = 500;
+	private int imageCheckInterval = 400;
 
 	private int iconSize = 16;
 
