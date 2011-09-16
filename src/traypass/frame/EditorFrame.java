@@ -6,22 +6,30 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.JTextField;
 
 import traypass.TrayPassObject;
 import traypass.crypto.CryptoEncryptFrame;
 import traypass.misc.TrayButton;
 import traypass.syntax.Syntax;
+import traypass.syntax.action.ActionSend;
+import traypass.tools.ToolClipboard;
 import traypass.tools.ToolFile;
 
 public class EditorFrame extends JFrame {
 
 	private JTextArea text;
+	private JTextField keyCode;
 	private JComboBox functions;
 	private String file = "";
 	public static final String newLine = "\n";
@@ -65,20 +73,41 @@ public class EditorFrame extends JFrame {
 				load();
 			}
 		});
-		top.add(reload);
-		TrayButton save = new TrayButton("Save");
-		save.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				save();
+
+		keyCode = new JTextField();
+		keyCode.setToolTipText("Type to get the key code, right click to put in clipboard");
+		keyCode.setEditable(false);
+		keyCode.setPreferredSize(new Dimension(80, keyCode.getPreferredSize().height));
+		keyCode.setFont(new Font(TrayPassObject.fontName, Font.PLAIN, TrayPassObject.fontSize));
+		keyCode.addKeyListener(new KeyListener() {
+			public void keyTyped(KeyEvent e) {
+			}
+
+			public void keyReleased(KeyEvent e) {
+				keyCode.setText(ActionSend.keyCodeString + e.getKeyCode() + "}");
+			}
+
+			public void keyPressed(KeyEvent e) {
 			}
 		});
-		top.add(save);
-		TrayButton setMenu = new TrayButton("Set Menu");
+		keyCode.addMouseListener(new MouseAdapter() {
+			public void mouseReleased(MouseEvent e) {
+				if (e.getButton() == 3) {
+					ToolClipboard.setClipboard(keyCode.getText());
+				}
+			}
+		});
+		top.add(keyCode);
+
+		top.add(reload);
+		TrayButton setMenu = new TrayButton("Save");
 		setMenu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				save();
 				if (TrayPassObject.trayPass != null) {
 					TrayPassObject.trayPass.setMenu();
 				}
+				dispose();
 			}
 		});
 		top.add(setMenu);
@@ -87,7 +116,7 @@ public class EditorFrame extends JFrame {
 		text.setSelectionColor(Color.GRAY);
 		text.setFont(new Font(TrayPassObject.fontName, Font.PLAIN, 13));
 		JScrollPane paneScrollPane = new JScrollPane(text, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
-		paneScrollPane.setPreferredSize(new Dimension(TrayPassObject.captureWidth, TrayPassObject.captureWidth * 3 / 4));
+		paneScrollPane.setPreferredSize(new Dimension(TrayPassObject.captureWidth, 700));
 
 		add(top, BorderLayout.NORTH);
 		add(paneScrollPane, BorderLayout.CENTER);

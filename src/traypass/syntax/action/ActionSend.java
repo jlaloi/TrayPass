@@ -9,6 +9,8 @@ import traypass.tools.Pair;
 
 public class ActionSend extends Action {
 
+	public static String keyCodeString = "{code:";
+
 	public String doAction(List<String> parameters) {
 		if (parameters.size() == 1) {
 			String characters = parameters.get(0);
@@ -116,9 +118,9 @@ public class ActionSend extends Action {
 			result = new int[] { KeyEvent.VK_RIGHT };
 		} else if (v.equals("{left}")) {
 			result = new int[] { KeyEvent.VK_LEFT };
-		} else if (v.startsWith("{code:")) {
+		} else if (v.startsWith(keyCodeString)) {
 			try {
-				String code = v.substring(v.indexOf(':') + 1, v.indexOf('}'));
+				String code = v.substring(keyCodeString.length(), v.indexOf('}'));
 				result = new int[] { Integer.valueOf(code) };
 			} catch (Exception e) {
 				e.printStackTrace();
