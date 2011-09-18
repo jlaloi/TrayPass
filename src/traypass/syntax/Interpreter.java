@@ -68,7 +68,7 @@ public class Interpreter extends Thread {
 					numberOfBracket--;
 					if (numberOfBracket == 0) {
 						String p = paramBuilder.toString();
-						if (null != p && !"".equals(p)) {
+						if (null != p && (!"".equals(p) || isEmptyParam(paramsS, i))) {
 							params.add(paramBuilder.toString());
 						}
 					} else {
@@ -122,6 +122,11 @@ public class Interpreter extends Thread {
 				result = false;
 			}
 		}
+		return result;
+	}
+
+	public static boolean isEmptyParam(String str, int pos) {
+		boolean result = pos > 0 && (isSpecialChar(str, pos - 1, Syntax.functionParamSeparator)) || isSpecialChar(str, pos - 1, Syntax.functionParamStart);
 		return result;
 	}
 
