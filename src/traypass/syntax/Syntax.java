@@ -51,6 +51,7 @@ import traypass.syntax.action.str.ActionLenght;
 import traypass.syntax.action.str.ActionReplace;
 import traypass.syntax.action.str.ActionStartsWith;
 import traypass.syntax.action.str.ActionSub;
+import traypass.syntax.action.str.ActionTrim;
 
 public enum Syntax {
 
@@ -375,6 +376,13 @@ public enum Syntax {
 			new ActionIs(),
 			new String[] { "<" + ActionIs.file + "/" + ActionIs.directory + ">", "<File>" },
 			"Is file/directory"),
+
+	TRIM(
+			"trim",
+			1,
+			new ActionTrim(),
+			new String[] { "<String>" },
+			"String trim"),
 
 	ENDSSWITH(
 			"endswith",
