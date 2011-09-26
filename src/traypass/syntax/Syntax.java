@@ -18,6 +18,7 @@ import traypass.syntax.action.ActionFileName;
 import traypass.syntax.action.ActionFileSize;
 import traypass.syntax.action.ActionInfo;
 import traypass.syntax.action.ActionListDir;
+import traypass.syntax.action.ActionMath;
 import traypass.syntax.action.ActionMouse;
 import traypass.syntax.action.ActionNewLine;
 import traypass.syntax.action.ActionPack;
@@ -299,6 +300,13 @@ public enum Syntax {
 			new ActionAnd(),
 			new String[] { "<bool>", "<bool>", "..." },
 			"Logical AND"),
+
+	MATH(
+			"math",
+			3,
+			new ActionMath(),
+			new String[] { "<operator>", "<double>", "<double>" },
+			"Math operation (double)"),
 
 	OR(
 			"or",
