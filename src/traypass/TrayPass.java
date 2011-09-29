@@ -9,6 +9,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JMenu;
 import javax.swing.JPopupMenu;
@@ -78,6 +80,8 @@ public class TrayPass {
 	public void setMenu() {
 		popup = new JPopupMenu();
 		boolean useEncryption = false;
+		String toExecute = "";
+		List<JMenu> currentMenu = new ArrayList<JMenu>();
 
 		// Adding pass
 		for (String pass : ToolFile.getFileLines(TrayPassObject.passFile)) {
@@ -87,12 +91,42 @@ public class TrayPass {
 			if (pass.contains(Syntax.DOWNLOAD.getPattern()) && TrayPassObject.trayConfig.getProxyPass() != null && TrayPassObject.trayConfig.getProxyPass().trim().length() > 0) {
 				useEncryption = true;
 			}
-			if (pass.equals("line")) {
-				popup.addSeparator();
+			if (pass.startsWith("<--{") && pass.endsWith("}")) {
+				String label = pass.substring(4, pass.indexOf("}"));
+				String icon = null;
+				if (label.contains(",")) {
+					icon = label.substring(label.indexOf(",") + 1);
+					label = label.substring(0, label.indexOf(","));
+				}
+				JMenu menu = new JMenu(label);
+				menu.setFont(TrayPassObject.font);
+				if (icon != null) {
+					menu.setIcon(ToolImage.getIconFile(icon));
+				}
+				if (currentMenu.size() > 0) {
+					currentMenu.get(currentMenu.size() - 1).add(menu);
+				} else {
+					popup.add(menu);
+				}
+				currentMenu.add(menu);
+			} else if (pass.equals("-->")) {
+				currentMenu.remove(currentMenu.size() - 1);
+			} else if (pass.startsWith("##")) {
+				toExecute += pass.substring(2);
+			} else if (pass.equals("line")) {
+				if (currentMenu.size() > 0) {
+					currentMenu.get(currentMenu.size() - 1).addSeparator();
+				} else {
+					popup.addSeparator();
+				}
 			} else if (pass.startsWith("title:")) {
 				PassMenuItem item = new PassMenuItem(pass.substring(pass.indexOf(":") + 1), null, "");
 				item.setFont(TrayPassObject.fontBold);
-				popup.add(item);
+				if (currentMenu.size() > 0) {
+					currentMenu.get(currentMenu.size() - 1).add(item);
+				} else {
+					popup.add(item);
+				}
 			} else {
 				String label = pass;
 				String icon = null;
@@ -106,7 +140,11 @@ public class TrayPass {
 					}
 				}
 				PassMenuItem item = new PassMenuItem(label, pass, icon);
-				popup.add(item);
+				if (currentMenu.size() > 0) {
+					currentMenu.get(currentMenu.size() - 1).add(item);
+				} else {
+					popup.add(item);
+				}
 			}
 		}
 
@@ -177,12 +215,15 @@ public class TrayPass {
 				new ConfigFrame();
 			}
 		}
+		if (toExecute.trim().length() > 0) {
+			compute(toExecute);
+		}
 	}
 
 	public void setWorking(boolean bool) {
-		if (bool) {
+		if (trayIcon != null && bool) {
 			trayIcon.setImage(workingIcon);
-		} else {
+		} else if (trayIcon != null) {
 			trayIcon.setImage(TrayPassObject.trayImageIcon);
 			trayIcon.setToolTip(title);
 		}

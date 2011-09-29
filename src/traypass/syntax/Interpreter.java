@@ -18,9 +18,13 @@ public class Interpreter extends Thread {
 
 	public void run() {
 		stop = false;
-		TrayPassObject.trayPass.setWorking(true);
+		if (TrayPassObject.trayPass != null) {
+			TrayPassObject.trayPass.setWorking(true);
+		}
 		computeFunctions(line);
-		TrayPassObject.trayPass.setWorking(false);
+		if (TrayPassObject.trayPass != null) {
+			TrayPassObject.trayPass.setWorking(false);
+		}
 		stop = true;
 	}
 
