@@ -70,9 +70,9 @@ public class PassMenuItem extends JMenuItem {
 	public static ImageIcon getImageIcon(String path, Class c) {
 		ImageIcon result = null;
 		try {
-			if (library.containsKey(path)) {
+			if (path != null && library.containsKey(path)) {
 				result = library.get(path);
-			} else if (defaultIconPath.equals(path) || new File(path).exists()) {
+			} else if (path != null && (defaultIconPath.equals(path) || new File(path).exists())) {
 				Image image = ToolImage.getImage(path, c);
 				BufferedImage icon = ToolImage.resizeImage(image, TrayPassObject.iconSize, TrayPassObject.iconSize);
 				result = new ImageIcon(icon);

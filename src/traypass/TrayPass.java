@@ -100,9 +100,7 @@ public class TrayPass {
 				}
 				JMenu menu = new JMenu(label);
 				menu.setFont(TrayPassObject.font);
-				if (icon != null) {
-					menu.setIcon(ToolImage.getIconFile(icon));
-				}
+				menu.setIcon(PassMenuItem.getImageIcon(icon, this.getClass()));
 				if (currentMenu.size() > 0) {
 					currentMenu.get(currentMenu.size() - 1).add(menu);
 				} else {
@@ -110,7 +108,9 @@ public class TrayPass {
 				}
 				currentMenu.add(menu);
 			} else if (pass.equals("-->")) {
-				currentMenu.remove(currentMenu.size() - 1);
+				if (currentMenu.size() > 0) {
+					currentMenu.remove(currentMenu.size() - 1);
+				}
 			} else if (pass.startsWith("##")) {
 				toExecute += pass.substring(2);
 			} else if (pass.equals("line")) {
