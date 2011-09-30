@@ -94,9 +94,9 @@ public class TrayPass {
 			if (pass.startsWith("<--{") && pass.endsWith("}")) {
 				String label = pass.substring(4, pass.indexOf("}"));
 				String icon = null;
-				if (label.contains(",")) {
-					icon = label.substring(label.indexOf(",") + 1);
-					label = label.substring(0, label.indexOf(","));
+				if (label.contains(Syntax.functionParamSeparator + "")) {
+					icon = label.substring(label.indexOf(Syntax.functionParamSeparator) + 1);
+					label = label.substring(0, label.indexOf(Syntax.functionParamSeparator));
 				}
 				JMenu menu = new JMenu(label);
 				menu.setFont(TrayPassObject.font);
@@ -119,27 +119,25 @@ public class TrayPass {
 				} else {
 					popup.addSeparator();
 				}
-			} else if (pass.startsWith("title:")) {
-				PassMenuItem item = new PassMenuItem(pass.substring(pass.indexOf(":") + 1), null, "");
-				item.setFont(TrayPassObject.fontBold);
-				if (currentMenu.size() > 0) {
-					currentMenu.get(currentMenu.size() - 1).add(item);
-				} else {
-					popup.add(item);
-				}
 			} else {
-				String label = pass;
-				String icon = null;
-				if (pass.startsWith("{")) {
-					label = pass.substring(1, pass.indexOf("}"));
-					pass = pass.substring(pass.indexOf("}") + 1);
-					if (label.contains(Syntax.functionParamSeparator + "")) {
-						String[] split = label.split(Syntax.functionParamSeparator + "");
-						label = split[0];
-						icon = split[1];
+				PassMenuItem item;
+				if (pass.startsWith("title:")) {
+					item = new PassMenuItem(pass.substring(pass.indexOf(":") + 1), null, "");
+					item.setFont(TrayPassObject.fontBold);
+				} else {
+					String label = pass;
+					String icon = null;
+					if (pass.startsWith("{")) {
+						label = pass.substring(1, pass.indexOf("}"));
+						pass = pass.substring(pass.indexOf("}") + 1);
+						if (label.contains(Syntax.functionParamSeparator + "")) {
+							String[] split = label.split(Syntax.functionParamSeparator + "");
+							label = split[0];
+							icon = split[1];
+						}
 					}
+					item = new PassMenuItem(label, pass, icon);
 				}
-				PassMenuItem item = new PassMenuItem(label, pass, icon);
 				if (currentMenu.size() > 0) {
 					currentMenu.get(currentMenu.size() - 1).add(item);
 				} else {
