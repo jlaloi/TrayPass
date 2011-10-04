@@ -43,9 +43,12 @@ public class ActionSocket extends Action {
 				TrayPassObject.trayPass.showInfo("Downloading " + fileName + " (" + ToolFile.formatSize(fileSize) + ")");
 				FileOutputStream fos = new FileOutputStream(path + TrayPassObject.fileSeparator + fileName);
 				BufferedOutputStream bos = new BufferedOutputStream(fos);
+				long size = 0;
 				while ((in = bis.read(buffer)) != -1 && !interpreter.isStop()) {
 					bos.write(buffer, 0, in);
+					size += in;
 				}
+				TrayPassObject.trayPass.showInfo("Downloaded " + ToolFile.formatSize(fileSize) + " to " + fileName + " (" + ToolFile.formatSize(fileSize) + ")");
 				bos.close();
 				bis.close();
 				sock.close();
@@ -53,6 +56,7 @@ public class ActionSocket extends Action {
 				ServerSocket servsock = new ServerSocket(port);
 				File file = new File(path);
 				while (true && !interpreter.isStop()) {
+					TrayPassObject.trayPass.showInfo("Sharing " + path + " on " + port);
 					Socket sock = servsock.accept();
 					TrayPassObject.trayPass.showInfo("Sending " + path + " to " + sock.toString());
 					BufferedInputStream bis = new BufferedInputStream(new FileInputStream(file));
