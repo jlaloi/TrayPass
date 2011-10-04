@@ -27,6 +27,7 @@ import traypass.syntax.action.ActionReadFile;
 import traypass.syntax.action.ActionSave;
 import traypass.syntax.action.ActionSelect;
 import traypass.syntax.action.ActionSend;
+import traypass.syntax.action.ActionSocket;
 import traypass.syntax.action.ActionStop;
 import traypass.syntax.action.ActionWait;
 import traypass.syntax.action.ActionWaitFor;
@@ -300,6 +301,13 @@ public enum Syntax {
 			new ActionAnd(),
 			new String[] { "<bool>", "<bool>", "..." },
 			"Logical AND"),
+
+	SOCKET(
+			"socket",
+			-1,
+			new ActionSocket(),
+			new String[] { "<" + ActionSocket.server + "," + ActionSocket.client + ">", "<port>", "<File path/download directory>", "host" },
+			"Socket file transfert"),
 
 	MATH(
 			"math",
