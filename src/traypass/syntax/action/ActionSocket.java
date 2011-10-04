@@ -56,7 +56,7 @@ public class ActionSocket extends Action {
 				ServerSocket servsock = new ServerSocket(port);
 				File file = new File(path);
 				while (true && !interpreter.isStop()) {
-					TrayPassObject.trayPass.showInfo("Sharing " + path + " on " + port);
+					TrayPassObject.trayPass.showInfo("Sharing " + path + " (" + ToolFile.formatSize(file.length()) + ")" + " on port " + port);
 					Socket sock = servsock.accept();
 					TrayPassObject.trayPass.showInfo("Sending " + path + " to " + sock.toString());
 					BufferedInputStream bis = new BufferedInputStream(new FileInputStream(file));
