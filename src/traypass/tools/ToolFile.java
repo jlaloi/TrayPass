@@ -46,12 +46,14 @@ public class ToolFile {
 
 	public static void addToFile(String file, String str, boolean append) {
 		try {
+			List<String> save = new ArrayList<String>();
+			if (append) {
+				save = getFileLines(file);
+			}
 			OutputStream bos = new BufferedOutputStream(new FileOutputStream(file));
 			OutputStreamWriter out = new OutputStreamWriter(bos, TrayPassObject.fileEncode);
-			if (append) {
-				for (String line : getFileLines(file)) {
-					out.write(line + TrayPassObject.lineSeparator);
-				}
+			for (String line : save) {
+				out.write(line + TrayPassObject.lineSeparator);
 			}
 			for (String line : str.split(TrayPassObject.lineSeparator)) {
 				out.write(line + TrayPassObject.lineSeparator);

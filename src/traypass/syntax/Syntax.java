@@ -17,6 +17,7 @@ import traypass.syntax.action.ActionFile;
 import traypass.syntax.action.ActionFileName;
 import traypass.syntax.action.ActionFileSize;
 import traypass.syntax.action.ActionInfo;
+import traypass.syntax.action.ActionJDBC;
 import traypass.syntax.action.ActionListDir;
 import traypass.syntax.action.ActionMath;
 import traypass.syntax.action.ActionMouse;
@@ -355,9 +356,13 @@ public enum Syntax {
 			"endswith",
 			new ActionEndsWith(),
 			new String[] { "<String>", "<Pattern>" },
-			"Ends with")
+			"Ends with"),
 
-	;
+	JDBC(
+			"jdbc",
+			new ActionJDBC(),
+			new String[] { "<driver>", "<url>", "<login>", "<password>", "<" + ActionJDBC.update + "/" + ActionJDBC.select + ">", "<query>", "<Separator>" },
+			"JDBC");
 
 	public static final Pattern functionPattern = Pattern.compile("\\@([a-z])*\\((.*)\\)");
 
