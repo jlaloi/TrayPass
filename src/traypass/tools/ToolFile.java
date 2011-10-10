@@ -1,13 +1,14 @@
 package traypass.tools;
 
+import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.DataInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -44,19 +45,21 @@ public class ToolFile {
 	}
 
 	public static void addToFile(String file, String str, boolean append) {
-		BufferedWriter bw = null;
 		try {
-			bw = new BufferedWriter(new FileWriter(file, append));
-			bw.write(str);
-			bw.flush();
+			OutputStream bos = new BufferedOutputStream(new FileOutputStream(file));
+			OutputStreamWriter out = new OutputStreamWriter(bos, TrayPassObject.fileEncode);
+			if (append) {
+				for (String line : getFileLines(file)) {
+					out.write(line + TrayPassObject.lineSeparator);
+				}
+			}
+			for (String line : str.split(TrayPassObject.lineSeparator)) {
+				out.write(line + TrayPassObject.lineSeparator);
+			}
+			out.flush();
+			out.close();
 		} catch (Exception ioe) {
 			ioe.printStackTrace();
-		} finally {
-			try {
-				bw.close();
-			} catch (Exception ioe2) {
-				ioe2.printStackTrace();
-			}
 		}
 	}
 

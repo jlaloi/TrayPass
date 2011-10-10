@@ -24,7 +24,7 @@ public class TrayPassConfig implements Serializable {
 
 	private int fontSize = 11;
 
-	private String fileEncode = "UTF-8";
+	private String fileEncode = "ISO-8859-1";
 
 	private String consoleEncode = "CP850";
 

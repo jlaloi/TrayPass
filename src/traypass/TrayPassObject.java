@@ -38,7 +38,7 @@ public class TrayPassObject {
 
 	public static Image trayImageIcon;
 
-	public static String fileEncode = "UTF-8";
+	public static String fileEncode = "ISO-8859-1";
 
 	public static String consoleEncode = "CP850";
 
