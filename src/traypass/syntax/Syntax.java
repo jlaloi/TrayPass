@@ -9,6 +9,7 @@ import traypass.syntax.action.ActionBrowse;
 import traypass.syntax.action.ActionClipboard;
 import traypass.syntax.action.ActionDate;
 import traypass.syntax.action.ActionDecrypt;
+import traypass.syntax.action.ActionDialog;
 import traypass.syntax.action.ActionDownload;
 import traypass.syntax.action.ActionExecute;
 import traypass.syntax.action.ActionExecuteResult;
@@ -207,6 +208,12 @@ public enum Syntax {
 			new ActionInfo(),
 			new String[] { "<Text>" },
 			"Display the text as info"),
+
+	DIALOG(
+			"dialog",
+			new ActionDialog(),
+			new String[] { "<Text>" },
+			"Display the text in a dialog"),
 
 	STOP(
 			"stop",

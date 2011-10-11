@@ -8,8 +8,11 @@ import traypass.syntax.Action;
 public class ActionInfo extends Action {
 
 	public String doAction(List<String> parameters) {
-		TrayPassObject.trayPass.showInfo(parameters.get(0));
-		return "";
+		String str = "";
+		if (parameters.size() > 0) {
+			parameters.get(0);
+		}
+		TrayPassObject.trayPass.showInfo(str);
+		return str;
 	}
-
 }
