@@ -25,6 +25,9 @@ public class ActionDialog extends Action {
 			height = Integer.valueOf(parameters.get(2));
 		}
 		JDialog dialog = new JDialog();
+		if (parameters.size() > 3) {
+			dialog.setTitle(parameters.get(3));
+		}
 		dialog.setIconImage(TrayPassObject.trayImageIcon);
 		JTextArea text = new JTextArea(str);
 		text.setSelectionColor(Color.GRAY);

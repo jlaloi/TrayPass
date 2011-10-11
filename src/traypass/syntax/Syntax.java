@@ -7,6 +7,7 @@ import java.util.regex.Pattern;
 
 import traypass.syntax.action.ActionBrowse;
 import traypass.syntax.action.ActionClipboard;
+import traypass.syntax.action.ActionConfirm;
 import traypass.syntax.action.ActionDate;
 import traypass.syntax.action.ActionDecrypt;
 import traypass.syntax.action.ActionDialog;
@@ -212,8 +213,14 @@ public enum Syntax {
 	DIALOG(
 			"dialog",
 			new ActionDialog(),
-			new String[] { "<Text>" },
+			new String[] { "<Text>", "<width>", "<height>", "<title>" },
 			"Display the text in a dialog"),
+
+	CONFIRM(
+			"confirm",
+			new ActionConfirm(),
+			new String[] { "<title>", "<text>" },
+			"Confirm dialog, return bool"),
 
 	STOP(
 			"stop",
