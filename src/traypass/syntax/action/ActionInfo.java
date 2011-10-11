@@ -10,7 +10,7 @@ public class ActionInfo extends Action {
 	public String doAction(List<String> parameters) {
 		String str = "";
 		if (parameters.size() > 0) {
-			parameters.get(0);
+			str = parameters.get(0);
 		}
 		TrayPassObject.trayPass.showInfo(str);
 		return str;

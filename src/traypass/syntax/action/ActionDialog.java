@@ -16,13 +16,21 @@ public class ActionDialog extends Action {
 
 	public String doAction(List<String> parameters) {
 		String str = parameters.get(0);
+		int width = TrayPassObject.captureWidth;
+		int height = 500;
+		if (parameters.size() > 1) {
+			width = Integer.valueOf(parameters.get(1));
+		}
+		if (parameters.size() > 2) {
+			height = Integer.valueOf(parameters.get(2));
+		}
 		JDialog dialog = new JDialog();
 		dialog.setIconImage(TrayPassObject.trayImageIcon);
 		JTextArea text = new JTextArea(str);
 		text.setSelectionColor(Color.GRAY);
 		text.setFont(new Font(TrayPassObject.fontName, Font.PLAIN, 13));
 		JScrollPane paneScrollPane = new JScrollPane(text, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
-		paneScrollPane.setPreferredSize(new Dimension(TrayPassObject.captureWidth, 500));
+		paneScrollPane.setPreferredSize(new Dimension(width, height));
 		dialog.add(paneScrollPane);
 		dialog.pack();
 		dialog.setLocationRelativeTo(dialog.getParent());

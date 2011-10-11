@@ -4,6 +4,7 @@ import java.util.List;
 
 import traypass.TrayPassObject;
 import traypass.syntax.Action;
+import traypass.syntax.Interpreter;
 import traypass.tools.ToolJDBC;
 
 public class ActionJDBC extends Action {
@@ -34,6 +35,7 @@ public class ActionJDBC extends Action {
 				}
 			}
 		} catch (Exception e) {
+			Interpreter.showError(e.getMessage());
 			e.printStackTrace();
 		} finally {
 			toolJdbc.close();
