@@ -4,7 +4,7 @@ import java.util.List;
 
 import traypass.syntax.Action;
 
-public class ActionLenght extends Action {
+public class ActionLength extends Action {
 
 	public String doAction(List<String> parameters) {
 		String result = "";

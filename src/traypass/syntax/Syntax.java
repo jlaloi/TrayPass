@@ -52,7 +52,7 @@ import traypass.syntax.action.str.ActionContains;
 import traypass.syntax.action.str.ActionEndsWith;
 import traypass.syntax.action.str.ActionIndexOf;
 import traypass.syntax.action.str.ActionLastIndexOf;
-import traypass.syntax.action.str.ActionLenght;
+import traypass.syntax.action.str.ActionLength;
 import traypass.syntax.action.str.ActionReplace;
 import traypass.syntax.action.str.ActionStartsWith;
 import traypass.syntax.action.str.ActionSub;
@@ -330,9 +330,9 @@ public enum Syntax {
 			new String[] { "<String>,<str>,<from*>" },
 			"Last index of"),
 
-	LENGHT(
-			"lenght",
-			new ActionLenght(),
+	LENGTH(
+			"length",
+			new ActionLength(),
 			new String[] { "<String>" },
 			"The string lenght"),
 
