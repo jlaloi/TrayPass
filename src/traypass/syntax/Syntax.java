@@ -389,7 +389,7 @@ public enum Syntax {
 	JDBC(
 			"jdbc",
 			new ActionJDBC(),
-			new String[] { "<driver>", "<url>", "<login>", "<password>", "<" + ActionJDBC.update + "/" + ActionJDBC.select + ">", "<query>", "<Separator>" },
+			new String[] { "<driver>", "<url>", "<login>", "<password>", "<" + ActionJDBC.update + "/" + ActionJDBC.select + "/" + ActionJDBC.script + ">", "<query>", "<Separator>" },
 			"JDBC");
 
 	public static final Pattern functionPattern = Pattern.compile("\\@([a-z])*\\((.*)\\)");

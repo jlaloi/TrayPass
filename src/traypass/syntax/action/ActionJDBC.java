@@ -13,6 +13,8 @@ public class ActionJDBC extends Action {
 
 	public static String select = "select";
 
+	public static String script = "script";
+
 	public String doAction(List<String> parameters) {
 		String result = "";
 		String driver = parameters.get(0);
@@ -27,7 +29,9 @@ public class ActionJDBC extends Action {
 		}
 		try {
 			toolJdbc.connect();
-			if (update.equals(action)) {
+			if (script.equals(action)) {
+				toolJdbc.executeScript(query);
+			} else if (update.equals(action)) {
 				toolJdbc.executeUpdate(query);
 			} else {
 				for (String row : toolJdbc.executeQuery(query)) {

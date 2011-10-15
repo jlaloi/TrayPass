@@ -1,5 +1,6 @@
 package traypass.tools;
 
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -88,6 +89,24 @@ public class ToolJDBC {
 			try {
 				if (stmt != null) {
 					stmt.close();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	public void executeScript(String sqlStatement) {
+		CallableStatement c = null;
+		try {
+			c = getConnection().prepareCall(sqlStatement);
+			c.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (c != null) {
+					c.close();
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
