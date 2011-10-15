@@ -49,11 +49,13 @@ import traypass.syntax.action.str.ActionCaseLower;
 import traypass.syntax.action.str.ActionCaseUpper;
 import traypass.syntax.action.str.ActionConcat;
 import traypass.syntax.action.str.ActionContains;
+import traypass.syntax.action.str.ActionCount;
 import traypass.syntax.action.str.ActionEndsWith;
 import traypass.syntax.action.str.ActionIndexOf;
 import traypass.syntax.action.str.ActionLastIndexOf;
 import traypass.syntax.action.str.ActionLength;
 import traypass.syntax.action.str.ActionReplace;
+import traypass.syntax.action.str.ActionSplit;
 import traypass.syntax.action.str.ActionStartsWith;
 import traypass.syntax.action.str.ActionSub;
 import traypass.syntax.action.str.ActionTrim;
@@ -371,6 +373,18 @@ public enum Syntax {
 			new ActionEndsWith(),
 			new String[] { "<String>", "<Pattern>" },
 			"Ends with"),
+
+	SPLIT(
+			"split",
+			new ActionSplit(),
+			new String[] { "<String>", "<Separator>", "<Index>" },
+			"String split"),
+
+	COUNT(
+			"count",
+			new ActionCount(),
+			new String[] { "<String>", "<String>" },
+			"Sub string count"),
 
 	JDBC(
 			"jdbc",

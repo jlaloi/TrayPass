@@ -1,10 +1,14 @@
 package traypass.frame;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.GridLayout;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 
 import traypass.Launcher;
 import traypass.TrayPassObject;
@@ -17,22 +21,34 @@ public class SyntaxFrame extends JFrame {
 	public SyntaxFrame() {
 		setTitle("Syntax Description");
 		setBackground(Color.white);
-		setLayout(new GridLayout(Syntax.values().length + 5, 1));
+		setLayout(new BorderLayout());
+
+		JPanel labels = new JPanel();
+		labels.setLayout(new GridLayout(Syntax.values().length, 1));
 		for (Syntax item : Syntax.getSort()) {
 			JLabel label = new TrayLabel(" " + item.getExample() + " --> " + item.getDescription() + " ");
-			add(label);
+			labels.add(label);
 		}
+		JScrollPane paneScrollPane = new JScrollPane(labels, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+		paneScrollPane.setPreferredSize(new Dimension(900, 600));
+		add(paneScrollPane, BorderLayout.NORTH);
+
+		JPanel infos = new JPanel();
+		infos.setLayout(new GridLayout(4, 1));
 		JLabel escape = new TrayLabel(" Escape character is " + Syntax.escapeChar);
-		add(escape);
+		infos.add(escape);
 		JLabel bool = new TrayLabel(" Bools are  " + Syntax.boolTrue + " and " + Syntax.boolFalse);
-		add(bool);
+		infos.add(bool);
 		JLabel example = new TrayLabel(" Middle click : Screen Capture - Double click : Stop Current Execution ");
-		add(example);
+		infos.add(example);
 		JLabel param = new TrayLabel(" Config parameter is " + Launcher.configFileNameParam + "<config name>");
-		add(param);
+		infos.add(param);
+		add(infos, BorderLayout.CENTER);
+
 		JLabel version = new TrayLabel(" Version : " + new TrayUpdate().getLocalVersion());
 		version.setHorizontalAlignment(JLabel.RIGHT);
-		add(version);
+		add(version, BorderLayout.SOUTH);
+
 		setIconImage(TrayPassObject.trayImageIcon);
 		pack();
 		setLocationRelativeTo(getParent());
