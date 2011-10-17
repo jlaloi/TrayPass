@@ -101,7 +101,7 @@ public class ToolJDBC {
 		CallableStatement c = null;
 		try {
 			c = getConnection().prepareCall(sqlStatement);
-			c.executeUpdate();
+			c.execute();
 			ResultSet results = c.getResultSet();
 			int nbColumn = results.getMetaData().getColumnCount();
 			while (results.next()) {
