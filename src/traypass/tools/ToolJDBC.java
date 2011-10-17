@@ -96,11 +96,21 @@ public class ToolJDBC {
 		}
 	}
 
-	public void executeScript(String sqlStatement) {
+	public List<String> executeScript(String sqlStatement) {
+		List<String> result = new ArrayList<String>();
 		CallableStatement c = null;
 		try {
 			c = getConnection().prepareCall(sqlStatement);
 			c.executeUpdate();
+			ResultSet results = c.getResultSet();
+			int nbColumn = results.getMetaData().getColumnCount();
+			while (results.next()) {
+				String row = results.getObject(1) + "";
+				for (int i = 2; i <= nbColumn; i++) {
+					row += colSeparator + results.getObject(i);
+				}
+				result.add(row);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -112,6 +122,7 @@ public class ToolJDBC {
 				e.printStackTrace();
 			}
 		}
+		return result;
 	}
 
 	public Connection getConnection() {

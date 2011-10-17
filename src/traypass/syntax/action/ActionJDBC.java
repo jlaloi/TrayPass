@@ -30,7 +30,9 @@ public class ActionJDBC extends Action {
 		try {
 			toolJdbc.connect();
 			if (script.equals(action)) {
-				toolJdbc.executeScript(query);
+				for (String row : toolJdbc.executeScript(query)) {
+					result += row + TrayPassObject.lineSeparator;
+				}
 			} else if (update.equals(action)) {
 				toolJdbc.executeUpdate(query);
 			} else {
