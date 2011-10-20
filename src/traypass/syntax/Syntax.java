@@ -77,14 +77,14 @@ public enum Syntax {
 	EXECUTE(
 			"execute",
 			new ActionExecute(),
-			new String[] { "<executable>", "<Parameter>", "..." },
-			"Execute the specified executable with specified parameter(s)"),
+			new String[] { "<executable>", "<Path>" },
+			"Execute"),
 
 	EXECUTERESULT(
 			"executeresult",
 			new ActionExecuteResult(),
-			new String[] { "<executable>", "<Parameter>", "<...>" },
-			"Return the execution result of the specified executable with specified parameter(s)"),
+			new String[] { "<executable>", "<Path>" },
+			"Return the execution result)"),
 
 	SEND(
 			"send",

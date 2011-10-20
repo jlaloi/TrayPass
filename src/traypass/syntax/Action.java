@@ -27,12 +27,4 @@ public abstract class Action {
 
 	public abstract String doAction(List<String> parameters);
 
-	public static String[] listToArray(List<String> parameters) {
-		String[] cmdArray = new String[parameters.size()];
-		for (int i = 0; i < parameters.size(); i++) {
-			cmdArray[i] = parameters.get(i);
-		}
-		return cmdArray;
-	}
-
 }
