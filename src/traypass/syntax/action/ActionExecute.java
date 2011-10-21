@@ -19,7 +19,7 @@ public class ActionExecute extends Action {
 			} else if (parameters.size() == 2) {
 				p = Runtime.getRuntime().exec(new String[] { parameters.get(0), parameters.get(1) });
 			} else if (parameters.size() == 3) {
-				p = Runtime.getRuntime().exec(new String[] { parameters.get(0), parameters.get(1) }, new String[] {}, new File(parameters.get(2)));
+				p = Runtime.getRuntime().exec(new String[] { parameters.get(0), parameters.get(1) }, null, new File(parameters.get(2)));
 			}
 		} catch (Exception exp) {
 			exp.printStackTrace();
