@@ -8,6 +8,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import traypass.syntax.Interpreter;
+
 public class ToolJDBC {
 
 	private String driver;
@@ -35,6 +37,7 @@ public class ToolJDBC {
 			Class.forName(driver);
 			connection = DriverManager.getConnection(url, login, password);
 		} catch (Exception e) {
+			Interpreter.showError(e.getMessage());
 			e.printStackTrace();
 		}
 		return connection;
@@ -65,6 +68,7 @@ public class ToolJDBC {
 				result.add(row);
 			}
 		} catch (Exception e) {
+			Interpreter.showError(e.getMessage());
 			e.printStackTrace();
 		} finally {
 			try {
@@ -84,6 +88,7 @@ public class ToolJDBC {
 			stmt = connection.createStatement();
 			stmt.executeUpdate(query);
 		} catch (Exception e) {
+			Interpreter.showError(e.getMessage());
 			e.printStackTrace();
 		} finally {
 			try {
@@ -112,6 +117,7 @@ public class ToolJDBC {
 				result.add(row);
 			}
 		} catch (Exception e) {
+			Interpreter.showError(e.getMessage());
 			e.printStackTrace();
 		} finally {
 			try {

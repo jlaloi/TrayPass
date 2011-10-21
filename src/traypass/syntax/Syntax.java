@@ -77,13 +77,13 @@ public enum Syntax {
 	EXECUTE(
 			"execute",
 			new ActionExecute(),
-			new String[] { "<executable>", "<Path>" },
+			new String[] { "<executable>", "<params>", "<Path>" },
 			"Execute"),
 
 	EXECUTERESULT(
 			"executeresult",
 			new ActionExecuteResult(),
-			new String[] { "<executable>", "<Path>" },
+			new String[] { "<executable>", "<params>", "<Path>" },
 			"Return the execution result)"),
 
 	SEND(
