@@ -14,6 +14,7 @@
             	<attribute name="Implementation-Version" value="${TODAY}"/> 
             </manifest>
             <fileset dir="bin" />
+        	<fileset dir="." includes="*.txt"/>
         </jar>
     	<signjar jar="TrayPass.jar" alias="TRAYPASS" keystore="traypass.key" storepass="tray1984pass"/>
     	<echo message="version ${TODAY}" />
