@@ -12,10 +12,8 @@ public class ActionSend extends Action {
 
 	public static String keyCodeString = "{code:";
 	public static HashMap<String, int[]> lib = new HashMap<String, int[]>();
-	public static String file = "key_azerty.txt";
 
 	public String doAction(List<String> parameters) {
-		load(file);
 		if (parameters.size() == 1) {
 			String characters = parameters.get(0);
 			for (int i = 0; i < characters.length() && !interpreter.isStop(); i++) {
@@ -37,9 +35,9 @@ public class ActionSend extends Action {
 		return "";
 	}
 
-	public void load(String file) {
+	public static void load() {
 		lib.clear();
-		for (String line : ToolFile.getFileLines(file)) {
+		for (String line : ToolFile.getFileLines(TrayPassObject.keyFile)) {
 			String[] parts = line.split("=>");
 			String[] codes = parts[1].split(",");
 			int[] keys = new int[codes.length];
@@ -48,6 +46,7 @@ public class ActionSend extends Action {
 			}
 			lib.put(parts[0], keys);
 		}
+		System.out.println(TrayPassObject.keyFile + " loaded");
 	}
 
 	public int[] getCode(String key) {

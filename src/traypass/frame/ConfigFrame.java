@@ -20,7 +20,7 @@ import traypass.syntax.Interpreter;
 
 public class ConfigFrame extends JDialog {
 
-	private JTextField cryptoKey, cryptoExample, proxyHost, proxyPort, proxyUser, font, fontSize, captureWidth, fileEncode, consoleEncode, passFile, iconFile, imageCheckNumber, imageCheckInterval, iconSize;
+	private JTextField cryptoKey, cryptoExample, proxyHost, proxyPort, proxyUser, font, fontSize, captureWidth, fileEncode, consoleEncode, passFile, iconFile, imageCheckNumber, imageCheckInterval, iconSize, keyFile;
 	private JPasswordField proxyPass;
 	private JButton save;
 
@@ -49,10 +49,11 @@ public class ConfigFrame extends JDialog {
 		imageCheckNumber = new TrayTextField(TrayPassObject.trayConfig.getImageCheckNumber() + "");
 		imageCheckInterval = new TrayTextField(TrayPassObject.trayConfig.getImageCheckInterval() + "");
 		iconSize = new TrayTextField(TrayPassObject.trayConfig.getIconSize() + "");
+		keyFile = new TrayTextField(TrayPassObject.keyFile);
 
 		save = new TrayButton("Save");
 
-		setLayout(new GridLayout(17, 2));
+		setLayout(new GridLayout(18, 2));
 
 		add(new TrayLabel(" Pass file:"));
 		add(passFile);
@@ -83,6 +84,9 @@ public class ConfigFrame extends JDialog {
 
 		add(new TrayLabel(" Console Encoding:"));
 		add(consoleEncode);
+
+		add(new TrayLabel(" Key File:"));
+		add(keyFile);
 
 		add(new TrayLabel(" Number of image checking:"));
 		add(imageCheckNumber);
@@ -130,6 +134,7 @@ public class ConfigFrame extends JDialog {
 				TrayPassObject.trayConfig.setConsoleEncode(consoleEncode.getText());
 				TrayPassObject.trayConfig.setPassFile(passFile.getText());
 				TrayPassObject.trayConfig.setIconFile(iconFile.getText());
+				TrayPassObject.trayConfig.setKeyFile(keyFile.getText());
 				try {
 					TrayPassObject.trayConfig.setProxyPort(Integer.valueOf(proxyPort.getText()));
 				} catch (Exception e) {

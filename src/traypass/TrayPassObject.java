@@ -6,6 +6,8 @@ import java.awt.Robot;
 
 import javax.crypto.SecretKey;
 
+import traypass.syntax.action.ActionSend;
+
 public class TrayPassObject {
 
 	public static String configFileName = ".TrayPass";
@@ -50,6 +52,8 @@ public class TrayPassObject {
 
 	public static int iconSize = 16;
 
+	public static String keyFile = "key_azerty.txt";
+
 	public static TrayPass trayPass;
 
 	private static Robot robot;
@@ -79,7 +83,9 @@ public class TrayPassObject {
 		font = new Font(fontName, Font.PLAIN, fontSize);
 		fontInfo = new Font(fontName, Font.PLAIN, fontSize + 1);
 		fontBold = new Font(fontName, Font.BOLD, fontSize);
+		keyFile = trayConfig.getKeyFile();
 		PassMenuItem.defaultIcon = null;
 		PassMenuItem.library.clear();
+		ActionSend.load();
 	}
 }

@@ -38,6 +38,8 @@ public class TrayPassConfig implements Serializable {
 
 	private int imageCheckInterval = 400;
 
+	private String keyFile = "key_azerty.txt";
+
 	private int iconSize = 16;
 
 	public String getSaveFile() {
@@ -98,6 +100,7 @@ public class TrayPassConfig implements Serializable {
 				this.setImageCheckInterval(tmp.getImageCheckInterval());
 				this.setImageCheckNumber(tmp.getImageCheckNumber());
 				this.setIconSize(tmp.getIconSize());
+				this.setKeyFile(tmp.getKeyFile());
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -230,6 +233,14 @@ public class TrayPassConfig implements Serializable {
 
 	public void setIconSize(int iconSize) {
 		this.iconSize = iconSize;
+	}
+
+	public String getKeyFile() {
+		return keyFile;
+	}
+
+	public void setKeyFile(String keyFile) {
+		this.keyFile = keyFile;
 	}
 
 }
