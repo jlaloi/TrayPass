@@ -45,7 +45,7 @@ public class SyntaxFrame extends JFrame {
 		infos.add(param);
 		add(infos, BorderLayout.CENTER);
 
-		JLabel version = new TrayLabel(" Version : " + new TrayUpdate().getLocalVersion());
+		JLabel version = new TrayLabel(" Version : " + new TrayUpdate().getLocalVersion() + " ");
 		version.setHorizontalAlignment(JLabel.RIGHT);
 		add(version, BorderLayout.SOUTH);
 

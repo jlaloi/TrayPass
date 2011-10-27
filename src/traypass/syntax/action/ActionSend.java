@@ -301,34 +301,34 @@ public class ActionSend extends Action {
 			result = new int[] { KeyEvent.VK_ALT, KeyEvent.VK_CONTROL, KeyEvent.VK_7 };
 			break;
 		case '0':
-			result = new int[] { KeyEvent.VK_SHIFT, KeyEvent.VK_0 };
+			result = new int[] { KeyEvent.VK_NUMPAD0 };
 			break;
 		case '1':
-			result = new int[] { KeyEvent.VK_SHIFT, KeyEvent.VK_1 };
+			result = new int[] { KeyEvent.VK_NUMPAD1 };
 			break;
 		case '2':
-			result = new int[] { KeyEvent.VK_SHIFT, KeyEvent.VK_2 };
+			result = new int[] { KeyEvent.VK_NUMPAD2 };
 			break;
 		case '3':
-			result = new int[] { KeyEvent.VK_SHIFT, KeyEvent.VK_3 };
+			result = new int[] { KeyEvent.VK_NUMPAD3 };
 			break;
 		case '4':
-			result = new int[] { KeyEvent.VK_SHIFT, KeyEvent.VK_4 };
+			result = new int[] { KeyEvent.VK_NUMPAD4 };
 			break;
 		case '5':
-			result = new int[] { KeyEvent.VK_SHIFT, KeyEvent.VK_5 };
+			result = new int[] { KeyEvent.VK_NUMPAD5 };
 			break;
 		case '6':
-			result = new int[] { KeyEvent.VK_SHIFT, KeyEvent.VK_6 };
+			result = new int[] { KeyEvent.VK_NUMPAD6 };
 			break;
 		case '7':
-			result = new int[] { KeyEvent.VK_SHIFT, KeyEvent.VK_7 };
+			result = new int[] { KeyEvent.VK_NUMPAD7 };
 			break;
 		case '8':
-			result = new int[] { KeyEvent.VK_SHIFT, KeyEvent.VK_8 };
+			result = new int[] { KeyEvent.VK_NUMPAD8 };
 			break;
 		case '9':
-			result = new int[] { KeyEvent.VK_SHIFT, KeyEvent.VK_9 };
+			result = new int[] { KeyEvent.VK_NUMPAD9 };
 			break;
 		case '-':
 			result = new int[] { KeyEvent.VK_6 };
