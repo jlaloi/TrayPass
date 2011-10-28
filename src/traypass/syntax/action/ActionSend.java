@@ -39,12 +39,14 @@ public class ActionSend extends Action {
 		lib.clear();
 		for (String line : ToolFile.getFileLines(TrayPassObject.keyFile)) {
 			String[] parts = line.split("=>");
-			String[] codes = parts[1].split(",");
-			int[] keys = new int[codes.length];
-			for (int i = 0; i < codes.length; i++) {
-				keys[i] = Integer.valueOf(codes[i]);
+			if (parts.length >= 2) {
+				String[] codes = parts[1].trim().split(",");
+				int[] keys = new int[codes.length];
+				for (int i = 0; i < codes.length; i++) {
+					keys[i] = Integer.valueOf(codes[i]);
+				}
+				lib.put(parts[0], keys);
 			}
-			lib.put(parts[0], keys);
 		}
 		System.out.println(TrayPassObject.keyFile + " loaded");
 	}
