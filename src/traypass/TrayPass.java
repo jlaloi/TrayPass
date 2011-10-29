@@ -23,6 +23,7 @@ import traypass.frame.SyntaxFrame;
 import traypass.misc.TrayUpdate;
 import traypass.syntax.Interpreter;
 import traypass.syntax.Syntax;
+import traypass.syntax.action.ActionSend;
 import traypass.tools.ToolFile;
 import traypass.tools.ToolImage;
 
@@ -216,6 +217,7 @@ public class TrayPass {
 		if (toExecute.trim().length() > 0) {
 			compute(toExecute);
 		}
+		ActionSend.load();
 	}
 
 	public void setWorking(boolean bool) {
