@@ -269,7 +269,7 @@ public enum Syntax {
 	FTP(
 			"ftp",
 			new ActionFTP(),
-			new String[] { "<host>", "<port>", "<user>", "<password>", "<" + ActionFTP.download + "/" + ActionFTP.upload + ">", "<Server File>", "Local File>" },
+			new String[] { "<host>", "<port>", "<user>", "<password>", "<" + ActionFTP.download + "/" + ActionFTP.upload + ">", "<Server File>", "<Local File>" },
 			"Return if the ftp transfert is ok"),
 
 	BROWSE(

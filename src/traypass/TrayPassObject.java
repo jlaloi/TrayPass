@@ -86,6 +86,5 @@ public class TrayPassObject {
 		keyFile = trayConfig.getKeyFile();
 		PassMenuItem.defaultIcon = null;
 		PassMenuItem.library.clear();
-		ActionSend.load();
 	}
 }
