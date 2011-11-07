@@ -27,18 +27,21 @@ public class ActionWaitFor extends Action {
 	private int click = 0;
 
 	public String doAction(List<String> parameters) {
-		String result = null;
+		String result = Syntax.boolFalse;
 		int maxCheck = TrayPassObject.imageCheckNumber;
 		int checkWait = TrayPassObject.imageCheckInterval;
-		if (parameters.size() > 1) {
-			this.click = Integer.valueOf(parameters.get(1));
-		} else {
-			result = Syntax.boolFalse;
-			maxCheck = 2;
-			click = 0;
-		}
+		this.click = 0;
 		isFound = false;
 		imagePath = parameters.get(0);
+		if (parameters.size() > 1) {
+			this.click = Integer.valueOf(parameters.get(1));
+		}
+		if (parameters.size() > 2) {
+			maxCheck = Integer.valueOf(parameters.get(2));
+		}
+		if (parameters.size() > 3) {
+			checkWait = Integer.valueOf(parameters.get(3));
+		}
 		try {
 			File file = new File(imagePath);
 			if (file.exists()) {

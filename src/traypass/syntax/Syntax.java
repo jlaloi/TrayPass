@@ -143,7 +143,7 @@ public enum Syntax {
 	WAITFOR(
 			"waitfor",
 			new ActionWaitFor(),
-			new String[] { "<image path>", "<click type>" },
+			new String[] { "<image path>", "<click type>","<Max check>","<Check wait>" },
 			"Waiting to find the image on the screen and then perform the specified mouse click"),
 
 	CONCAT(
