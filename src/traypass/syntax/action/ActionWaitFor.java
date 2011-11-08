@@ -27,7 +27,7 @@ public class ActionWaitFor extends Action {
 	private int click = 0;
 
 	public String doAction(List<String> parameters) {
-		String result = Syntax.boolFalse;
+		String result = null;
 		int maxCheck = TrayPassObject.imageCheckNumber;
 		int checkWait = TrayPassObject.imageCheckInterval;
 		this.click = 0;
@@ -52,13 +52,15 @@ public class ActionWaitFor extends Action {
 					}
 					ActionWait.waitMS(checkWait);
 				}
+				if (isFound) {
+					result = Syntax.boolTrue;
+				}else{
+					result = Syntax.boolFalse;
+				}
 			}
 		} catch (Exception e) {
 			Interpreter.showError("WaitFor: " + e);
 			e.printStackTrace();
-		}
-		if (isFound) {
-			result = Syntax.boolTrue;
 		}
 		return result;
 	}
