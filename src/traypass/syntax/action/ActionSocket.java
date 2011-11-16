@@ -43,10 +43,8 @@ public class ActionSocket extends Action {
 				TrayPassObject.trayPass.showInfo("Downloading " + fileName + " (" + ToolFile.formatSize(fileSize) + ")");
 				FileOutputStream fos = new FileOutputStream(path + TrayPassObject.fileSeparator + fileName);
 				BufferedOutputStream bos = new BufferedOutputStream(fos);
-				long size = 0;
 				while ((in = bis.read(buffer)) != -1 && !interpreter.isStop()) {
 					bos.write(buffer, 0, in);
-					size += in;
 				}
 				TrayPassObject.trayPass.showInfo("Downloaded " + ToolFile.formatSize(fileSize) + " to " + fileName + " (" + ToolFile.formatSize(fileSize) + ")");
 				bos.close();

@@ -17,41 +17,36 @@ import traypass.tools.ToolFile;
 
 public class ActionPack extends Action {
 
-	public static String paramPattern = "#param#";
-
 	public static String lineFile = "line.txt";
 
 	public String doAction(List<String> parameters) {
-		String pack = parameters.get(0);
-		HashMap<String, String> files = preparePack(pack);
-		String result = "";
+		HashMap<String, String> files = preparePack(parameters.get(0));
+		String result = null;
 		if (files.containsKey(lineFile)) {
-			String line = "";
+			
+			// Read file
+			result = "";
 			for (String l : ToolFile.getFileLines(files.get(lineFile))) {
-				line += l + " ";
+				result += l + " ";
 			}
-			String[] lines = line.split(paramPattern);
+			
 			// Parameters
-			if (lines.length > 1 && parameters.size() > 1) {
-				for (int i = 0; i < lines.length; i++) {
-					result += lines[i];
-					if (i + 1 != lines.length && i < parameters.size() - 1) {
-						result += parameters.get(i + 1);
-					}
-				}
-			} else {
-				result = lines[0];
+			result = result.replace("#param0#", parameters.size() - 1 + "");		
+			for(int i = 1; i < parameters.size(); i++){
+				result = result.replace("#param" + i + "#", parameters.get(i));		
 			}
-			// Files
+			
+			// Replace Files
 			for (String file : files.keySet()) {
 				if (!file.equals(lineFile)) {
 					result = result.replace(file, files.get(file));
 				}
 			}
+			
 			System.out.println("pack:" + result);
-			interpreter.computeFunctions(result);
+			result = interpreter.computeFunctions(result);
 		}
-		return "";
+		return result;
 	}
 
 	private HashMap<String, String> preparePack(String path) {
