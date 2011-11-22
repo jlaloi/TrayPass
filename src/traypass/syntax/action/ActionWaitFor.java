@@ -8,8 +8,11 @@ import java.util.List;
 
 import javax.imageio.ImageIO;
 
+import org.apache.log4j.Logger;
+
 import traypass.TrayPass;
 import traypass.TrayPassObject;
+import traypass.log.LogFactory;
 import traypass.syntax.Action;
 import traypass.syntax.Interpreter;
 import traypass.syntax.Syntax;
@@ -17,6 +20,8 @@ import traypass.tools.ToolImage;
 import traypass.tools.ToolMouse;
 
 public class ActionWaitFor extends Action {
+	
+	private static final Logger logger = LogFactory.getLogger(ActionWaitFor.class);
 
 	private BufferedImage image;
 
@@ -60,7 +65,7 @@ public class ActionWaitFor extends Action {
 			}
 		} catch (Exception e) {
 			Interpreter.showError("WaitFor: " + e);
-			e.printStackTrace();
+			logger.error(e);
 		}
 		return result;
 	}

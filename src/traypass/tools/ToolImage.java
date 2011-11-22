@@ -21,9 +21,14 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.filechooser.FileSystemView;
 
+import org.apache.log4j.Logger;
+
 import traypass.TrayPassObject;
+import traypass.log.LogFactory;
 
 public class ToolImage {
+	
+	private static final Logger logger = LogFactory.getLogger(ToolImage.class);
 
 	public static List<Rectangle> getScreenBounds() {
 		List<Rectangle> result = new ArrayList<Rectangle>();
@@ -60,7 +65,7 @@ public class ToolImage {
 		try {
 			ImageIO.write(image, ext, file);
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e);
 		}
 	}
 
@@ -90,7 +95,7 @@ public class ToolImage {
 			GraphicsConfiguration gc = gs.getDefaultConfiguration();
 			bimage = gc.createCompatibleImage(image.getWidth(null), image.getHeight(null), Transparency.BITMASK);
 		} catch (HeadlessException e) {
-			e.printStackTrace();
+			logger.error(e);
 		}
 		if (bimage == null) {
 			bimage = new BufferedImage(image.getWidth(null), image.getHeight(null), BufferedImage.TYPE_INT_ARGB);
@@ -110,7 +115,6 @@ public class ToolImage {
 		return image;
 	}
 
-	@SuppressWarnings("unchecked")
 	public static Image getImage(String path, Class c) {
 		Image result = null;
 		try {
@@ -125,7 +129,7 @@ public class ToolImage {
 			}
 		} catch (Exception e) {
 			System.out.println("getImage exception " + path);
-			e.printStackTrace();
+			logger.error(e);
 		}
 		return result;
 	}

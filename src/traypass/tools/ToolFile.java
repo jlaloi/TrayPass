@@ -13,10 +13,15 @@ import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
 import traypass.TrayPassObject;
+import traypass.log.LogFactory;
 import traypass.syntax.Interpreter;
 
 public class ToolFile {
+	
+	private static final Logger logger = LogFactory.getLogger(ToolFile.class);
 
 	public static List<String> getFileLines(String file) {
 		List<String> result = new ArrayList<String>();
@@ -31,7 +36,7 @@ public class ToolFile {
 			in.close();
 		} catch (Exception e) {
 			Interpreter.showError("getFileLines " + file + ":\n" + e);
-			e.printStackTrace();
+			logger.error(e);
 		}
 		return result;
 	}
@@ -61,7 +66,7 @@ public class ToolFile {
 			out.flush();
 			out.close();
 		} catch (Exception ioe) {
-			ioe.printStackTrace();
+			logger.error(ioe);
 		}
 	}
 
@@ -108,19 +113,19 @@ public class ToolFile {
 				out.write(buffer, 0, nbRead);
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e);
 			result = false;
 		} finally {
 			try {
 				out.close();
 			} catch (Exception e) {
-				e.printStackTrace();
+				logger.error(e);
 				result = false;
 			}
 			try {
 				in.close();
 			} catch (Exception e) {
-				e.printStackTrace();
+				logger.error(e);
 				result = false;
 			}
 		}

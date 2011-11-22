@@ -15,11 +15,14 @@ import java.util.List;
 import javax.swing.JMenu;
 import javax.swing.JPopupMenu;
 
+import org.apache.log4j.Logger;
+
 import traypass.crypto.CryptoEnterFrame;
 import traypass.frame.CaptureFrame;
 import traypass.frame.ConfigFrame;
 import traypass.frame.EditorFrame;
 import traypass.frame.SyntaxFrame;
+import traypass.log.LogFactory;
 import traypass.misc.TrayUpdate;
 import traypass.syntax.Interpreter;
 import traypass.syntax.Syntax;
@@ -28,6 +31,8 @@ import traypass.tools.ToolFile;
 import traypass.tools.ToolImage;
 
 public class TrayPass {
+	
+	private static final Logger logger = LogFactory.getLogger(TrayPass.class);
 
 	public static String title = "Tray Pass";
 
@@ -74,7 +79,7 @@ public class TrayPass {
 				}
 			});
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e);
 		}
 	}
 

@@ -8,7 +8,13 @@ import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
 
+import org.apache.log4j.Logger;
+
+import traypass.log.LogFactory;
+
 public class ToolFTP {
+	
+	private static final Logger logger = LogFactory.getLogger(ToolFTP.class);
 
 	private String host;
 
@@ -48,13 +54,13 @@ public class ToolFTP {
 				bos.write(buffer, 0, readCount);
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e);
 			result = false;
 		} finally {
 			try {
 				bos.close();
 			} catch (Exception e) {
-				e.printStackTrace();
+				logger.error(e);
 				result = false;
 			}
 			ftp = null;
@@ -80,19 +86,19 @@ public class ToolFTP {
 			}
 
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e);
 			result = false;
 		} finally {
 			try {
 				bos.close();
 			} catch (Exception e) {
-				e.printStackTrace();
+				logger.error(e);
 				result = false;
 			}
 			try {
 				is.close();
 			} catch (Exception e) {
-				e.printStackTrace();
+				logger.error(e);
 				result = false;
 			}
 			ftp = null;

@@ -8,9 +8,14 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
+import traypass.log.LogFactory;
 import traypass.syntax.Interpreter;
 
 public class ToolJDBC {
+	
+	private static final Logger logger = LogFactory.getLogger(ToolJDBC.class);
 
 	private String driver;
 
@@ -38,7 +43,7 @@ public class ToolJDBC {
 			connection = DriverManager.getConnection(url, login, password);
 		} catch (Exception e) {
 			Interpreter.showError(e.getMessage());
-			e.printStackTrace();
+			logger.error(e);
 		}
 		return connection;
 	}
@@ -49,7 +54,7 @@ public class ToolJDBC {
 				connection.close();
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e);
 		}
 	}
 
@@ -69,14 +74,14 @@ public class ToolJDBC {
 			}
 		} catch (Exception e) {
 			Interpreter.showError(e.getMessage());
-			e.printStackTrace();
+			logger.error(e);
 		} finally {
 			try {
 				if (stmt != null) {
 					stmt.close();
 				}
 			} catch (Exception e) {
-				e.printStackTrace();
+				logger.error(e);
 			}
 		}
 		return result;
@@ -89,14 +94,14 @@ public class ToolJDBC {
 			stmt.executeUpdate(query);
 		} catch (Exception e) {
 			Interpreter.showError(e.getMessage());
-			e.printStackTrace();
+			logger.error(e);
 		} finally {
 			try {
 				if (stmt != null) {
 					stmt.close();
 				}
 			} catch (Exception e) {
-				e.printStackTrace();
+				logger.error(e);
 			}
 		}
 	}
@@ -118,14 +123,14 @@ public class ToolJDBC {
 			}
 		} catch (Exception e) {
 			Interpreter.showError(e.getMessage());
-			e.printStackTrace();
+			logger.error(e);
 		} finally {
 			try {
 				if (c != null) {
 					c.close();
 				}
 			} catch (Exception e) {
-				e.printStackTrace();
+				logger.error(e);
 			}
 		}
 		return result;

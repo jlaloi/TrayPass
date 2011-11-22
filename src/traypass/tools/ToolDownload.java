@@ -7,13 +7,18 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
 
+import org.apache.log4j.Logger;
+
 import traypass.TrayPassConfig;
 import traypass.TrayPassObject;
 import traypass.crypto.CryptoEncrypter;
+import traypass.log.LogFactory;
 
 import com.sun.org.apache.xml.internal.security.utils.Base64;
 
 public class ToolDownload {
+	
+	private static final Logger logger = LogFactory.getLogger(ToolDownload.class);
 
 	public static HttpURLConnection getURConnection(String url) {
 		HttpURLConnection connection = null;
@@ -30,7 +35,7 @@ public class ToolDownload {
 				connection.setRequestProperty("Proxy-Authorization", "Basic " + encoded);
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e);
 		}
 		return connection;
 	}
@@ -41,7 +46,7 @@ public class ToolDownload {
 			URLConnection connection = getURConnection(url);
 			result = connection.getContentLength();
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e);
 		}
 		return result;
 	}
@@ -53,7 +58,7 @@ public class ToolDownload {
 			downloadFile(url, randomAccessFile, 0, 0);
 			randomAccessFile.close();
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e);
 		}
 	}
 
@@ -79,13 +84,13 @@ public class ToolDownload {
 				pos += len;
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e);
 		} finally {
 			if (inputStream != null) {
 				try {
 					inputStream.close();
 				} catch (IOException ioe) {
-					ioe.printStackTrace();
+					logger.error(ioe);
 				}
 			}
 		}

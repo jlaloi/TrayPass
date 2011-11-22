@@ -11,14 +11,19 @@ import javax.swing.JFileChooser;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
+import org.apache.log4j.Logger;
+
 import traypass.TrayPassObject;
 import traypass.crypto.CryptoEncrypter;
+import traypass.log.LogFactory;
 import traypass.misc.TrayButton;
 import traypass.misc.TrayLabel;
 import traypass.misc.TrayTextField;
 import traypass.syntax.Interpreter;
 
 public class ConfigFrame extends JDialog {
+	
+	private static final Logger logger = LogFactory.getLogger(ConfigFrame.class);
 
 	private JTextField cryptoKey, cryptoExample, proxyHost, proxyPort, proxyUser, font, fontSize, captureWidth, fileEncode, consoleEncode, passFile, iconFile, imageCheckNumber, imageCheckInterval, iconSize, keyFile;
 	private JPasswordField proxyPass;
@@ -138,32 +143,32 @@ public class ConfigFrame extends JDialog {
 				try {
 					TrayPassObject.trayConfig.setProxyPort(Integer.valueOf(proxyPort.getText()));
 				} catch (Exception e) {
-					e.printStackTrace();
+					logger.error(e);
 				}
 				try {
 					TrayPassObject.trayConfig.setCaptureWidth(Integer.valueOf(captureWidth.getText()));
 				} catch (Exception e) {
-					e.printStackTrace();
+					logger.error(e);
 				}
 				try {
 					TrayPassObject.trayConfig.setFontSize(Integer.valueOf(fontSize.getText()));
 				} catch (Exception e) {
-					e.printStackTrace();
+					logger.error(e);
 				}
 				try {
 					TrayPassObject.trayConfig.setImageCheckInterval(Integer.valueOf(imageCheckInterval.getText()));
 				} catch (Exception e) {
-					e.printStackTrace();
+					logger.error(e);
 				}
 				try {
 					TrayPassObject.trayConfig.setIconSize(Integer.valueOf(iconSize.getText()));
 				} catch (Exception e) {
-					e.printStackTrace();
+					logger.error(e);
 				}
 				try {
 					TrayPassObject.trayConfig.setImageCheckNumber(Integer.valueOf(imageCheckNumber.getText()));
 				} catch (Exception e) {
-					e.printStackTrace();
+					logger.error(e);
 				}
 				if (new String(proxyPass.getPassword()).trim().length() > 0) {
 					if (TrayPassObject.secretKey != null) {

@@ -5,13 +5,18 @@ import java.io.InputStream;
 import java.net.URLConnection;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
 import traypass.TrayPassObject;
+import traypass.log.LogFactory;
 import traypass.syntax.Action;
 import traypass.syntax.Interpreter;
 import traypass.tools.ToolDownload;
 import traypass.tools.ToolFile;
 
 public class ActionDownload extends Action {
+	
+	private static final Logger logger = LogFactory.getLogger(ActionDownload.class);
 
 	public String doAction(List<String> parameters) {
 		String result = "";
@@ -42,7 +47,7 @@ public class ActionDownload extends Action {
 			writeFile.flush();
 		} catch (Exception e) {
 			Interpreter.showError("Error while downloading " + url + ": " + e);
-			e.printStackTrace();
+			logger.error(e);
 			result = null;
 		} finally {
 			try {
@@ -54,7 +59,7 @@ public class ActionDownload extends Action {
 				}
 			} catch (Exception e) {
 				result = null;
-				e.printStackTrace();
+				logger.error(e);
 			}
 		}
 		return result;

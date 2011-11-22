@@ -10,9 +10,14 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
 import traypass.TrayPassObject;
+import traypass.log.LogFactory;
 
 public class ToolClipboard {
+	
+	private static final Logger logger = LogFactory.getLogger(ToolClipboard.class);
 
 	public static void setClipboard(String text) {
 		setClipboard(new StringSelection(text));
@@ -44,7 +49,7 @@ public class ToolClipboard {
 				}
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e);
 		}
 		return result;
 	}

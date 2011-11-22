@@ -11,11 +11,16 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
 import traypass.TrayPassObject;
+import traypass.log.LogFactory;
 import traypass.syntax.Action;
 import traypass.tools.ToolFile;
 
 public class ActionSocket extends Action {
+	
+	private static final Logger logger = LogFactory.getLogger(ActionSocket.class);
 
 	public static int bufferSize = 1024;
 
@@ -72,7 +77,7 @@ public class ActionSocket extends Action {
 				}
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e);
 			TrayPassObject.trayPass.showError(e.getMessage());
 			result = null;
 		}

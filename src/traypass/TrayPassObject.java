@@ -6,9 +6,13 @@ import java.awt.Robot;
 
 import javax.crypto.SecretKey;
 
-import traypass.syntax.action.ActionSend;
+import org.apache.log4j.Logger;
+
+import traypass.log.LogFactory;
 
 public class TrayPassObject {
+	
+	private static final Logger logger = LogFactory.getLogger(TrayPassObject.class);
 
 	public static String configFileName = ".TrayPass";
 
@@ -63,7 +67,7 @@ public class TrayPassObject {
 			try {
 				robot = new Robot();
 			} catch (Exception e) {
-				e.printStackTrace();
+				logger.error(e);
 			}
 		}
 		return robot;

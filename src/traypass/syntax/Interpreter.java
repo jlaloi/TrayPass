@@ -4,9 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 
+import org.apache.log4j.Logger;
+
 import traypass.TrayPassObject;
+import traypass.log.LogFactory;
 
 public class Interpreter extends Thread {
+	
+	private static final Logger logger = LogFactory.getLogger(Interpreter.class);
 
 	private String line;
 
@@ -48,7 +53,7 @@ public class Interpreter extends Thread {
 			}
 		} catch (Exception e) {
 			showError("Exception while computeFunctions:" + line + ":\n" + e);
-			e.printStackTrace();
+			logger.error(e);
 		}
 		return result;
 	}
@@ -98,7 +103,7 @@ public class Interpreter extends Thread {
 
 		} catch (Exception e) {
 			showError("Exception while executing:" + function + ":\n" + e);
-			e.printStackTrace();
+			logger.error(e);
 		}
 		return result;
 	}

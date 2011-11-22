@@ -6,7 +6,13 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
+import org.apache.log4j.Logger;
+
+import traypass.log.LogFactory;
+
 public class TrayPassConfig implements Serializable {
+	
+	private static final Logger logger = LogFactory.getLogger(TrayPassConfig.class);
 
 	private String cryptoExample = "";
 
@@ -65,7 +71,7 @@ public class TrayPassConfig implements Serializable {
 				}
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e);
 		}
 	}
 
@@ -103,7 +109,7 @@ public class TrayPassConfig implements Serializable {
 				this.setKeyFile(tmp.getKeyFile());
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e);
 		}
 	}
 

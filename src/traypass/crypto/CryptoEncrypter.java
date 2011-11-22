@@ -9,9 +9,14 @@ import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 
+import org.apache.log4j.Logger;
+
 import traypass.TrayPassObject;
+import traypass.log.LogFactory;
 
 public class CryptoEncrypter {
+	
+	private static final Logger logger = LogFactory.getLogger(CryptoEncrypter.class);
 
 	public static String encrypt(String str, SecretKey key) {
 		String result = "";
@@ -22,7 +27,7 @@ public class CryptoEncrypter {
 			byte[] enc = ecipher.doFinal(utf8);
 			result = new sun.misc.BASE64Encoder().encode(enc);
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e);
 		}
 		return result;
 	}
@@ -41,7 +46,7 @@ public class CryptoEncrypter {
 			result = str;
 		} catch (Exception e) {
 			System.out.println(str);
-			e.printStackTrace();
+			logger.error(e);
 		}
 		return result;
 	}
@@ -59,7 +64,7 @@ public class CryptoEncrypter {
 				result = new SecretKeySpec(key, TrayPassObject.algorithm);
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e);
 		}
 		return result;
 	}

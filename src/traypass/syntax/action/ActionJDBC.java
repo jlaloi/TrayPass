@@ -2,12 +2,17 @@ package traypass.syntax.action;
 
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
 import traypass.TrayPassObject;
+import traypass.log.LogFactory;
 import traypass.syntax.Action;
 import traypass.syntax.Interpreter;
 import traypass.tools.ToolJDBC;
 
 public class ActionJDBC extends Action {
+	
+	private static final Logger logger = LogFactory.getLogger(ActionJDBC.class);
 
 	public static String update = "update";
 
@@ -42,7 +47,7 @@ public class ActionJDBC extends Action {
 			}
 		} catch (Exception e) {
 			Interpreter.showError(e.getMessage());
-			e.printStackTrace();
+			logger.error(e);
 		} finally {
 			toolJdbc.close();
 		}

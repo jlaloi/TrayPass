@@ -11,9 +11,14 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JMenuItem;
 
+import org.apache.log4j.Logger;
+
+import traypass.log.LogFactory;
 import traypass.tools.ToolImage;
 
 public class PassMenuItem extends JMenuItem {
+	
+	private static final Logger logger = LogFactory.getLogger(PassMenuItem.class);
 
 	public static ImageIcon defaultIcon;
 
@@ -66,7 +71,6 @@ public class PassMenuItem extends JMenuItem {
 		}
 	}
 
-	@SuppressWarnings("unchecked")
 	public static ImageIcon getImageIcon(String path, Class c) {
 		ImageIcon result = null;
 		try {
@@ -81,7 +85,7 @@ public class PassMenuItem extends JMenuItem {
 				result = defaultIcon;
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e);
 		}
 		return result;
 	}

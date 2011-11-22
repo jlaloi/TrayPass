@@ -4,11 +4,16 @@ import java.util.jar.JarFile;
 
 import javax.swing.JOptionPane;
 
+import org.apache.log4j.Logger;
+
 import traypass.TrayPassObject;
+import traypass.log.LogFactory;
 import traypass.tools.ToolDownload;
 import traypass.tools.ToolFile;
 
 public class TrayUpdate {
+	
+	private static final Logger logger = LogFactory.getLogger(TrayUpdate.class);
 
 	public static String updateJarUrl = "http://tp.loul.org/TrayPass.jar";
 
@@ -21,7 +26,7 @@ public class TrayUpdate {
 		try {
 			result = this.getClass().getProtectionDomain().getCodeSource().getLocation().toURI().toString().replace("file:/", "").replace("/", TrayPassObject.fileSeparator + "").replace("%20", " ");
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e);
 		}
 		return result;
 	}
@@ -36,7 +41,7 @@ public class TrayUpdate {
 			JarFile jar = new JarFile(jarLocation);
 			result = jar.getManifest().getMainAttributes().getValue(manifestAttribute);
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e);
 		}
 		return result;
 	}
@@ -48,7 +53,7 @@ public class TrayUpdate {
 			ToolDownload.downloadFile(updateVersionUrl, tmpFile);
 			result = ToolFile.getFileLines(tmpFile).get(0);
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e);
 		}
 		return result;
 	}
@@ -64,7 +69,7 @@ public class TrayUpdate {
 				result = true;
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e);
 		}
 		return result;
 	}

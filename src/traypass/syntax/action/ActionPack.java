@@ -10,12 +10,17 @@ import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
+import org.apache.log4j.Logger;
+
 import traypass.TrayPassObject;
+import traypass.log.LogFactory;
 import traypass.syntax.Action;
 import traypass.syntax.Interpreter;
 import traypass.tools.ToolFile;
 
 public class ActionPack extends Action {
+	
+	private static final Logger logger = LogFactory.getLogger(ActionPack.class);
 
 	public static String lineFile = "line.txt";
 
@@ -76,7 +81,7 @@ public class ActionPack extends Action {
 			zip.close();
 		} catch (Exception e) {
 			Interpreter.showError("preparePack: " + path + "\n" + e);
-			e.printStackTrace();
+			logger.error(e);
 		}
 		return result;
 	}
