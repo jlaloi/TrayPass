@@ -26,6 +26,7 @@ import traypass.syntax.action.ActionMouse;
 import traypass.syntax.action.ActionNewLine;
 import traypass.syntax.action.ActionPack;
 import traypass.syntax.action.ActionPrompt;
+import traypass.syntax.action.ActionQuickFrame;
 import traypass.syntax.action.ActionReadFile;
 import traypass.syntax.action.ActionSave;
 import traypass.syntax.action.ActionSelect;
@@ -200,6 +201,12 @@ public enum Syntax {
 			new String[] { "<bool>", "<then>", "<else>" },
 			"If bool then else"),
 
+	QUICKFRAME(
+			"quickframe",
+			new ActionQuickFrame(),
+			new String[] { "<Text>", "<second>", "<Color r>", "<Color g>", "<Color b>" },
+			"Display the text message for specified seconds"),
+					
 	WHILE(
 			"while",
 			new ActionWhile(),
