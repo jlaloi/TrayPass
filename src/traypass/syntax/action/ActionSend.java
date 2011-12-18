@@ -37,7 +37,7 @@ public class ActionSend extends Action {
 
 	public static void load() {
 		lib.clear();
-		for (String line : ToolFile.getFileLines(TrayPassObject.keyFile)) {
+		for (String line : ToolFile.getFileLinesJar(TrayPassObject.keyFile, TrayPassObject.class)) {
 			String[] parts = line.split("=>");
 			if (parts.length >= 2) {
 				String[] codes = parts[1].trim().split(",");

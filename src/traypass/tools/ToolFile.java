@@ -6,6 +6,7 @@ import java.io.DataInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
@@ -36,6 +37,23 @@ public class ToolFile {
 			in.close();
 		} catch (Exception e) {
 			Interpreter.showError("getFileLines " + file + ":\n" + e);
+			logger.error(e);
+		}
+		return result;
+	}
+	
+	public static List<String> getFileLinesJar(String file, Class c) {
+		List<String> result = new ArrayList<String>();
+		try {
+			InputStream in = c.getResourceAsStream(file);
+			BufferedReader br = new BufferedReader(new InputStreamReader(in, TrayPassObject.fileEncode));
+			String line;
+			while ((line = br.readLine()) != null) {
+				result.add(line);
+			}
+			in.close();
+		} catch (Exception e) {
+			Interpreter.showError("getFileLinesJar " + file + ":\n" + e);
 			logger.error(e);
 		}
 		return result;
