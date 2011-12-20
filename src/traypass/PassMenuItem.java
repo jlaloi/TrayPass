@@ -25,6 +25,8 @@ public class PassMenuItem extends JMenuItem {
 	public static String defaultIconPath = "DefaultMenuIcon.png";
 
 	public static HashMap<String, ImageIcon> library = new HashMap<String, ImageIcon>();
+	
+	public Object object;
 
 	public PassMenuItem(String label) {
 		super(label);
@@ -88,6 +90,14 @@ public class PassMenuItem extends JMenuItem {
 			logger.error(e);
 		}
 		return result;
+	}
+
+	public Object getObject() {
+		return object;
+	}
+
+	public void setObject(Object object) {
+		this.object = object;
 	}
 
 }

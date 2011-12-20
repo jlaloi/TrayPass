@@ -97,7 +97,7 @@ public class Interpreter extends Thread {
 
 			Action action = getAction(methodName, params.size());
 			if (!stop && action != null) {
-				System.out.println("Executing " + methodName);
+				logger.info("Executing " + methodName);
 				result = action.execute(this, params);
 			}
 

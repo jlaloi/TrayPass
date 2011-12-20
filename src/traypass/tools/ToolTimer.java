@@ -1,0 +1,70 @@
+package traypass.tools;
+
+import java.util.Timer;
+import java.util.TimerTask;
+
+import org.apache.log4j.Logger;
+
+import traypass.log.LogFactory;
+import traypass.syntax.Interpreter;
+
+public class ToolTimer {
+
+	private Timer timer;
+	private int seconds = 60;
+	private String action;
+	private String title;
+	private Interpreter interpreter;
+
+	private static final Logger logger = LogFactory
+			.getLogger(ToolClipboard.class);
+
+	public ToolTimer(String title, String seconds, String action) {
+		super();
+		try {
+			this.seconds = Integer.valueOf(seconds).intValue();
+		} catch (Exception e) {
+			logger.error(e);
+		}
+		this.action = action;
+		this.title = title;
+	}
+
+	public void start() {
+		timer = new Timer();
+		timer.schedule(new ActionTask(), seconds * 1000, seconds * 1000);
+		logger.info("Task " +getTitle() + " started");
+	}
+
+	public void stop() {
+		if (timer != null) {
+			timer.cancel();
+			timer = null;
+		}
+		if (interpreter != null) {
+			interpreter.setStop(true);
+		}
+		logger.info("Task " +getTitle() + " stopped");
+	}
+
+	public boolean isStop() {
+		return timer == null;
+	}
+
+	public int getSeconds() {
+		return seconds;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	class ActionTask extends TimerTask {
+		public void run() {
+			logger.debug("Task " + title + " executing " + action);
+			interpreter = new Interpreter(action);
+			interpreter.start();
+		}
+	}
+
+}

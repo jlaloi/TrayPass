@@ -29,6 +29,7 @@ import traypass.syntax.Syntax;
 import traypass.syntax.action.ActionSend;
 import traypass.tools.ToolFile;
 import traypass.tools.ToolImage;
+import traypass.tools.ToolTimer;
 
 public class TrayPass {
 	
@@ -43,6 +44,8 @@ public class TrayPass {
 	private JPopupMenu popup;
 
 	public static Interpreter interpreter;
+	
+	public static List<ToolTimer> tasks = new ArrayList<ToolTimer>();
 
 	public void loadIcon() {
 		TrayPassObject.trayImageIcon = ToolImage.getImage(TrayPassObject.iconFile, getClass());
@@ -84,6 +87,13 @@ public class TrayPass {
 	}
 
 	public void setMenu() {
+		
+		// Reset timer
+		for(ToolTimer t : tasks){
+			t.stop();
+		}
+		tasks.clear();
+		
 		popup = new JPopupMenu();
 		boolean useEncryption = false;
 		String toExecute = "";
@@ -119,6 +129,11 @@ public class TrayPass {
 				}
 			} else if (pass.startsWith("##")) {
 				toExecute += pass.substring(2);
+			} else if (pass.startsWith("task:")) {
+				String taskName = pass.substring(pass.indexOf(":") + 1, pass.indexOf(","));
+				String taskTime = pass.substring(pass.indexOf(",") + 1, (pass.lastIndexOf(",")));
+				String taskAction = pass.substring(pass.lastIndexOf(",") + 1);
+				tasks.add(new ToolTimer(taskName, taskTime, taskAction));
 			} else if (pass.equals("line")) {
 				if (currentMenu.size() > 0) {
 					currentMenu.get(currentMenu.size() - 1).addSeparator();
@@ -194,6 +209,30 @@ public class TrayPass {
 			}
 		});
 		configMenu.add(updateItem);
+		
+		JMenu taskMenu = new JMenu("Task(s)");
+		taskMenu.setFont(TrayPassObject.fontBold);
+		for(ToolTimer tt : tasks){
+			final PassMenuItem taskItem = new PassMenuItem(tt.getTitle());
+			taskItem.setObject(tt);
+			taskItem.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					ToolTimer task = ((ToolTimer) taskItem.getObject());
+					if(task.isStop()){
+						showInfo("Starting " + task.getTitle());
+						task.start();
+						taskItem.setText(task.getTitle());
+					}else{
+						showInfo("Stoping " + task.getTitle());
+						task.stop();
+						taskItem.setText(task.getTitle() + " (STOPPED)");
+					}
+				}
+			});
+			taskMenu.add(taskItem);
+		}
+		
+		configMenu.add(taskMenu);
 		PassMenuItem exitItem = new PassMenuItem("Exit");
 		exitItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -223,6 +262,10 @@ public class TrayPass {
 			compute(toExecute);
 		}
 		ActionSend.load();
+		
+		for(ToolTimer t : tasks){
+			t.start();
+		}
 	}
 
 	public void setWorking(boolean bool) {
