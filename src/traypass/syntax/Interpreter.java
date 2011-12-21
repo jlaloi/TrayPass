@@ -59,6 +59,7 @@ public class Interpreter extends Thread {
 	}
 
 	private String computeFunction(String function) {
+		logger.debug("Executing " + function);
 		String result = function;
 		try {
 			if (stop || !checkSyntax(function)) {

@@ -14,18 +14,20 @@ public class ToolTimer {
 	private int seconds = 60;
 	private String action;
 	private String title;
+	private String icon;
 	private Interpreter interpreter;
 
 	private static final Logger logger = LogFactory
 			.getLogger(ToolClipboard.class);
 
-	public ToolTimer(String title, String seconds, String action) {
+	public ToolTimer(String title, String icon, String seconds, String action) {
 		super();
 		try {
 			this.seconds = Integer.valueOf(seconds).intValue();
 		} catch (Exception e) {
 			logger.error(e);
 		}
+		this.icon = icon;
 		this.action = action;
 		this.title = title;
 	}
@@ -57,6 +59,10 @@ public class ToolTimer {
 
 	public String getTitle() {
 		return title;
+	}
+
+	public String getIcon() {
+		return icon;
 	}
 
 	class ActionTask extends TimerTask {

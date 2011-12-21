@@ -25,7 +25,10 @@ public class ActionQuickFrame extends Action {
 
 	public String doAction(List<String> parameters) {
 		String text = parameters.get(0);
-		int seconds = Integer.valueOf(parameters.get(1));
+		int seconds = 5;
+		if (parameters.size() > 1) {
+			seconds = Integer.valueOf(parameters.get(1));
+		}
 		Color color = Color.red;
 		if (parameters.size() > 4) {
 			int r = Integer.valueOf(parameters.get(2));

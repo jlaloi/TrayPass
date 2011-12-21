@@ -101,69 +101,78 @@ public class TrayPass {
 
 		// Adding pass
 		for (String pass : ToolFile.getFileLines(TrayPassObject.passFile)) {
-			if (pass.contains(Syntax.DECRYPT.getPattern())) {
-				useEncryption = true;
-			}
-			if (pass.contains(Syntax.DOWNLOAD.getPattern()) && TrayPassObject.trayConfig.getProxyPass() != null && TrayPassObject.trayConfig.getProxyPass().trim().length() > 0) {
-				useEncryption = true;
-			}
-			if (pass.startsWith("<--{") && pass.endsWith("}")) {
-				String label = pass.substring(4, pass.indexOf("}"));
-				String icon = null;
-				if (label.contains(Syntax.functionParamSeparator + "")) {
-					icon = label.substring(label.indexOf(Syntax.functionParamSeparator) + 1);
-					label = label.substring(0, label.indexOf(Syntax.functionParamSeparator));
+			try{
+				if (pass.contains(Syntax.DECRYPT.getPattern())) {
+					useEncryption = true;
 				}
-				JMenu menu = new JMenu(label);
-				menu.setFont(TrayPassObject.font);
-				menu.setIcon(PassMenuItem.getImageIcon(icon, this.getClass()));
-				if (currentMenu.size() > 0) {
-					currentMenu.get(currentMenu.size() - 1).add(menu);
-				} else {
-					popup.add(menu);
+				if (pass.contains(Syntax.DOWNLOAD.getPattern()) && TrayPassObject.trayConfig.getProxyPass() != null && TrayPassObject.trayConfig.getProxyPass().trim().length() > 0) {
+					useEncryption = true;
 				}
-				currentMenu.add(menu);
-			} else if (pass.equals("-->")) {
-				if (currentMenu.size() > 0) {
-					currentMenu.remove(currentMenu.size() - 1);
-				}
-			} else if (pass.startsWith("##")) {
-				toExecute += pass.substring(2);
-			} else if (pass.startsWith("task:")) {
-				String taskName = pass.substring(pass.indexOf(":") + 1, pass.indexOf(","));
-				String taskTime = pass.substring(pass.indexOf(",") + 1, (pass.lastIndexOf(",")));
-				String taskAction = pass.substring(pass.lastIndexOf(",") + 1);
-				tasks.add(new ToolTimer(taskName, taskTime, taskAction));
-			} else if (pass.equals("line")) {
-				if (currentMenu.size() > 0) {
-					currentMenu.get(currentMenu.size() - 1).addSeparator();
-				} else {
-					popup.addSeparator();
-				}
-			} else {
-				PassMenuItem item;
-				if (pass.startsWith("title:")) {
-					item = new PassMenuItem(pass.substring(pass.indexOf(":") + 1), null, "");
-					item.setFont(TrayPassObject.fontBold);
-				} else {
-					String label = pass;
+				if (pass.startsWith("<--{") && pass.endsWith("}")) {
+					String label = pass.substring(4, pass.indexOf("}"));
 					String icon = null;
-					if (pass.startsWith("{")) {
-						label = pass.substring(1, pass.indexOf("}"));
-						pass = pass.substring(pass.indexOf("}") + 1);
-						if (label.contains(Syntax.functionParamSeparator + "")) {
-							String[] split = label.split(Syntax.functionParamSeparator + "");
-							label = split[0];
-							icon = split[1];
-						}
+					if (label.contains(Syntax.functionParamSeparator + "")) {
+						icon = label.substring(label.indexOf(Syntax.functionParamSeparator) + 1);
+						label = label.substring(0, label.indexOf(Syntax.functionParamSeparator));
 					}
-					item = new PassMenuItem(label, pass, icon);
-				}
-				if (currentMenu.size() > 0) {
-					currentMenu.get(currentMenu.size() - 1).add(item);
+					JMenu menu = new JMenu(label);
+					menu.setFont(TrayPassObject.font);
+					menu.setIcon(PassMenuItem.getImageIcon(icon, this.getClass()));
+					if (currentMenu.size() > 0) {
+						currentMenu.get(currentMenu.size() - 1).add(menu);
+					} else {
+						popup.add(menu);
+					}
+					currentMenu.add(menu);
+				} else if (pass.equals("-->")) {
+					if (currentMenu.size() > 0) {
+						currentMenu.remove(currentMenu.size() - 1);
+					}
+				} else if (pass.startsWith("##")) {
+					toExecute += pass.substring(2);
+				} else if (pass.startsWith("task:{")) {
+					String taskName = pass.substring(pass.indexOf("{") + 1, pass.indexOf("}"));
+					String taskIcon = null;
+					if (taskName.contains(Syntax.functionParamSeparator + "")) {
+						taskIcon = taskName.substring(taskName.indexOf(Syntax.functionParamSeparator) + 1);
+						taskName = taskName.substring(0, taskName.indexOf(Syntax.functionParamSeparator));
+					}
+					String taskTime = pass.substring(pass.indexOf("}") + 1, pass.indexOf(Syntax.functionParamSeparator,pass.indexOf("}")));
+					String taskAction = pass.substring(pass.indexOf(Syntax.functionParamSeparator,pass.indexOf("}")) + 1);
+					tasks.add(new ToolTimer(taskName, taskIcon, taskTime, taskAction));
+				} else if (pass.equals("line")) {
+					if (currentMenu.size() > 0) {
+						currentMenu.get(currentMenu.size() - 1).addSeparator();
+					} else {
+						popup.addSeparator();
+					}
 				} else {
-					popup.add(item);
+					PassMenuItem item;
+					if (pass.startsWith("title:")) {
+						item = new PassMenuItem(pass.substring(pass.indexOf(":") + 1), null, "");
+						item.setFont(TrayPassObject.fontBold);
+					} else {
+						String label = pass;
+						String icon = null;
+						if (pass.startsWith("{")) {
+							label = pass.substring(1, pass.indexOf("}"));
+							pass = pass.substring(pass.indexOf("}") + 1);
+							if (label.contains(Syntax.functionParamSeparator + "")) {
+								String[] split = label.split(Syntax.functionParamSeparator + "");
+								label = split[0];
+								icon = split[1];
+							}
+						}
+						item = new PassMenuItem(label, pass, icon);
+					}
+					if (currentMenu.size() > 0) {
+						currentMenu.get(currentMenu.size() - 1).add(item);
+					} else {
+						popup.add(item);
+					}
 				}
+			}catch (Exception e) {
+				logger.error(pass + " " + e);
 			}
 		}
 
@@ -214,6 +223,7 @@ public class TrayPass {
 		taskMenu.setFont(TrayPassObject.fontBold);
 		for(ToolTimer tt : tasks){
 			final PassMenuItem taskItem = new PassMenuItem(tt.getTitle());
+			taskItem.setIcon(PassMenuItem.getImageIcon(tt.getIcon(), this.getClass()));
 			taskItem.setObject(tt);
 			taskItem.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {

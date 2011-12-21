@@ -3,7 +3,10 @@ package traypass.syntax.action;
 import java.util.HashMap;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
 import traypass.TrayPassObject;
+import traypass.log.LogFactory;
 import traypass.syntax.Action;
 import traypass.tools.Pair;
 import traypass.tools.ToolFile;
@@ -12,6 +15,7 @@ public class ActionSend extends Action {
 
 	public static String keyCodeString = "{code:";
 	public static HashMap<String, int[]> lib = new HashMap<String, int[]>();
+	private static final Logger logger = LogFactory.getLogger(ActionSend.class);
 
 	public String doAction(List<String> parameters) {
 		if (parameters.size() == 1) {
@@ -48,7 +52,7 @@ public class ActionSend extends Action {
 				lib.put(parts[0], keys);
 			}
 		}
-		System.out.println(TrayPassObject.keyFile + " loaded");
+		logger.info(TrayPassObject.keyFile + " loaded");
 	}
 
 	public int[] getCode(String key) {
@@ -89,6 +93,7 @@ public class ActionSend extends Action {
 				doType(keyCodes, offset + 1, length - 1);
 				TrayPassObject.getRobot().keyRelease(keyCodes[offset]);
 			} catch (Exception e) {
+				logger.error(e);
 			}
 		}
 	}
