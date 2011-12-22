@@ -219,30 +219,32 @@ public class TrayPass {
 		});
 		configMenu.add(updateItem);
 		
-		JMenu taskMenu = new JMenu("Task(s)");
-		taskMenu.setFont(TrayPassObject.fontBold);
-		for(ToolTimer tt : tasks){
-			final PassMenuItem taskItem = new PassMenuItem(tt.getTitle());
-			taskItem.setIcon(PassMenuItem.getImageIcon(tt.getIcon(), this.getClass()));
-			taskItem.setObject(tt);
-			taskItem.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					ToolTimer task = ((ToolTimer) taskItem.getObject());
-					if(task.isStop()){
-						showInfo("Starting " + task.getTitle());
-						task.start();
-						taskItem.setText(task.getTitle());
-					}else{
-						showInfo("Stoping " + task.getTitle());
-						task.stop();
-						taskItem.setText(task.getTitle() + " (STOPPED)");
+		if(tasks.size() > 0){
+			JMenu taskMenu = new JMenu("Tasks");
+			taskMenu.setFont(TrayPassObject.fontBold);
+			for(ToolTimer tt : tasks){
+				final PassMenuItem taskItem = new PassMenuItem(tt.getTitle());
+				taskItem.setIcon(PassMenuItem.getImageIcon(tt.getIcon(), this.getClass()));
+				taskItem.setObject(tt);
+				taskItem.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						ToolTimer task = ((ToolTimer) taskItem.getObject());
+						if(task.isStop()){
+							showInfo("Starting " + task.getTitle());
+							task.start();
+							taskItem.setText(task.getTitle());
+						}else{
+							showInfo("Stoping " + task.getTitle());
+							task.stop();
+							taskItem.setText(task.getTitle() + " (STOPPED)");
+						}
 					}
-				}
-			});
-			taskMenu.add(taskItem);
+				});
+				taskMenu.add(taskItem);
+			}
+			popup.add(taskMenu);
 		}
 		
-		configMenu.add(taskMenu);
 		PassMenuItem exitItem = new PassMenuItem("Exit");
 		exitItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
