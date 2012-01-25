@@ -16,6 +16,8 @@ public class Interpreter extends Thread {
 	private String line;
 
 	private boolean stop = false;
+	
+	private boolean invisible = false;
 
 	public Interpreter(String line) {
 		this.line = line;
@@ -23,11 +25,11 @@ public class Interpreter extends Thread {
 
 	public void run() {
 		stop = false;
-		if (TrayPassObject.trayPass != null) {
+		if (!invisible && TrayPassObject.trayPass != null) {
 			TrayPassObject.trayPass.setWorking(true);
 		}
 		computeFunctions(line);
-		if (TrayPassObject.trayPass != null) {
+		if (!invisible && TrayPassObject.trayPass != null) {
 			TrayPassObject.trayPass.setWorking(false);
 		}
 		stop = true;
@@ -251,6 +253,14 @@ public class Interpreter extends Thread {
 
 	public void setLine(String line) {
 		this.line = line;
+	}
+
+	public boolean isInvisible() {
+		return invisible;
+	}
+
+	public void setInvisible(boolean invisible) {
+		this.invisible = invisible;
 	}
 
 }

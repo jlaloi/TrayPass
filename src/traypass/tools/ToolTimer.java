@@ -69,6 +69,7 @@ public class ToolTimer {
 		public void run() {
 			logger.debug("Task " + title + " executing " + action);
 			interpreter = new Interpreter(action);
+			interpreter.setInvisible(true);
 			interpreter.start();
 		}
 	}

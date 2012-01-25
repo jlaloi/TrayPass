@@ -5,6 +5,7 @@ import java.util.SortedMap;
 import java.util.TreeMap;
 import java.util.regex.Pattern;
 
+import traypass.syntax.action.ActionChrono;
 import traypass.syntax.action.ActionBrowse;
 import traypass.syntax.action.ActionClipboard;
 import traypass.syntax.action.ActionConfirm;
@@ -104,6 +105,12 @@ public enum Syntax {
 			new ActionFile(),
 			new String[] { "<" + ActionFile.copy + "/" + ActionFile.delete + "/" + ActionFile.exist + "/" + ActionFile.move + ">", "<file path>", "<new file path>" },
 			"Copy, move or delete a file"),
+	
+	CHRONO(
+			"chrono",
+			new ActionChrono(),
+			new String[] { "<" + ActionChrono.start + "/" + ActionChrono.stop + "/" + ActionChrono.pause + ">", "<name>" },
+			"Monitor time."),
 
 	DECRYPT(
 			"decrypt",
