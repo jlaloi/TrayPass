@@ -5,8 +5,8 @@ import java.util.SortedMap;
 import java.util.TreeMap;
 import java.util.regex.Pattern;
 
-import traypass.syntax.action.ActionChrono;
 import traypass.syntax.action.ActionBrowse;
+import traypass.syntax.action.ActionChrono;
 import traypass.syntax.action.ActionClipboard;
 import traypass.syntax.action.ActionConfirm;
 import traypass.syntax.action.ActionDate;
@@ -30,10 +30,12 @@ import traypass.syntax.action.ActionPrompt;
 import traypass.syntax.action.ActionQuickFrame;
 import traypass.syntax.action.ActionReadFile;
 import traypass.syntax.action.ActionSave;
+import traypass.syntax.action.ActionScreenCapture;
 import traypass.syntax.action.ActionSelect;
 import traypass.syntax.action.ActionSend;
 import traypass.syntax.action.ActionSocket;
 import traypass.syntax.action.ActionStop;
+import traypass.syntax.action.ActionTextReader;
 import traypass.syntax.action.ActionWait;
 import traypass.syntax.action.ActionWaitFor;
 import traypass.syntax.action.logical.ActionAnd;
@@ -64,347 +66,123 @@ import traypass.syntax.action.str.ActionTrim;
 
 public enum Syntax {
 
-	WAIT(
-			"wait",
-			new ActionWait(),
-			new String[] { "<time>" },
-			"Wait specified millisecond"),
+	WAIT("wait", new ActionWait(), new String[] { "<time>" }, "Wait specified millisecond"),
 
-	PROMPT(
-			"prompt",
-			new ActionPrompt(),
-			new String[] { "<label>" },
-			"Display a prompt to enter a value"),
+	PROMPT("prompt", new ActionPrompt(), new String[] { "<label>" }, "Display a prompt to enter a value"),
 
-	EXECUTE(
-			"execute",
-			new ActionExecute(),
-			new String[] { "<executable>", "<params>", "<Path>" },
-			"Execute"),
+	EXECUTE("execute", new ActionExecute(), new String[] { "<executable>", "<params>", "<Path>" }, "Execute"),
 
-	EXECUTERESULT(
-			"executeresult",
-			new ActionExecuteResult(),
-			new String[] { "<executable>", "<params>", "<Path>" },
-			"Return the execution result)"),
+	EXECUTERESULT("executeresult", new ActionExecuteResult(), new String[] { "<executable>", "<params>", "<Path>" }, "Return the execution result)"),
 
-	SEND(
-			"send",
-			new ActionSend(),
-			new String[] { "<keys>" },
-			"Simulate a keyboard to send specified keys"),
+	SEND("send", new ActionSend(), new String[] { "<keys>" }, "Simulate a keyboard to send specified keys"),
 
-	READFILE(
-			"readfile",
-			new ActionReadFile(),
-			new String[] { "<file path>" },
-			"Read the content of the specified file"),
+	READFILE("readfile", new ActionReadFile(), new String[] { "<file path>" }, "Read the content of the specified file"),
 
-	FILE(
-			"file",
-			new ActionFile(),
-			new String[] { "<" + ActionFile.copy + "/" + ActionFile.delete + "/" + ActionFile.exist + "/" + ActionFile.move + ">", "<file path>", "<new file path>" },
-			"Copy, move or delete a file"),
+	FILE("file", new ActionFile(), new String[] { "<" + ActionFile.copy + "/" + ActionFile.delete + "/" + ActionFile.exist + "/" + ActionFile.move + ">", "<file path>", "<new file path>" }, "Copy, move or delete a file"),
+
+	CHRONO("chrono", new ActionChrono(), new String[] { "<" + ActionChrono.start + "/" + ActionChrono.stop + "/" + ActionChrono.pause + ">", "<name>" }, "Monitor time."),
+
+	DECRYPT("decrypt", new ActionDecrypt(), new String[] { "<Encrypted text>" }, "Decrypt the encrypted text"),
+
+	CLIPBOARD("clipboard", new ActionClipboard(), new String[] { "<text>" }, "Set the clipboard content with the specified text or without parameter to get the clipboard content"),
+
+	SAVE("save", new ActionSave(), new String[] { "<file path>", "<text>", "<bool append>" }, "Add the specified text to the specified file"),
+
+	PACK("pack", new ActionPack(), new String[] { "<file path>", "<param>" }, "Execute the specified pack"),
+
+	MOUSE("mouse", new ActionMouse(), new String[] { "<x>", "<y>", "<click>" }, "Click on the specified position"),
+
+	FIND("find", new ActionWaitFor(), new String[] { "<image path>" }, "Waiting to find the image on the screen, return bool"),
+
+	WAITFOR("waitfor", new ActionWaitFor(), new String[] { "<image path>", "<click type>", "<Max check>", "<Check wait>" }, "Waiting to find the image on the screen and then perform the specified mouse click"),
+
+	CONCAT("concat", new ActionConcat(), new String[] { "<text>", "<text>" }, "Concatenate specified text"),
+
+	DOWNLOAD("download", new ActionDownload(), new String[] { "<url>", "<file>" }, "Download specified url in the specified file"),
+
+	REPLACE("replace", new ActionReplace(), new String[] { "<in>", "<what>", "<by>" }, "Replace in what by"),
+
+	SELECT("select", new ActionSelect(), new String[] { "<message>", "<selected label>", "<label 1>", "<value 1>", "<label 2>", "<value 2>", "<...>" }, "Return the value associated to the selected label"),
+
+	LISTDIR("listdir", new ActionListDir(), new String[] { "<path>" }, "List all files in the selected path"),
+
+	DATE("date", new ActionDate(), new String[] {}, "The current date"),
+
+	VAR("var", new ActionVar(), new String[] { "<var name>", "<var value>" }, "Set a var or get a var"),
+
+	EQUALS("equals", new ActionEquals(), new String[] { "<value>", "<value>" }, "Compare two values, return bool"),
+
+	IF("if", new ActionIf(), new String[] { "<bool>", "<then>", "<else>" }, "If bool then else"),
+
+	QUICKFRAME("quickframe", new ActionQuickFrame(), new String[] { "<Text>", "<second>", "<Color r>", "<Color g>", "<Color b>" }, "Display the text message for specified seconds"),
+
+	WHILE("while", new ActionWhile(), new String[] { "<bool>", "<action>" }, "While bool action"),
+
+	INFO("info", new ActionInfo(), new String[] { "<Text>" }, "Display the text as info"),
+
+	DIALOG("dialog", new ActionDialog(), new String[] { "<Text>", "<width>", "<height>", "<title>" }, "Display the text in a dialog"),
+
+	CONFIRM("confirm", new ActionConfirm(), new String[] { "<title>", "<text>" }, "Confirm dialog, return bool"),
+
+	STOP("stop", new ActionStop(), new String[] {}, "Stop the execution"),
+
+	NOT("not", new ActionNot(), new String[] { "<bool>" }, "Return bool inverse"),
+
+	CONTAINS("contains", new ActionContains(), new String[] { "<in>", "<what>" }, "Return if what is in"),
+
+	FOREACH("foreach", new ActionForeach(), new String[] { "<list>", "<var name>", "<action>", "<list separator (optional)>" }, "Foreach all items of the list execute the action setting the current item list in the var"),
+
+	FILENAME("filename", new ActionFileName(), new String[] { "<file path>" }, "Return the file name"),
+
+	FILESIZE("filesize", new ActionFileSize(), new String[] { "<file path>" }, "Return the file size"),
+
+	NEWLINE("newline", new ActionNewLine(), new String[] {}, "Return CR"),
+
+	FTP("ftp", new ActionFTP(), new String[] { "<host>", "<port>", "<user>", "<password>", "<" + ActionFTP.download + "/" + ActionFTP.upload + ">", "<Server File>", "<Local File>" }, "Return if the ftp transfert is ok"),
+
+	BROWSE("browse", new ActionBrowse(), new String[] { "<" + ActionBrowse.file + "/" + ActionBrowse.dir + ">", "<title>" }, "Return selected file"),
+
+	AND("and", new ActionAnd(), new String[] { "<bool>", "<bool>", "..." }, "Logical AND"),
+
+	SOCKET("socket", new ActionSocket(), new String[] { "<" + ActionSocket.server + "," + ActionSocket.client + ">", "<port>", "<File path/download directory>", "host" }, "Socket file transfert"),
+
+	MATH("math", new ActionMath(), new String[] { "<operator>", "<double>", "<double>" }, "Math operation (double)"),
+
+	OR("or", new ActionOr(), new String[] { "<bool>", "<bool>", "..." }, "Logical OR"),
+
+	UPPERCASE("uppercase", new ActionCaseUpper(), new String[] { "<String>" }, "To upper case"),
+
+	LOWERCASE("lowercase", new ActionCaseLower(), new String[] { "<String>" }, "To lower case"),
+
+	SUBSTR("substr", new ActionSub(), new String[] { "<String>,<from>,<to>" }, "Substr"),
+
+	INDEXOF("indexof", new ActionIndexOf(), new String[] { "<String>,<str>,<from*>" }, "Index of"),
+
+	LASTINDEXOF("lastindexof", new ActionLastIndexOf(), new String[] { "<String>,<str>,<from*>" }, "Last index of"),
+
+	LENGTH("length", new ActionLength(), new String[] { "<String>" }, "The string lenght"),
+
+	SWITCH("switch", new ActionSwitch(), new String[] { "<value>", "<test 1>", "<result 1>", "<...>" }, "Logical switch"),
+
+	FUNCTION("function", new ActionFunction(), new String[] { "<function name>", "<function actions>" }, "Declare a function or execute a function"),
+
+	STARTSWITH("startswith", new ActionStartsWith(), new String[] { "<String>", "<Pattern>", "<Offset>" }, "Starts with"),
+
+	IS("is", new ActionIs(), new String[] { "<" + ActionIs.file + "/" + ActionIs.directory + ">", "<File>" }, "Is file/directory"),
+
+	TRIM("trim", new ActionTrim(), new String[] { "<String>" }, "String trim"),
+
+	ENDSSWITH("endswith", new ActionEndsWith(), new String[] { "<String>", "<Pattern>" }, "Ends with"),
+
+	SPLIT("split", new ActionSplit(), new String[] { "<String>", "<Separator>", "<Index>" }, "String split"),
+
+	COUNT("count", new ActionCount(), new String[] { "<String>", "<String>" }, "Sub string count"),
+
+	JDBC("jdbc", new ActionJDBC(), new String[] { "<driver>", "<url>", "<login>", "<password>", "<" + ActionJDBC.update + "/" + ActionJDBC.select + "/" + ActionJDBC.script + ">", "<query>", "<Separator>" }, "JDBC"),
+
+	OCR("ocr", new ActionTextReader(), new String[] { "<image path>", "<Font Name>", "<Font Style>", "<Font Size>", "<Font Special char>", "<Font RGB Color>" }, "OCR"),
 	
-	CHRONO(
-			"chrono",
-			new ActionChrono(),
-			new String[] { "<" + ActionChrono.start + "/" + ActionChrono.stop + "/" + ActionChrono.pause + ">", "<name>" },
-			"Monitor time."),
-
-	DECRYPT(
-			"decrypt",
-			new ActionDecrypt(),
-			new String[] { "<Encrypted text>" },
-			"Decrypt the encrypted text"),
-
-	CLIPBOARD(
-			"clipboard",
-			new ActionClipboard(),
-			new String[] { "<text>" },
-			"Set the clipboard content with the specified text or without parameter to get the clipboard content"),
-
-	SAVE(
-			"save",
-			new ActionSave(),
-			new String[] { "<file path>", "<text>", "<bool append>" },
-			"Add the specified text to the specified file"),
-
-	PACK(
-			"pack",
-			new ActionPack(),
-			new String[] { "<file path>", "<param>" },
-			"Execute the specified pack"),
-
-	MOUSE(
-			"mouse",
-			new ActionMouse(),
-			new String[] { "<x>", "<y>", "<click>" },
-			"Click on the specified position"),
-
-	FIND(
-			"find",
-			new ActionWaitFor(),
-			new String[] { "<image path>" },
-			"Waiting to find the image on the screen, return bool"),
-
-	WAITFOR(
-			"waitfor",
-			new ActionWaitFor(),
-			new String[] { "<image path>", "<click type>","<Max check>","<Check wait>" },
-			"Waiting to find the image on the screen and then perform the specified mouse click"),
-
-	CONCAT(
-			"concat",
-			new ActionConcat(),
-			new String[] { "<text>", "<text>" },
-			"Concatenate specified text"),
-
-	DOWNLOAD(
-			"download",
-			new ActionDownload(),
-			new String[] { "<url>", "<file>" },
-			"Download specified url in the specified file"),
-
-	REPLACE(
-			"replace",
-			new ActionReplace(),
-			new String[] { "<in>", "<what>", "<by>" },
-			"Replace in what by"),
-
-	SELECT(
-			"select",
-			new ActionSelect(),
-			new String[] { "<message>", "<selected label>", "<label 1>", "<value 1>", "<label 2>", "<value 2>", "<...>" },
-			"Return the value associated to the selected label"),
-
-	LISTDIR(
-			"listdir",
-			new ActionListDir(),
-			new String[] { "<path>" },
-			"List all files in the selected path"),
-
-	DATE(
-			"date",
-			new ActionDate(),
-			new String[] {},
-			"The current date"),
-
-	VAR(
-			"var",
-			new ActionVar(),
-			new String[] { "<var name>", "<var value>" },
-			"Set a var or get a var"),
-
-	EQUALS(
-			"equals",
-			new ActionEquals(),
-			new String[] { "<value>", "<value>" },
-			"Compare two values, return bool"),
-
-	IF(
-			"if",
-			new ActionIf(),
-			new String[] { "<bool>", "<then>", "<else>" },
-			"If bool then else"),
-
-	QUICKFRAME(
-			"quickframe",
-			new ActionQuickFrame(),
-			new String[] { "<Text>", "<second>", "<Color r>", "<Color g>", "<Color b>" },
-			"Display the text message for specified seconds"),
-					
-	WHILE(
-			"while",
-			new ActionWhile(),
-			new String[] { "<bool>", "<action>" },
-			"While bool action"),
-
-	INFO(
-			"info",
-			new ActionInfo(),
-			new String[] { "<Text>" },
-			"Display the text as info"),
-
-	DIALOG(
-			"dialog",
-			new ActionDialog(),
-			new String[] { "<Text>", "<width>", "<height>", "<title>" },
-			"Display the text in a dialog"),
-
-	CONFIRM(
-			"confirm",
-			new ActionConfirm(),
-			new String[] { "<title>", "<text>" },
-			"Confirm dialog, return bool"),
-
-	STOP(
-			"stop",
-			new ActionStop(),
-			new String[] {},
-			"Stop the execution"),
-
-	NOT(
-			"not",
-			new ActionNot(),
-			new String[] { "<bool>" },
-			"Return bool inverse"),
-
-	CONTAINS(
-			"contains",
-			new ActionContains(),
-			new String[] { "<in>", "<what>" },
-			"Return if what is in"),
-
-	FOREACH(
-			"foreach",
-			new ActionForeach(),
-			new String[] { "<list>", "<var name>", "<action>", "<list separator (optional)>" },
-			"Foreach all items of the list execute the action setting the current item list in the var"),
-
-	FILENAME(
-			"filename",
-			new ActionFileName(),
-			new String[] { "<file path>" },
-			"Return the file name"),
-
-	FILESIZE(
-			"filesize",
-			new ActionFileSize(),
-			new String[] { "<file path>" },
-			"Return the file size"),
-
-	NEWLINE(
-			"newline",
-			new ActionNewLine(),
-			new String[] {},
-			"Return CR"),
-
-	FTP(
-			"ftp",
-			new ActionFTP(),
-			new String[] { "<host>", "<port>", "<user>", "<password>", "<" + ActionFTP.download + "/" + ActionFTP.upload + ">", "<Server File>", "<Local File>" },
-			"Return if the ftp transfert is ok"),
-
-	BROWSE(
-			"browse",
-			new ActionBrowse(),
-			new String[] { "<" + ActionBrowse.file + "/" + ActionBrowse.dir + ">", "<title>" },
-			"Return selected file"),
-
-	AND(
-			"and",
-			new ActionAnd(),
-			new String[] { "<bool>", "<bool>", "..." },
-			"Logical AND"),
-
-	SOCKET(
-			"socket",
-			new ActionSocket(),
-			new String[] { "<" + ActionSocket.server + "," + ActionSocket.client + ">", "<port>", "<File path/download directory>", "host" },
-			"Socket file transfert"),
-
-	MATH(
-			"math",
-			new ActionMath(),
-			new String[] { "<operator>", "<double>", "<double>" },
-			"Math operation (double)"),
-
-	OR(
-			"or",
-			new ActionOr(),
-			new String[] { "<bool>", "<bool>", "..." },
-			"Logical OR"),
-
-	UPPERCASE(
-			"uppercase",
-			new ActionCaseUpper(),
-			new String[] { "<String>" },
-			"To upper case"),
-
-	LOWERCASE(
-			"lowercase",
-			new ActionCaseLower(),
-			new String[] { "<String>" },
-			"To lower case"),
-
-	SUBSTR(
-			"substr",
-			new ActionSub(),
-			new String[] { "<String>,<from>,<to>" },
-			"Substr"),
-
-	INDEXOF(
-			"indexof",
-			new ActionIndexOf(),
-			new String[] { "<String>,<str>,<from*>" },
-			"Index of"),
-
-	LASTINDEXOF(
-			"lastindexof",
-			new ActionLastIndexOf(),
-			new String[] { "<String>,<str>,<from*>" },
-			"Last index of"),
-
-	LENGTH(
-			"length",
-			new ActionLength(),
-			new String[] { "<String>" },
-			"The string lenght"),
-
-	SWITCH(
-			"switch",
-			new ActionSwitch(),
-			new String[] { "<value>", "<test 1>", "<result 1>", "<...>" },
-			"Logical switch"),
-
-	FUNCTION(
-			"function",
-			new ActionFunction(),
-			new String[] { "<function name>", "<function actions>" },
-			"Declare a function or execute a function"),
-
-	STARTSWITH(
-			"startswith",
-			new ActionStartsWith(),
-			new String[] { "<String>", "<Pattern>", "<Offset>" },
-			"Starts with"),
-
-	IS(
-			"is",
-			new ActionIs(),
-			new String[] { "<" + ActionIs.file + "/" + ActionIs.directory + ">", "<File>" },
-			"Is file/directory"),
-
-	TRIM(
-			"trim",
-			new ActionTrim(),
-			new String[] { "<String>" },
-			"String trim"),
-
-	ENDSSWITH(
-			"endswith",
-			new ActionEndsWith(),
-			new String[] { "<String>", "<Pattern>" },
-			"Ends with"),
-
-	SPLIT(
-			"split",
-			new ActionSplit(),
-			new String[] { "<String>", "<Separator>", "<Index>" },
-			"String split"),
-
-	COUNT(
-			"count",
-			new ActionCount(),
-			new String[] { "<String>", "<String>" },
-			"Sub string count"),
-
-	JDBC(
-			"jdbc",
-			new ActionJDBC(),
-			new String[] { "<driver>", "<url>", "<login>", "<password>", "<" + ActionJDBC.update + "/" + ActionJDBC.select + "/" + ActionJDBC.script + ">", "<query>", "<Separator>" },
-			"JDBC");
+	SCREENCAPTURE("screencapture", new ActionScreenCapture(), new String[] { "<image path>", "<"+ActionScreenCapture.full + "/" + ActionScreenCapture.manual+ "/" + ActionScreenCapture.custom + ">","<x>","<y>","<width>","<height>" }, "Do a screen capture");
 
 	public static final Pattern functionPattern = Pattern.compile("\\@([a-z])*\\((.*)\\)");
 

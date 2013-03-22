@@ -31,7 +31,6 @@ public class ToolClipboard {
 		Toolkit.getDefaultToolkit().getSystemClipboard().setContents(transferable, null);
 	}
 
-	@SuppressWarnings("unchecked")
 	public static String getClipboardContent() {
 		String result = null;
 		try {

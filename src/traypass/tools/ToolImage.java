@@ -1,5 +1,8 @@
 package traypass.tools;
 
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GraphicsConfiguration;
@@ -11,6 +14,7 @@ import java.awt.Rectangle;
 import java.awt.RenderingHints;
 import java.awt.Toolkit;
 import java.awt.Transparency;
+import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.ArrayList;
@@ -161,6 +165,41 @@ public class ToolImage {
 
 	public static Image resizeImage(Icon icon, int width, int height) {
 		return resizeImage(iconToImage(icon), width, height);
+	}
+	
+	public static BufferedImage loadImage(String path) {
+		logger.info("Loading " + path);
+		BufferedImage result = null;
+		try {
+			result = ImageIO.read(new File(path));
+		} catch (Exception e) {
+			logger.error(e);
+		}
+		return result;
+	}
+	
+	public static BufferedImage createImageWithText(String text, Font font, int width, int height, Color fontBackgroundColor, Color fontColor) {
+		BufferedImage bufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+		Graphics2D graphics2D = bufferedImage.createGraphics();
+		graphics2D.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+		graphics2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+		graphics2D.setFont(font);
+
+		FontMetrics fm = graphics2D.getFontMetrics(font);
+		Rectangle2D rect = fm.getStringBounds(text, graphics2D);
+
+		int x = (int) (bufferedImage.getWidth() - rect.getWidth() - 2);
+		int y = bufferedImage.getHeight() - 2;
+
+		graphics2D.setColor(fontBackgroundColor);
+		graphics2D.drawString(text, x + 1, y + 1);
+
+		graphics2D.setColor(fontColor);
+		graphics2D.drawString(text, x, y);
+
+		graphics2D.dispose();
+		return bufferedImage;
 	}
 
 }
