@@ -19,7 +19,7 @@ import traypass.syntax.Interpreter;
 import traypass.tools.ToolFile;
 
 public class ActionPack extends Action {
-	
+
 	private static final Logger logger = LogFactory.getLogger(ActionPack.class);
 
 	public static String lineFile = "line.txt";
@@ -28,26 +28,26 @@ public class ActionPack extends Action {
 		HashMap<String, String> files = preparePack(parameters.get(0));
 		String result = null;
 		if (files.containsKey(lineFile)) {
-			
+
 			// Read file
 			result = "";
 			for (String l : ToolFile.getFileLines(files.get(lineFile))) {
 				result += l + " ";
 			}
-			
+
 			// Parameters
-			result = result.replace("#param0#", parameters.size() - 1 + "");		
-			for(int i = 1; i < parameters.size(); i++){
-				result = result.replace("#param" + i + "#", parameters.get(i));		
+			result = result.replace("#param0#", parameters.size() - 1 + "");
+			for (int i = 1; i < parameters.size(); i++) {
+				result = result.replace("#param" + i + "#", parameters.get(i));
 			}
-			
+
 			// Replace Files
 			for (String file : files.keySet()) {
 				if (!file.equals(lineFile)) {
 					result = result.replace(file, files.get(file));
 				}
 			}
-			
+
 			System.out.println("pack:" + result);
 			result = interpreter.computeFunctions(result);
 		}

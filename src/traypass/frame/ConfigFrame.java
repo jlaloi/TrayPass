@@ -22,7 +22,7 @@ import traypass.misc.TrayTextField;
 import traypass.syntax.Interpreter;
 
 public class ConfigFrame extends JDialog {
-	
+
 	private static final Logger logger = LogFactory.getLogger(ConfigFrame.class);
 
 	private JTextField cryptoKey, cryptoExample, proxyHost, proxyPort, proxyUser, font, fontSize, captureWidth, fileEncode, consoleEncode, passFile, iconFile, imageCheckNumber, imageCheckInterval, iconSize, keyFile;

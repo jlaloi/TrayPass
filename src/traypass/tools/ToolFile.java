@@ -21,7 +21,7 @@ import traypass.log.LogFactory;
 import traypass.syntax.Interpreter;
 
 public class ToolFile {
-	
+
 	private static final Logger logger = LogFactory.getLogger(ToolFile.class);
 
 	public static List<String> getFileLines(String file) {
@@ -41,7 +41,7 @@ public class ToolFile {
 		}
 		return result;
 	}
-	
+
 	public static List<String> getFileLinesJar(String file, Class c) {
 		List<String> result = new ArrayList<String>();
 		try {

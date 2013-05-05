@@ -11,7 +11,7 @@ import org.apache.log4j.Logger;
 import traypass.log.LogFactory;
 
 public class TrayPassObject {
-	
+
 	private static final Logger logger = LogFactory.getLogger(TrayPassObject.class);
 
 	public static String configFileName = ".TrayPass";

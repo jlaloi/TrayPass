@@ -14,7 +14,7 @@ public class ActionTextReader extends Action {
 		String result = null;
 		BufferedImage image = ToolImage.loadImage(parameters.get(0));
 		Font font = new Font(parameters.get(1), Integer.valueOf(parameters.get(2)), Integer.valueOf(parameters.get(3)));
-		TextReader tr = new TextReader(image,font);
+		TextReader tr = new TextReader(image, font);
 		if (parameters.size() > 4) {
 			tr.setSpecialChar(parameters.get(4));
 		}

@@ -12,7 +12,7 @@ import traypass.tools.ToolDownload;
 import traypass.tools.ToolFile;
 
 public class TrayUpdate {
-	
+
 	private static final Logger logger = LogFactory.getLogger(TrayUpdate.class);
 
 	public static String updateJarUrl = "http://tp.loul.org/TrayPass.jar";

@@ -20,7 +20,7 @@ import traypass.tools.ToolImage;
 import traypass.tools.ToolMouse;
 
 public class ActionWaitFor extends Action {
-	
+
 	private static final Logger logger = LogFactory.getLogger(ActionWaitFor.class);
 
 	private BufferedImage image;
@@ -59,7 +59,7 @@ public class ActionWaitFor extends Action {
 				}
 				if (isFound) {
 					result = Syntax.boolTrue;
-				}else{
+				} else {
 					result = Syntax.boolFalse;
 				}
 			}

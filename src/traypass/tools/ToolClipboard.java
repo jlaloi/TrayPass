@@ -16,7 +16,7 @@ import traypass.TrayPassObject;
 import traypass.log.LogFactory;
 
 public class ToolClipboard {
-	
+
 	private static final Logger logger = LogFactory.getLogger(ToolClipboard.class);
 
 	public static void setClipboard(String text) {

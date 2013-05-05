@@ -13,7 +13,7 @@ import org.apache.log4j.Logger;
 import traypass.log.LogFactory;
 
 public class ToolFTP {
-	
+
 	private static final Logger logger = LogFactory.getLogger(ToolFTP.class);
 
 	private String host;

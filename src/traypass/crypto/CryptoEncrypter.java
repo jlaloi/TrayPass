@@ -15,7 +15,7 @@ import traypass.TrayPassObject;
 import traypass.log.LogFactory;
 
 public class CryptoEncrypter {
-	
+
 	private static final Logger logger = LogFactory.getLogger(CryptoEncrypter.class);
 
 	public static String encrypt(String str, SecretKey key) {

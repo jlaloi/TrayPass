@@ -17,7 +17,7 @@ import traypass.log.LogFactory;
 import com.sun.org.apache.xml.internal.security.utils.Base64;
 
 public class ToolDownload {
-	
+
 	private static final Logger logger = LogFactory.getLogger(ToolDownload.class);
 
 	public static HttpURLConnection getURConnection(String url) {

@@ -10,22 +10,22 @@ import traypass.syntax.Action;
 public class ActionChrono extends Action {
 
 	private static HashMap<String, Long> chrono = new HashMap<String, Long>();
-	
+
 	public static String start = "start";
-	
+
 	public static String stop = "stop";
-	
+
 	public static String pause = "pause";
 
 	public String doAction(List<String> parameters) {
 		String result = "";
 		String action = parameters.get(0);
 		String name = parameters.get(1);
-		if(action.equals(start)){
+		if (action.equals(start)) {
 			start(name);
-		}else if(action.equals(stop)){
+		} else if (action.equals(stop)) {
 			result = stop(name) + "";
-		}else if(action.equals(pause)){
+		} else if (action.equals(pause)) {
 			result = pause(name) + "";
 		}
 		return result;

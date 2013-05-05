@@ -86,7 +86,7 @@ public class ActionScreenCapture extends Action {
 	private JDialog createWarningDialog(String text, Font font) {
 		return createDialog(text, font, 300, 80, Color.black, Color.red);
 	}
-	
+
 	private JDialog createDialog(String text, Font font, int width, int height, Color fontBackgroundColor, Color fontColor) {
 		BufferedImage image = ToolImage.createImageWithText(text, font, 300, 80, fontBackgroundColor, fontColor);
 		JDialog jDialog = new JDialog();

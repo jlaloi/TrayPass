@@ -11,7 +11,7 @@ import traypass.syntax.Interpreter;
 import traypass.tools.ToolJDBC;
 
 public class ActionJDBC extends Action {
-	
+
 	private static final Logger logger = LogFactory.getLogger(ActionJDBC.class);
 
 	public static String update = "update";

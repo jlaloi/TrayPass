@@ -8,7 +8,7 @@ import traypass.log.LogFactory;
 import traypass.syntax.Action;
 
 public class ActionWait extends Action {
-	
+
 	private static final Logger logger = LogFactory.getLogger(ActionWait.class);
 
 	public String doAction(List<String> parameters) {

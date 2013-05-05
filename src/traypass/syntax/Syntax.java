@@ -181,8 +181,8 @@ public enum Syntax {
 	JDBC("jdbc", new ActionJDBC(), new String[] { "<driver>", "<url>", "<login>", "<password>", "<" + ActionJDBC.update + "/" + ActionJDBC.select + "/" + ActionJDBC.script + ">", "<query>", "<Separator>" }, "JDBC"),
 
 	OCR("ocr", new ActionTextReader(), new String[] { "<image path>", "<Font Name>", "<Font Style>", "<Font Size>", "<Font Special char>", "<Font RGB Color>" }, "OCR"),
-	
-	SCREENCAPTURE("screencapture", new ActionScreenCapture(), new String[] { "<image path>", "<"+ActionScreenCapture.full + "/" + ActionScreenCapture.manual+ "/" + ActionScreenCapture.custom + ">","<x>","<y>","<width>","<height>" }, "Do a screen capture");
+
+	SCREENCAPTURE("screencapture", new ActionScreenCapture(), new String[] { "<image path>", "<" + ActionScreenCapture.full + "/" + ActionScreenCapture.manual + "/" + ActionScreenCapture.custom + ">", "<x>", "<y>", "<width>", "<height>" }, "Do a screen capture");
 
 	public static final Pattern functionPattern = Pattern.compile("\\@([a-z])*\\((.*)\\)");
 

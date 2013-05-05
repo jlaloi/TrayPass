@@ -10,13 +10,13 @@ import traypass.TrayPassObject;
 import traypass.log.LogFactory;
 
 public class Interpreter extends Thread {
-	
+
 	private static final Logger logger = LogFactory.getLogger(Interpreter.class);
 
 	private String line;
 
 	private boolean stop = false;
-	
+
 	private boolean invisible = false;
 
 	public Interpreter(String line) {

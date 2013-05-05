@@ -9,7 +9,7 @@ import org.apache.log4j.Logger;
 import traypass.log.LogFactory;
 
 public class Launcher {
-	
+
 	private static final Logger logger = LogFactory.getLogger(Launcher.class);
 
 	public static final String configFileNameParam = "configFileName:";

@@ -17,8 +17,7 @@ public class ToolTimer {
 	private String icon;
 	private Interpreter interpreter;
 
-	private static final Logger logger = LogFactory
-			.getLogger(ToolClipboard.class);
+	private static final Logger logger = LogFactory.getLogger(ToolClipboard.class);
 
 	public ToolTimer(String title, String icon, String seconds, String action) {
 		super();
@@ -35,7 +34,7 @@ public class ToolTimer {
 	public void start() {
 		timer = new Timer();
 		timer.schedule(new ActionTask(), seconds * 1000, seconds * 1000);
-		logger.info("Task " +getTitle() + " started");
+		logger.info("Task " + getTitle() + " started");
 	}
 
 	public void stop() {
@@ -46,7 +45,7 @@ public class ToolTimer {
 		if (interpreter != null) {
 			interpreter.setStop(true);
 		}
-		logger.info("Task " +getTitle() + " stopped");
+		logger.info("Task " + getTitle() + " stopped");
 	}
 
 	public boolean isStop() {

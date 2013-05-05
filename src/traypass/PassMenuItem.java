@@ -17,7 +17,7 @@ import traypass.log.LogFactory;
 import traypass.tools.ToolImage;
 
 public class PassMenuItem extends JMenuItem {
-	
+
 	private static final Logger logger = LogFactory.getLogger(PassMenuItem.class);
 
 	public static ImageIcon defaultIcon;
@@ -25,7 +25,7 @@ public class PassMenuItem extends JMenuItem {
 	public static String defaultIconPath = "DefaultMenuIcon.png";
 
 	public static HashMap<String, ImageIcon> library = new HashMap<String, ImageIcon>();
-	
+
 	public Object object;
 
 	public PassMenuItem(String label) {

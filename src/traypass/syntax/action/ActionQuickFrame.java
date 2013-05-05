@@ -47,7 +47,7 @@ public class ActionQuickFrame extends Action {
 		jDialog.pack();
 		int screenHeight = Toolkit.getDefaultToolkit().getScreenSize().height;
 		int screenWidth = Toolkit.getDefaultToolkit().getScreenSize().width;
-		jDialog.setLocation(screenWidth - jDialog.getWidth(), screenHeight- jDialog.getHeight() - 50);
+		jDialog.setLocation(screenWidth - jDialog.getWidth(), screenHeight - jDialog.getHeight() - 50);
 		jDialog.setAlwaysOnTop(true);
 		jDialog.addMouseMotionListener(new MouseMotionAdapter() {
 			public void mouseMoved(MouseEvent e) {

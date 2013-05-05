@@ -31,7 +31,7 @@ import traypass.TrayPassObject;
 import traypass.log.LogFactory;
 
 public class ToolImage {
-	
+
 	private static final Logger logger = LogFactory.getLogger(ToolImage.class);
 
 	public static List<Rectangle> getScreenBounds() {
@@ -166,7 +166,7 @@ public class ToolImage {
 	public static Image resizeImage(Icon icon, int width, int height) {
 		return resizeImage(iconToImage(icon), width, height);
 	}
-	
+
 	public static BufferedImage loadImage(String path) {
 		logger.info("Loading " + path);
 		BufferedImage result = null;
@@ -177,7 +177,7 @@ public class ToolImage {
 		}
 		return result;
 	}
-	
+
 	public static BufferedImage createImageWithText(String text, Font font, int width, int height, Color fontBackgroundColor, Color fontColor) {
 		BufferedImage bufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
 		Graphics2D graphics2D = bufferedImage.createGraphics();

@@ -14,7 +14,7 @@ import traypass.log.LogFactory;
 import traypass.syntax.Interpreter;
 
 public class ToolJDBC {
-	
+
 	private static final Logger logger = LogFactory.getLogger(ToolJDBC.class);
 
 	private String driver;

@@ -19,7 +19,7 @@ import traypass.syntax.Action;
 import traypass.tools.ToolFile;
 
 public class ActionSocket extends Action {
-	
+
 	private static final Logger logger = LogFactory.getLogger(ActionSocket.class);
 
 	public static int bufferSize = 1024;

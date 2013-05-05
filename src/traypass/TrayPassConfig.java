@@ -11,7 +11,7 @@ import org.apache.log4j.Logger;
 import traypass.log.LogFactory;
 
 public class TrayPassConfig implements Serializable {
-	
+
 	private static final Logger logger = LogFactory.getLogger(TrayPassConfig.class);
 
 	private String cryptoExample = "";

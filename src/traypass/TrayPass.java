@@ -32,7 +32,7 @@ import traypass.tools.ToolImage;
 import traypass.tools.ToolTimer;
 
 public class TrayPass {
-	
+
 	private static final Logger logger = LogFactory.getLogger(TrayPass.class);
 
 	public static String title = "Tray Pass";
@@ -44,7 +44,7 @@ public class TrayPass {
 	private JPopupMenu popup;
 
 	public static Interpreter interpreter;
-	
+
 	public static List<ToolTimer> tasks = new ArrayList<ToolTimer>();
 
 	public void loadIcon() {
@@ -87,13 +87,13 @@ public class TrayPass {
 	}
 
 	public void setMenu() {
-		
+
 		// Reset timer
-		for(ToolTimer t : tasks){
+		for (ToolTimer t : tasks) {
 			t.stop();
 		}
 		tasks.clear();
-		
+
 		popup = new JPopupMenu();
 		boolean useEncryption = false;
 		String toExecute = "";
@@ -101,7 +101,7 @@ public class TrayPass {
 
 		// Adding pass
 		for (String pass : ToolFile.getFileLines(TrayPassObject.passFile)) {
-			try{
+			try {
 				if (pass.contains(Syntax.DECRYPT.getPattern())) {
 					useEncryption = true;
 				}
@@ -137,8 +137,8 @@ public class TrayPass {
 						taskIcon = taskName.substring(taskName.indexOf(Syntax.functionParamSeparator) + 1);
 						taskName = taskName.substring(0, taskName.indexOf(Syntax.functionParamSeparator));
 					}
-					String taskTime = pass.substring(pass.indexOf("}") + 1, pass.indexOf(Syntax.functionParamSeparator,pass.indexOf("}")));
-					String taskAction = pass.substring(pass.indexOf(Syntax.functionParamSeparator,pass.indexOf("}")) + 1);
+					String taskTime = pass.substring(pass.indexOf("}") + 1, pass.indexOf(Syntax.functionParamSeparator, pass.indexOf("}")));
+					String taskAction = pass.substring(pass.indexOf(Syntax.functionParamSeparator, pass.indexOf("}")) + 1);
 					tasks.add(new ToolTimer(taskName, taskIcon, taskTime, taskAction));
 				} else if (pass.equals("line")) {
 					if (currentMenu.size() > 0) {
@@ -171,7 +171,7 @@ public class TrayPass {
 						popup.add(item);
 					}
 				}
-			}catch (Exception e) {
+			} catch (Exception e) {
 				logger.error(pass + " " + e);
 			}
 		}
@@ -218,22 +218,22 @@ public class TrayPass {
 			}
 		});
 		configMenu.add(updateItem);
-		
-		if(tasks.size() > 0){
+
+		if (tasks.size() > 0) {
 			JMenu taskMenu = new JMenu("Tasks");
 			taskMenu.setFont(TrayPassObject.fontBold);
-			for(ToolTimer tt : tasks){
+			for (ToolTimer tt : tasks) {
 				final PassMenuItem taskItem = new PassMenuItem(tt.getTitle());
 				taskItem.setIcon(PassMenuItem.getImageIcon(tt.getIcon(), this.getClass()));
 				taskItem.setObject(tt);
 				taskItem.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						ToolTimer task = ((ToolTimer) taskItem.getObject());
-						if(task.isStop()){
+						if (task.isStop()) {
 							showInfo("Starting " + task.getTitle());
 							task.start();
 							taskItem.setText(task.getTitle());
-						}else{
+						} else {
 							showInfo("Stoping " + task.getTitle());
 							task.stop();
 							taskItem.setText(task.getTitle() + " (STOPPED)");
@@ -244,7 +244,7 @@ public class TrayPass {
 			}
 			popup.add(taskMenu);
 		}
-		
+
 		PassMenuItem exitItem = new PassMenuItem("Exit");
 		exitItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -274,8 +274,8 @@ public class TrayPass {
 			compute(toExecute);
 		}
 		ActionSend.load();
-		
-		for(ToolTimer t : tasks){
+
+		for (ToolTimer t : tasks) {
 			t.start();
 		}
 	}
