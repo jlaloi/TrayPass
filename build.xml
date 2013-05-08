@@ -4,8 +4,7 @@
    		<format property="TODAY" pattern="yyyy-MM-dd HH:mm" />
     </tstamp>
     <target name="create_run_jar">
-    	<javac srcdir="src" destdir="bin"/>
-    	<delete file="bin/UploadVersion.class"/>
+    	<javac srcdir="src" destdir="target"/>
         <jar destfile="TrayPass.jar">
             <manifest>
             	<attribute name="Main-Class" value="traypass.Launcher"/>
@@ -13,7 +12,7 @@
                 <attribute name="Class-Path" value="."/>
             	<attribute name="Implementation-Version" value="${TODAY}"/> 
             </manifest>
-            <fileset dir="bin" />
+            <fileset dir="target" />
         	<fileset dir="." includes="*.txt"/>
         </jar>
     	<echo message="version ${TODAY}" />
