@@ -52,8 +52,8 @@ In the menu configuration > Tasks, tasks can be controled.
 
 Menu Configuration File Example:
 -----
-##@var(path,c:\path2pack\\)\n
-task:{Display time}10, @info(@date())\n
+##@var(path,c:\path2pack\\)
+task:{Display time}10, @info(@date())
 title:Example\n
 <--{Server}\n
 {Server #1}@clipboard(Server 1!)\n
