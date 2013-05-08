@@ -7,7 +7,7 @@ import traypass.syntax.Action;
 
 public class ActionVar extends Action {
 
-	private static HashMap<String, String> vars = new HashMap<String, String>();
+	private static final HashMap<String, String> vars = new HashMap<String, String>();
 
 	public String doAction(List<String> parameters) {
 		String result = null;

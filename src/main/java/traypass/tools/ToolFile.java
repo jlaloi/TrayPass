@@ -189,4 +189,8 @@ public class ToolFile {
 		return result;
 	}
 
+	public static String getNewTempFile() {
+		return getTmpDir() + Factory.appName + System.currentTimeMillis();
+	}
+
 }

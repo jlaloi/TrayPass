@@ -1,4 +1,4 @@
-package traypass;
+package traypass.misc;
 
 import java.awt.Image;
 import java.awt.event.ActionEvent;

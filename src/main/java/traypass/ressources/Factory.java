@@ -9,12 +9,16 @@ import javax.crypto.SecretKey;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import traypass.PassMenuItem;
 import traypass.TrayPass;
+import traypass.misc.PassMenuItem;
 
 public class Factory {
 
 	private static final Logger logger = LoggerFactory.getLogger(Factory.class);
+
+	public static final String updateUrl = "https://raw.github.com/jlaloi/TrayPass/master/";
+
+	public static final String appName = "Tray Pass";
 
 	public static String configFileName = ".TrayPass";
 

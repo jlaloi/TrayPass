@@ -77,6 +77,7 @@ public class ToolImage {
 		BufferedImage resutl = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
 		Graphics2D graphics2D = resutl.createGraphics();
 		graphics2D.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+		graphics2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		graphics2D.drawImage(image, 0, 0, width, height, null);
 		graphics2D.dispose();
 		return resutl;

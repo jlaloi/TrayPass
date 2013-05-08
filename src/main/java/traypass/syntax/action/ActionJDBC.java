@@ -14,11 +14,11 @@ public class ActionJDBC extends Action {
 
 	private static final Logger logger = LoggerFactory.getLogger(ActionJDBC.class);
 
-	public static String update = "update";
+	public static final String update = "update";
 
-	public static String select = "select";
+	public static final String select = "select";
 
-	public static String script = "script";
+	public static final String script = "script";
 
 	public String doAction(List<String> parameters) {
 		String result = "";

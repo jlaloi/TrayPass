@@ -9,7 +9,6 @@ import java.io.Serializable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
 public class TrayPassConfig implements Serializable {
 
 	private static final Logger logger = LoggerFactory.getLogger(TrayPassConfig.class);

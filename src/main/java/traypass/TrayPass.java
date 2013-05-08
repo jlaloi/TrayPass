@@ -20,9 +20,10 @@ import org.slf4j.LoggerFactory;
 
 import traypass.crypto.CryptoEnterFrame;
 import traypass.frame.CaptureFrame;
-import traypass.frame.ConfigFrame;
+import traypass.frame.ConfigurationFrame;
 import traypass.frame.EditorFrame;
 import traypass.frame.SyntaxFrame;
+import traypass.misc.PassMenuItem;
 import traypass.misc.TrayUpdate;
 import traypass.ressources.Factory;
 import traypass.syntax.Interpreter;
@@ -35,8 +36,6 @@ import traypass.tools.ToolTimer;
 public class TrayPass {
 
 	private static final Logger logger = LoggerFactory.getLogger(TrayPass.class);
-
-	public static String title = "Tray Pass";
 
 	public static BufferedImage workingIcon;
 
@@ -68,7 +67,7 @@ public class TrayPass {
 	public TrayPass() {
 		try {
 			loadIcon();
-			trayIcon = new TrayIcon(Factory.trayImageIcon, title, null);
+			trayIcon = new TrayIcon(Factory.trayImageIcon, Factory.appName, null);
 			trayIcon.setImageAutoSize(true);
 			SystemTray tray = SystemTray.getSystemTray();
 			setMenu();
@@ -204,7 +203,7 @@ public class TrayPass {
 		PassMenuItem configitem = new PassMenuItem("Configuration");
 		configitem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new ConfigFrame();
+				new ConfigurationFrame();
 			}
 		});
 		configMenu.add(configitem);
@@ -273,7 +272,7 @@ public class TrayPass {
 			if (Factory.trayConfig.getCryptoExample() != null && Factory.trayConfig.getCryptoExample().trim().length() > 0) {
 				new CryptoEnterFrame();
 			} else if (Factory.secretKey == null) {
-				new ConfigFrame();
+				new ConfigurationFrame();
 			}
 		}
 		if (toExecute.trim().length() > 0) {
@@ -291,16 +290,16 @@ public class TrayPass {
 			trayIcon.setImage(workingIcon);
 		} else if (trayIcon != null) {
 			trayIcon.setImage(Factory.trayImageIcon);
-			trayIcon.setToolTip(title);
+			trayIcon.setToolTip(Factory.appName);
 		}
 	}
 
 	public void showError(String text) {
-		trayIcon.displayMessage(title, text, TrayIcon.MessageType.ERROR);
+		trayIcon.displayMessage(Factory.appName, text, TrayIcon.MessageType.ERROR);
 	}
 
 	public void showInfo(String text) {
-		trayIcon.displayMessage(title, text, TrayIcon.MessageType.INFO);
+		trayIcon.displayMessage(Factory.appName, text, TrayIcon.MessageType.INFO);
 	}
 
 	public void compute(String line) {

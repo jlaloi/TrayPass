@@ -26,10 +26,8 @@ public class Launcher {
 	}
 
 	public static void main(String[] args) {
-
 		setParameters(args);
 		logger.info(configFileNameParam + " " + Factory.configFileName);
-
 		if (SystemTray.isSupported()) {
 			try {
 				UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");

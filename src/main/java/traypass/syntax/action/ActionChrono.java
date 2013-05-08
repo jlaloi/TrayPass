@@ -11,11 +11,11 @@ public class ActionChrono extends Action {
 
 	private static HashMap<String, Long> chrono = new HashMap<String, Long>();
 
-	public static String start = "start";
+	public static final String start = "start";
 
-	public static String stop = "stop";
+	public static final String stop = "stop";
 
-	public static String pause = "pause";
+	public static final String pause = "pause";
 
 	public String doAction(List<String> parameters) {
 		String result = "";

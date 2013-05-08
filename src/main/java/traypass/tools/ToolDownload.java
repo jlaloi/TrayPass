@@ -1,11 +1,13 @@
 package traypass.tools;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.RandomAccessFile;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -51,15 +53,18 @@ public class ToolDownload {
 		return result;
 	}
 
-	public static void downloadFile(String url, String file) {
+	public static String downloadFile(String url, String file) {
+		String result = null;
 		try {
 			RandomAccessFile randomAccessFile = new RandomAccessFile(file, "rw");
 			randomAccessFile.setLength(getDownloadSize(url));
 			downloadFile(url, randomAccessFile, 0, 0);
 			randomAccessFile.close();
+			result = file;
 		} catch (Exception e) {
 			logger.error("Error", e);
 		}
+		return result;
 	}
 
 	public static void downloadFile(String url, RandomAccessFile file, long from, long to) {
@@ -94,6 +99,16 @@ public class ToolDownload {
 				}
 			}
 		}
+	}
+
+	public static List<String> getDownloadedFileContent(String url) {
+		List<String> result = null;
+		String tempFile = ToolFile.getNewTempFile();
+		if (downloadFile(url, tempFile) != null) {
+			result = ToolFile.getFileLines(tempFile);
+		}
+		new File(tempFile).delete();
+		return result;
 	}
 
 }

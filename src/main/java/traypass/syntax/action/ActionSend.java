@@ -13,7 +13,8 @@ import traypass.tools.ToolFile;
 
 public class ActionSend extends Action {
 
-	public static String keyCodeString = "{code:";
+	public static final String keyCodeString = "{code:";
+	public static final int waitBetweenChar = 8;
 	public static HashMap<String, int[]> lib = new HashMap<String, int[]>();
 	private static final Logger logger = LoggerFactory.getLogger(ActionSend.class);
 
@@ -87,7 +88,7 @@ public class ActionSend extends Action {
 
 	private void doType(int[] keyCodes, int offset, int length) {
 		if (length > 0) {
-			ActionWait.waitMS(5);
+			ActionWait.waitMS(waitBetweenChar);
 			try {
 				Factory.getRobot().keyPress(keyCodes[offset]);
 				doType(keyCodes, offset + 1, length - 1);

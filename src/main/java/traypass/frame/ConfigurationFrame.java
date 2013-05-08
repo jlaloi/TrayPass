@@ -1,5 +1,6 @@
 package traypass.frame;
 
+import java.awt.Cursor;
 import java.awt.GridLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -21,15 +22,15 @@ import traypass.misc.TrayTextField;
 import traypass.ressources.Factory;
 import traypass.syntax.Interpreter;
 
-public class ConfigFrame extends JDialog {
+public class ConfigurationFrame extends JDialog {
 
-	private static final Logger logger = LoggerFactory.getLogger(ConfigFrame.class);
+	private static final Logger logger = LoggerFactory.getLogger(ConfigurationFrame.class);
 
 	private JTextField cryptoKey, cryptoExample, proxyHost, proxyPort, proxyUser, font, fontSize, captureWidth, fileEncode, consoleEncode, passFile, iconFile, imageCheckNumber, imageCheckInterval, iconSize, keyFile;
 	private JPasswordField proxyPass;
 	private JButton save;
 
-	public ConfigFrame() {
+	public ConfigurationFrame() {
 		cryptoKey = new TrayTextField();
 		cryptoExample = new TrayTextField();
 		proxyHost = new TrayTextField(Factory.trayConfig.getProxyHost());
@@ -208,10 +209,14 @@ public class ConfigFrame extends JDialog {
 
 		public FileAdapater(JTextField label) {
 			this.label = label;
+			label.setCursor(new Cursor(Cursor.HAND_CURSOR));
+			label.setToolTipText("Right click to select a file");
 		}
 
 		public void mouseReleased(MouseEvent e) {
-			label.setText(saveFile(label.getText()));
+			if (e.getButton() == 3) {
+				label.setText(saveFile(label.getText()));
+			}
 		}
 	}
 

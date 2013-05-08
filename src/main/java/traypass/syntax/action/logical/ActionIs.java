@@ -8,8 +8,8 @@ import traypass.syntax.Syntax;
 
 public class ActionIs extends Action {
 
-	public static String file = "file";
-	public static String directory = "directory";
+	public static final String file = "file";
+	public static final String directory = "directory";
 
 	public String doAction(List<String> parameters) {
 		String result = Syntax.boolFalse;

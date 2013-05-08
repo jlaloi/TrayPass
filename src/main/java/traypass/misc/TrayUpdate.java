@@ -9,24 +9,20 @@ import org.slf4j.LoggerFactory;
 
 import traypass.ressources.Factory;
 import traypass.tools.ToolDownload;
-import traypass.tools.ToolFile;
 
 public class TrayUpdate {
 
+	public static final String updateVersionUrl = "lastcompiled.txt";
+	public static final String manifestAttribute = "Implementation-Version";
+
 	private static final Logger logger = LoggerFactory.getLogger(TrayUpdate.class);
 
-	public static String updateJarUrl = "http://tp.loul.org/TrayPass.jar";
-
-	public static String updateVersionUrl = "http://tp.loul.org/version.txt";
-
-	public static String manifestAttribute = "Implementation-Version";
-
-	public String getJarLocation() {
+	private String getJarLocation() {
 		String result = "";
 		try {
 			result = this.getClass().getProtectionDomain().getCodeSource().getLocation().toURI().toString().replace("file:/", "").replace("/", Factory.fileSeparator + "").replace("%20", " ");
 		} catch (Exception e) {
-			logger.error("Error", e);
+			e.printStackTrace();
 		}
 		return result;
 	}
@@ -35,13 +31,12 @@ public class TrayUpdate {
 		return getLocalVersion(getJarLocation());
 	}
 
-	public String getLocalVersion(String jarLocation) {
+	private String getLocalVersion(String jarLocation) {
 		String result = "";
 		try {
 			JarFile jar = new JarFile(jarLocation);
 			result = jar.getManifest().getMainAttributes().getValue(manifestAttribute);
 		} catch (Exception e) {
-			logger.error("Error", e);
 		}
 		return result;
 	}
@@ -49,22 +44,20 @@ public class TrayUpdate {
 	public String getServerVersion() {
 		String result = "";
 		try {
-			String tmpFile = ToolFile.getTmpDir() + "tpversion";
-			ToolDownload.downloadFile(updateVersionUrl, tmpFile);
-			result = ToolFile.getFileLines(tmpFile).get(0);
+			result = ToolDownload.getDownloadedFileContent(Factory.updateUrl + updateVersionUrl).get(0);
 		} catch (Exception e) {
 			logger.error("Error", e);
 		}
 		return result;
 	}
 
-	public boolean isUpdate() {
+	private boolean isUpdateAvailable() {
 		boolean result = false;
 		try {
 			String local = getLocalVersion(getJarLocation());
 			String server = getServerVersion();
-			System.out.println("Local version is " + local);
-			System.out.println("Server version is " + server);
+			logger.info("Local version is " + local);
+			logger.info("Server version is " + server);
 			if (local != null && server != null && local.trim().length() > 0 && server.trim().length() > 0 && !local.equals(server)) {
 				result = true;
 			}
@@ -74,20 +67,25 @@ public class TrayUpdate {
 		return result;
 	}
 
-	public void update() {
-		ToolDownload.downloadFile(updateJarUrl, getJarLocation());
+	private void update() {
+		try {
+			Runtime.getRuntime().exec("java -cp TrayPass.jar traypass.Updater " + Factory.updateUrl);
+			System.exit(0);
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "Error occured while updating!", Factory.appName, JOptionPane.ERROR_MESSAGE);
+			logger.error("Error", e);
+		}
 	}
 
 	public void manage() {
-		if (isUpdate()) {
-			Object[] options = { "Yes, update it!", "No, thanks" };
-			int n = JOptionPane.showOptionDialog(null, "A new update is available.\n" + "Local : " + getLocalVersion() + "\n" + "Server : " + getServerVersion() + "\n" + "Do you wants to update?", "TrayPass update", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[1]);
+		if (isUpdateAvailable()) {
+			Object[] options = { "Yes, update it!", "No, thanks!" };
+			int n = JOptionPane.showOptionDialog(null, "A new update is available.\n" + "Local : " + getLocalVersion() + "\n" + "Server : " + getServerVersion() + "\n" + "Do you want to update?", Factory.appName, JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[1]);
 			if (n == 0) {
 				update();
-				Factory.trayPass.showInfo(getJarLocation() + " updated.\nYou need to restart the application!");
 			}
 		} else {
-			Factory.trayPass.showInfo("No update available!");
+			JOptionPane.showMessageDialog(null, "No update available!", Factory.appName, JOptionPane.INFORMATION_MESSAGE);
 		}
 	}
 
