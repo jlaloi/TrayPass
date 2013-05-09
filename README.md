@@ -28,9 +28,9 @@ For example, for one menu entry, the below line will be present:
 Or simply:
 @clipboard(TrayPass)
 
-Examples
+Example
 -----
-Check the examples directory for a menu example.
+Check the examples directory.
 
 Pack Principle
 -----
@@ -53,25 +53,3 @@ For example:
 task:{Display time}5, @info(@date())
 
 In the menu configuration > Tasks, tasks can be controled.
-<<<<<<< HEAD
-
-Menu Configuration File Example:
------
-##@var(path,c:\path2pack\\)
-task:{Display time}10, @info(@date())
-title:Example\n
-<--{Server}\n
-{Server #1}@clipboard(Server 1!)\n
-{Server #2}@clipboard(Server 2!)\n
-<--{Server B}\n
-{Server B}@clipboard(Server B!) @quickframe(Danger Zone!)\n
--->\n
--->\n
-{Google,C:\Program Files\Internet Explorer\iexplore.exe} @execute(C:\Program Files\Internet Explorer\iexplore.exe,http://www.google.fr)\n
-line\n
-title:My Apps\n
-@info(@concat(My packs are stored in the path: ,@var(path),MyApp.zip))\n
-{My App}@execute(@pack(@contact(@var(path),MyApp.zip)))\n
-{My App2}@execute(@pack(@contact(@var(path),MyApp.zip)))
-=======
->>>>>>> Adding example
