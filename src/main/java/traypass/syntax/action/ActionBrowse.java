@@ -5,6 +5,7 @@ import java.util.List;
 import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 
+import traypass.ressources.Factory;
 import traypass.syntax.Action;
 
 public class ActionBrowse extends Action {
@@ -19,7 +20,10 @@ public class ActionBrowse extends Action {
 		if (dir.equalsIgnoreCase(parameters.get(0))) {
 			type = JFileChooser.DIRECTORIES_ONLY;
 		}
-		String title = parameters.get(1);
+		String title = Factory.appName;
+		if(parameters.size() > 1){
+			 title = parameters.get(1);
+		}
 		JFileChooser chooser = new JFileChooser();
 		chooser.setFileSelectionMode(type);
 		chooser.setApproveButtonText("Select");

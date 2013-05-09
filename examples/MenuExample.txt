@@ -1,0 +1,17 @@
+##@var(packPath,examples\\)
+task:{Display time}20, @info(@date())
+title:Simple example
+{Google,C:\Program Files\Internet Explorer\iexplore.exe} @execute(C:\Program Files\Internet Explorer\iexplore.exe,http://www.google.fr)
+{Save clipboard}@save(@browse(file),@concat(##### ,@date(), #####,@newline(),@clipboard(),@newline()),true)
+title:Pack example
+{Where is my pack?}@quickframe(@concat(My pack is stored in: ,@var(packPath)),2,204,102,204)
+{Log to Git Hub}@pack(@concat(@var(packPath),PackGitHubSignIn.zip),@prompt(GitHub login?),@prompt(GitHub password?))
+title:Menu Example
+<--{Server}
+{Server #1}@clipboard(Server 1!)
+line
+{Server #2}@clipboard(Server 2!)
+<--{Server B}
+{Server B}@clipboard(Server B!) @quickframe(Danger Zone!)
+-->
+-->

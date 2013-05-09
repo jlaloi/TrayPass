@@ -28,6 +28,10 @@ For example, for one menu entry, the below line will be present:
 Or simply:
 @clipboard(TrayPass)
 
+Examples
+-----
+Check the examples directory for a menu example.
+
 Pack Principle
 -----
 It is possible to create a "pack", it is a ZIP archive file which can regroup actions to be executed and image files.
@@ -49,6 +53,7 @@ For example:
 task:{Display time}5, @info(@date())
 
 In the menu configuration > Tasks, tasks can be controled.
+<<<<<<< HEAD
 
 Menu Configuration File Example:
 -----
@@ -68,3 +73,5 @@ title:My Apps\n
 @info(@concat(My packs are stored in the path: ,@var(path),MyApp.zip))\n
 {My App}@execute(@pack(@contact(@var(path),MyApp.zip)))\n
 {My App2}@execute(@pack(@contact(@var(path),MyApp.zip)))
+=======
+>>>>>>> Adding example

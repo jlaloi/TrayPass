@@ -69,6 +69,7 @@ public class ToolFile {
 
 	public static void addToFile(String file, String str, boolean append) {
 		try {
+			new File(file).createNewFile();
 			List<String> save = new ArrayList<String>();
 			if (append) {
 				save = getFileLines(file);
