@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import traypass.ressources.Factory;
+import traypass.syntax.plugin.Plugin;
 
 public class Interpreter extends Thread {
 
@@ -113,10 +114,20 @@ public class Interpreter extends Thread {
 
 	public static Action getAction(String functionName, int nbParameters) {
 		Action result = null;
+		// Default action
 		for (Syntax syntax : Syntax.values()) {
 			if (syntax.getPattern().toLowerCase().equals(functionName.toLowerCase())) {
 				result = syntax.getAction();
 				break;
+			}
+		}
+		// Plugin action
+		if (result == null) {
+			for (Plugin plugin : Factory.getPluginManager().getPluginList()) {
+				if ((Syntax.functionStart + plugin.getPattern()).toLowerCase().equals(functionName.toLowerCase())) {
+					result = plugin;
+					break;
+				}
 			}
 		}
 		return result;

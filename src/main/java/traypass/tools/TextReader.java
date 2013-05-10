@@ -1,4 +1,4 @@
-package traypass.tools;
+﻿package traypass.tools;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -21,7 +21,7 @@ public class TextReader {
 
 	private static final int imageType = BufferedImage.TYPE_INT_ARGB;
 
-	public static final String alpha = "0123456789abcdefghijklmnopqrstuvwxyz&�#'{([-|�_\\��@)�])+=}$%�*!�:/;.,?<>��".toLowerCase();
+	public static final String alpha = "0123456789abcdefghijklmnopqrstuvwxyz&#'{([-|_\\@)])+=}$%*!:/;.,?<>éèàùêîô".toLowerCase();
 
 	public String specialChar = "_y";
 

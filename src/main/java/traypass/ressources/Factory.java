@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 
 import traypass.TrayPass;
 import traypass.misc.PassMenuItem;
+import traypass.syntax.plugin.PluginManager;
 
 public class Factory {
 
@@ -67,6 +68,12 @@ public class Factory {
 	public static TrayPass trayPass;
 
 	private static Robot robot;
+	
+	private static PluginManager pluginManager;
+	
+	static{
+		pluginManager = new PluginManager();
+	}
 
 	public static Robot getRobot() {
 		if (robot == null) {
@@ -96,5 +103,11 @@ public class Factory {
 		keyFile = trayConfig.getKeyFile();
 		PassMenuItem.defaultIcon = null;
 		PassMenuItem.library.clear();
+		pluginManager.initPluginList();
 	}
+
+	public static PluginManager getPluginManager() {
+		return pluginManager;
+	}
+	
 }
