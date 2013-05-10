@@ -5,7 +5,7 @@ Java Tray Automatic Actions Implementation
 
 Allowing you for example:
 
-- Auto form login (Opening a new Internet broswer to a specified url, wait for a specific image and then send credentials, etc.)
+- Auto form login (Opening a new Internet browser to a specified url, wait for a specific image and then send credentials, etc.)
 - Recurring tasks management (Each 5 min, log to a database, get the number of session and save it to a file)
 - Managing several passwords (Put in the clipboard a deciphered password after entering the main application password)
 - etc.
@@ -50,7 +50,7 @@ The MyPack.zip contains:
 - The file "line.txt" will all actions to be executed,
 - Some pictures used by the actions.
 
-Reccuring tasks principle
+Recurring tasks principle
 -----
 In the menu configuration file, the below entry will be present:
 
@@ -60,4 +60,10 @@ For example:
 
 task:{Display time}5, @info(@date())
 
-In the menu configuration &gt; Tasks, tasks can be controled.
+In the menu configuration &gt; Tasks, tasks can be controlled.
+
+Plugin
+-----
+In order to create a plugin, create a new JAVA class file extending the class plugin.java, create a jar and copy it to the "plugin" directory.
+
+See the plugin directory for an example.
