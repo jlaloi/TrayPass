@@ -68,10 +68,10 @@ public class Factory {
 	public static TrayPass trayPass;
 
 	private static Robot robot;
-	
+
 	private static PluginManager pluginManager;
-	
-	static{
+
+	static {
 		pluginManager = new PluginManager();
 	}
 
@@ -109,5 +109,5 @@ public class Factory {
 	public static PluginManager getPluginManager() {
 		return pluginManager;
 	}
-	
+
 }

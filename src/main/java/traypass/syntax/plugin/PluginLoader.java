@@ -12,10 +12,8 @@ import java.util.jar.JarFile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import traypass.syntax.action.ActionQuickFrame;
-
 public class PluginLoader<T> {
-	
+
 	private static final Logger logger = LoggerFactory.getLogger(PluginLoader.class);
 
 	private final Class<T> typeParameterClass;

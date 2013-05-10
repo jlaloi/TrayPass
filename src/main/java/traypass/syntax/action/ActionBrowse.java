@@ -21,8 +21,8 @@ public class ActionBrowse extends Action {
 			type = JFileChooser.DIRECTORIES_ONLY;
 		}
 		String title = Factory.appName;
-		if(parameters.size() > 1){
-			 title = parameters.get(1);
+		if (parameters.size() > 1) {
+			title = parameters.get(1);
 		}
 		JFileChooser chooser = new JFileChooser();
 		chooser.setFileSelectionMode(type);
