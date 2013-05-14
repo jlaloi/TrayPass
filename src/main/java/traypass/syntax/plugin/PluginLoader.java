@@ -41,7 +41,7 @@ public class PluginLoader<T> {
 	public List<T> getClassFromJar(String jarFilePath) {
 		List<T> result = new ArrayList<T>();
 		try {
-			logger.info("Plugin loading from: " + jarFilePath );
+			logger.info("Plugin loading from: " + jarFilePath);
 			JarFile jarFile = new JarFile(jarFilePath);
 			Enumeration<JarEntry> e = jarFile.entries();
 			URLClassLoader cl = URLClassLoader.newInstance(new URL[] { new URL("jar:file:" + jarFilePath + "!/") });

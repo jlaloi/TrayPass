@@ -107,7 +107,7 @@ public class TrayPass {
 				if (pass.contains(Syntax.DECRYPT.getPattern())) {
 					useEncryption = true;
 				}
-				if (pass.contains(Syntax.DOWNLOAD.getPattern()) &&Factory.get().getConfig().getProxyPass() != null && Factory.get().getConfig().getProxyPass().trim().length() > 0) {
+				if (pass.contains(Syntax.DOWNLOAD.getPattern()) && Factory.get().getConfig().getProxyPass() != null && Factory.get().getConfig().getProxyPass().trim().length() > 0) {
 					useEncryption = true;
 				}
 				if (pass.startsWith("<--{") && pass.endsWith("}")) {
@@ -204,7 +204,7 @@ public class TrayPass {
 			}
 		});
 		configMenu.add(configitem);
-		
+
 		PassMenuItem reloadPluginItem = new PassMenuItem("Reload Plugin");
 		reloadPluginItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {

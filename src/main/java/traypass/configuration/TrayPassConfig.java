@@ -20,15 +20,15 @@ public class TrayPassConfig implements Serializable {
 		this.file = file;
 		this.properties = new Properties();
 	}
-	
+
 	public void load() {
 		try {
 			properties.load(new FileInputStream(file));
 		} catch (Exception e) {
 			logger.error("Error while loading", e);
 		}
-		for(ConfigurationValues configurationValues : ConfigurationValues.values()){
-			if(!properties.containsKey(configurationValues.toString())){
+		for (ConfigurationValues configurationValues : ConfigurationValues.values()) {
+			if (!properties.containsKey(configurationValues.toString())) {
 				savePropertie(configurationValues, configurationValues.getDefaultValue());
 			}
 		}

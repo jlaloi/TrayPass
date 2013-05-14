@@ -14,8 +14,8 @@ import org.slf4j.LoggerFactory;
 import traypass.TrayPass;
 import traypass.ressources.Factory;
 import traypass.syntax.Action;
+import traypass.syntax.Function;
 import traypass.syntax.Interpreter;
-import traypass.syntax.Syntax;
 import traypass.tools.ToolImage;
 import traypass.tools.ToolMouse;
 
@@ -58,9 +58,9 @@ public class ActionWaitFor extends Action {
 					ActionWait.waitMS(checkWait);
 				}
 				if (isFound) {
-					result = Syntax.boolTrue;
+					result = Function.boolTrue;
 				} else {
-					result = Syntax.boolFalse;
+					result = Function.boolFalse;
 				}
 			}
 		} catch (Exception e) {

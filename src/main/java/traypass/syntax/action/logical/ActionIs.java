@@ -4,7 +4,7 @@ import java.io.File;
 import java.util.List;
 
 import traypass.syntax.Action;
-import traypass.syntax.Syntax;
+import traypass.syntax.Function;
 
 public class ActionIs extends Action {
 
@@ -12,15 +12,15 @@ public class ActionIs extends Action {
 	public static final String directory = "directory";
 
 	public String doAction(List<String> parameters) {
-		String result = Syntax.boolFalse;
+		String result = Function.boolFalse;
 		String test = parameters.get(0);
 		String filePath = parameters.get(1);
 		File f = new File(filePath);
 		if (f.exists()) {
 			if (file.equals(test) && f.isFile()) {
-				result = Syntax.boolTrue;
+				result = Function.boolTrue;
 			} else if (directory.equals(test) && f.isDirectory()) {
-				result = Syntax.boolTrue;
+				result = Function.boolTrue;
 			}
 		}
 		return result;

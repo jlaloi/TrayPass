@@ -44,7 +44,7 @@ public class Factory {
 	private PluginManager pluginManager;
 
 	private SecretKey secretKey;
-	
+
 	private Image trayImageIcon;
 
 	public Factory(String TrayPassFile) {

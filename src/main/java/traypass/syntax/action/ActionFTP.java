@@ -3,7 +3,7 @@ package traypass.syntax.action;
 import java.util.List;
 
 import traypass.syntax.Action;
-import traypass.syntax.Syntax;
+import traypass.syntax.Function;
 import traypass.tools.ToolFTP;
 
 public class ActionFTP extends Action {
@@ -23,15 +23,15 @@ public class ActionFTP extends Action {
 		ToolFTP ftp = new ToolFTP(host, port, user, password);
 		if (upload.equalsIgnoreCase(action)) {
 			if (ftp.uploadFile(serverFileName, localFileName)) {
-				result = Syntax.boolTrue;
+				result = Function.boolTrue;
 			} else {
-				result = Syntax.boolFalse;
+				result = Function.boolFalse;
 			}
 		} else if (download.equalsIgnoreCase(action)) {
 			if (ftp.downloadFile(serverFileName, localFileName)) {
-				result = Syntax.boolTrue;
+				result = Function.boolTrue;
 			} else {
-				result = Syntax.boolFalse;
+				result = Function.boolFalse;
 			}
 		}
 		return result;

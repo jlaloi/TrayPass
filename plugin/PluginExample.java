@@ -4,7 +4,7 @@ import traypass.syntax.plugin.Plugin;
 
 public class PluginExample extends Plugin {
 
-	public String getPattern() {
+	public String getName() {
 		return "pluginexample";
 	}
 
@@ -19,5 +19,5 @@ public class PluginExample extends Plugin {
 	public String doAction(List<String> parameters) {
 		return "This is the plugin example: " + parameters.get(0);
 	}
-
+	
 }

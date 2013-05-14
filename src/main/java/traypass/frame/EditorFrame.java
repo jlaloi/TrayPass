@@ -21,8 +21,10 @@ import javax.swing.JTextField;
 import traypass.crypto.CryptoEncryptFrame;
 import traypass.misc.TrayButton;
 import traypass.ressources.Factory;
+import traypass.syntax.Function;
 import traypass.syntax.Syntax;
 import traypass.syntax.action.ActionSend;
+import traypass.syntax.plugin.Plugin;
 import traypass.tools.ToolClipboard;
 import traypass.tools.ToolFile;
 
@@ -47,9 +49,12 @@ public class EditorFrame extends JFrame {
 		for (Syntax s : Syntax.getSort()) {
 			functions.addItem(s);
 		}
+		for (Plugin plugin : Factory.get().getPluginManager().getPluginList()) {
+			functions.addItem(plugin);
+		}
 		functions.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				addFunction((Syntax) functions.getSelectedItem());
+				addFunction((Function) functions.getSelectedItem());
 			}
 		});
 		top.add(functions);
@@ -143,16 +148,16 @@ public class EditorFrame extends JFrame {
 		ToolFile.addToFile(Factory.get().getConfig().getMenuFile(), text.getText(), false);
 	}
 
-	private void addFunction(Syntax function) {
-		String str = function.getPattern() + Syntax.functionParamStart;
+	private void addFunction(Function function) {
+		String str = function.getPattern() + Function.functionParamStart;
 		for (int i = 0; i < function.getParams().length; i++) {
 			if (i > 0) {
-				str += function.getParams()[i] + Syntax.functionParamSeparator;
+				str += function.getParams()[i] + Function.functionParamSeparator;
 			} else {
 				str += function.getParams()[i];
 			}
 		}
-		str += Syntax.functionParamEnd;
+		str += Function.functionParamEnd;
 		String result = text.getText().substring(0, text.getSelectionStart());
 		result += str;
 		result += text.getText().substring(text.getSelectionEnd());

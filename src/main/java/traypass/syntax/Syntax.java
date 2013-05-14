@@ -3,7 +3,6 @@ package traypass.syntax;
 import java.util.Collection;
 import java.util.SortedMap;
 import java.util.TreeMap;
-import java.util.regex.Pattern;
 
 import traypass.syntax.action.ActionBrowse;
 import traypass.syntax.action.ActionChrono;
@@ -64,7 +63,7 @@ import traypass.syntax.action.str.ActionStartsWith;
 import traypass.syntax.action.str.ActionSub;
 import traypass.syntax.action.str.ActionTrim;
 
-public enum Syntax {
+public enum Syntax implements Function {
 
 	WAIT("wait", new ActionWait(), new String[] { "<time>" }, "Wait specified millisecond"),
 
@@ -184,29 +183,13 @@ public enum Syntax {
 
 	SCREENCAPTURE("screencapture", new ActionScreenCapture(), new String[] { "<image path>", "<" + ActionScreenCapture.full + "/" + ActionScreenCapture.manual + "/" + ActionScreenCapture.custom + ">", "<x>", "<y>", "<width>", "<height>" }, "Do a screen capture");
 
-	public static final Pattern functionPattern = Pattern.compile("\\@([a-z])*\\((.*)\\)");
-
-	public static final char functionStart = '@';
-
-	public static final char functionParamStart = '(';
-
-	public static final char functionParamEnd = ')';
-
-	public static final char functionParamSeparator = ',';
-
-	public static final char escapeChar = '\\';
-
-	public static final String boolTrue = "true";
-
-	public static final String boolFalse = "false";
-
 	private String pattern;
 	private Action action;
 	private String[] params;
 	private String description;
 
 	Syntax(String pattern, Action action, String[] params, String description) {
-		this.pattern = Syntax.functionStart + pattern;
+		this.pattern = Function.functionStart + pattern;
 		this.action = action;
 		this.description = description;
 		this.params = params;
@@ -218,19 +201,6 @@ public enum Syntax {
 
 	public Action getAction() {
 		return action;
-	}
-
-	public String getExample() {
-		String example = "";
-		for (String param : params) {
-			if (example.length() > 0) {
-				example += Syntax.functionParamSeparator + param;
-			} else {
-				example += param;
-			}
-		}
-		example = pattern + Syntax.functionParamStart + example + Syntax.functionParamEnd;
-		return example;
 	}
 
 	public String[] getParams() {

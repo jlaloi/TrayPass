@@ -4,7 +4,7 @@ import java.io.File;
 import java.util.List;
 
 import traypass.syntax.Action;
-import traypass.syntax.Syntax;
+import traypass.syntax.Function;
 import traypass.tools.ToolFile;
 
 public class ActionFile extends Action {
@@ -23,15 +23,15 @@ public class ActionFile extends Action {
 		File file = new File(parameters.get(1));
 		if (file.exists()) {
 			if (move.equals(action) && file.renameTo(new File(parameters.get(2)))) {
-				result = Syntax.boolTrue;
+				result = Function.boolTrue;
 			} else if (copy.equals(action) && file.isFile() && ToolFile.copyFile(parameters.get(1), parameters.get(2))) {
-				result = Syntax.boolTrue;
+				result = Function.boolTrue;
 			} else if (copy.equals(action) && file.isDirectory() && ToolFile.copyDir(parameters.get(1), parameters.get(2))) {
-				result = Syntax.boolTrue;
+				result = Function.boolTrue;
 			} else if (delete.equals(action) && file.delete()) {
-				result = Syntax.boolTrue;
+				result = Function.boolTrue;
 			} else if (exist.equals(action)) {
-				result = Syntax.boolTrue;
+				result = Function.boolTrue;
 			}
 		}
 		return result;
