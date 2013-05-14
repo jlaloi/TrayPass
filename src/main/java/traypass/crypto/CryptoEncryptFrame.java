@@ -27,7 +27,7 @@ public class CryptoEncryptFrame extends JDialog {
 
 		setSize(800, 80);
 		setTitle("Tray Encrypter Help");
-		setIconImage(Factory.trayImageIcon);
+		setIconImage(Factory.get().getTrayImageIcon());
 		setResizable(false);
 		setLocationRelativeTo(getParent());
 		setVisible(true);
@@ -38,10 +38,10 @@ public class CryptoEncryptFrame extends JDialog {
 			public void keyReleased(KeyEvent e) {
 				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 					String result = "";
-					if (Factory.secretKey == null) {
+					if (Factory.get().getSecretKey() == null) {
 						result = "Encrypter not set!";
 					} else {
-						result = Syntax.DECRYPT.getPattern() + Syntax.functionParamStart + CryptoEncrypter.encrypt(text.getText(), Factory.secretKey) + Syntax.functionParamEnd;
+						result = Syntax.DECRYPT.getPattern() + Syntax.functionParamStart + CryptoEncrypter.encrypt(text.getText(), Factory.get().getSecretKey()) + Syntax.functionParamEnd;
 						ToolClipboard.setClipboard(result);
 					}
 					encrypted.setText(result);

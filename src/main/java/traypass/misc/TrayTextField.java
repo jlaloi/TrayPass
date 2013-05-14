@@ -8,17 +8,17 @@ public class TrayTextField extends JTextField {
 
 	public TrayTextField() {
 		super();
-		setFont(Factory.font);
+		setFont(Factory.get().getFont());
 	}
 
 	public TrayTextField(String label) {
 		super(label);
-		setFont(Factory.font);
+		setFont(Factory.get().getFont());
 	}
 
 	public TrayTextField(int alignment) {
 		super();
-		setFont(Factory.font);
+		setFont(Factory.get().getFont());
 		setHorizontalAlignment(alignment);
 	}
 

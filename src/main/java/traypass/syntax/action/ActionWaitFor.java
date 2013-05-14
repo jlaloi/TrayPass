@@ -33,8 +33,8 @@ public class ActionWaitFor extends Action {
 
 	public String doAction(List<String> parameters) {
 		String result = null;
-		int maxCheck = Factory.imageCheckNumber;
-		int checkWait = Factory.imageCheckInterval;
+		int maxCheck = Factory.get().getConfig().getImageCheckNumber();
+		int checkWait = Factory.get().getConfig().getImageCheckInterval();
 		this.click = 0;
 		isFound = false;
 		imagePath = parameters.get(0);

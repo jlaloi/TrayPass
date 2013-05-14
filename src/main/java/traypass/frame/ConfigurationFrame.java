@@ -33,29 +33,29 @@ public class ConfigurationFrame extends JDialog {
 	public ConfigurationFrame() {
 		cryptoKey = new TrayTextField();
 		cryptoExample = new TrayTextField();
-		proxyHost = new TrayTextField(Factory.trayConfig.getProxyHost());
-		proxyPort = new TrayTextField(Factory.trayConfig.getProxyPort() + "");
-		proxyUser = new TrayTextField(Factory.trayConfig.getProxyUser());
+		proxyHost = new TrayTextField(Factory.get().getConfig().getProxyHost());
+		proxyPort = new TrayTextField(Factory.get().getConfig().getProxyPort() + "");
+		proxyUser = new TrayTextField(Factory.get().getConfig().getProxyUser());
 		proxyPass = new JPasswordField();
-		if (Factory.trayConfig.getProxyPass() != null && Factory.trayConfig.getProxyPass().trim().length() > 0) {
-			if (Factory.secretKey != null) {
-				proxyPass.setText(CryptoEncrypter.decrypt(Factory.trayConfig.getProxyPass(), Factory.secretKey));
+		if (Factory.get().getConfig().getProxyPass() != null && Factory.get().getConfig().getProxyPass().trim().length() > 0) {
+			if (Factory.get().getSecretKey() != null) {
+				proxyPass.setText(CryptoEncrypter.decrypt(Factory.get().getConfig().getProxyPass(), Factory.get().getSecretKey()));
 			} else {
 				Interpreter.showError("You need to set your encryption key to save the proxy password.");
 				return;
 			}
 		}
-		font = new TrayTextField(Factory.trayConfig.getFont());
-		fontSize = new TrayTextField(Factory.trayConfig.getFontSize() + "");
-		captureWidth = new TrayTextField(Factory.trayConfig.getCaptureWidth() + "");
-		fileEncode = new TrayTextField(Factory.trayConfig.getFileEncode());
-		consoleEncode = new TrayTextField(Factory.trayConfig.getConsoleEncode());
-		passFile = new TrayTextField(Factory.trayConfig.getPassFile());
-		iconFile = new TrayTextField(Factory.trayConfig.getIconFile());
-		imageCheckNumber = new TrayTextField(Factory.trayConfig.getImageCheckNumber() + "");
-		imageCheckInterval = new TrayTextField(Factory.trayConfig.getImageCheckInterval() + "");
-		iconSize = new TrayTextField(Factory.trayConfig.getIconSize() + "");
-		keyFile = new TrayTextField(Factory.keyFile);
+		font = new TrayTextField(Factory.get().getConfig().getFontName());
+		fontSize = new TrayTextField(Factory.get().getConfig().getFontSize() + "");
+		captureWidth = new TrayTextField(Factory.get().getConfig().getCaptureWidth() + "");
+		fileEncode = new TrayTextField(Factory.get().getConfig().getFileEncode());
+		consoleEncode = new TrayTextField(Factory.get().getConfig().getConsoleEncode());
+		passFile = new TrayTextField(Factory.get().getConfig().getMenuFile());
+		iconFile = new TrayTextField(Factory.get().getConfig().getIconFile());
+		imageCheckNumber = new TrayTextField(Factory.get().getConfig().getImageCheckNumber() + "");
+		imageCheckInterval = new TrayTextField(Factory.get().getConfig().getImageCheckInterval() + "");
+		iconSize = new TrayTextField(Factory.get().getConfig().getIconSize() + "");
+		keyFile = new TrayTextField(Factory.get().getConfig().getKeyFile());
 
 		save = new TrayButton("Save");
 
@@ -117,7 +117,7 @@ public class ConfigurationFrame extends JDialog {
 
 		pack();
 		setTitle("Tray Encrypter Config");
-		setIconImage(Factory.trayImageIcon);
+		setIconImage(Factory.get().getTrayImageIcon());
 		setLocationRelativeTo(getParent());
 		setResizable(false);
 		setVisible(true);
@@ -130,61 +130,61 @@ public class ConfigurationFrame extends JDialog {
 		save.addMouseListener(new MouseAdapter() {
 			public void mouseReleased(MouseEvent arg0) {
 				if (cryptoKey.getText().trim().length() > 0) {
-					Factory.secretKey = CryptoEncrypter.getSecretKey(cryptoKey.getText());
-					Factory.trayConfig.setCryptoExample(CryptoEncrypter.encrypt(cryptoExample.getText(), Factory.secretKey));
+					Factory.get().setSecretKey(CryptoEncrypter.getSecretKey(cryptoKey.getText()));
+					Factory.get().getConfig().setCryptoExample(CryptoEncrypter.encrypt(cryptoExample.getText(), Factory.get().getSecretKey()));
 				}
-				Factory.trayConfig.setProxyHost(proxyHost.getText());
-				Factory.trayConfig.setProxyUser(proxyUser.getText());
-				Factory.trayConfig.setFont(font.getText());
-				Factory.trayConfig.setFileEncode(fileEncode.getText());
-				Factory.trayConfig.setConsoleEncode(consoleEncode.getText());
-				Factory.trayConfig.setPassFile(passFile.getText());
-				Factory.trayConfig.setIconFile(iconFile.getText());
-				Factory.trayConfig.setKeyFile(keyFile.getText());
+				Factory.get().getConfig().setProxyHost(proxyHost.getText());
+				Factory.get().getConfig().setProxyUser(proxyUser.getText());
+				Factory.get().getConfig().setFontName(font.getText());
+				Factory.get().getConfig().setFileEncode(fileEncode.getText());
+				Factory.get().getConfig().setConsoleEncode(consoleEncode.getText());
+				Factory.get().getConfig().setMenuFile(passFile.getText());
+				Factory.get().getConfig().setIconFile(iconFile.getText());
+				Factory.get().getConfig().setKeyFile(keyFile.getText());
 				try {
-					Factory.trayConfig.setProxyPort(Integer.valueOf(proxyPort.getText()));
+					Factory.get().getConfig().setProxyPort(Integer.valueOf(proxyPort.getText()));
 				} catch (Exception e) {
 					logger.error("Error", e);
 				}
 				try {
-					Factory.trayConfig.setCaptureWidth(Integer.valueOf(captureWidth.getText()));
+					Factory.get().getConfig().setCaptureWidth(Integer.valueOf(captureWidth.getText()));
 				} catch (Exception e) {
 					logger.error("Error", e);
 				}
 				try {
-					Factory.trayConfig.setFontSize(Integer.valueOf(fontSize.getText()));
+					Factory.get().getConfig().setFontSize(Integer.valueOf(fontSize.getText()));
 				} catch (Exception e) {
 					logger.error("Error", e);
 				}
 				try {
-					Factory.trayConfig.setImageCheckInterval(Integer.valueOf(imageCheckInterval.getText()));
+					Factory.get().getConfig().setImageCheckInterval(Integer.valueOf(imageCheckInterval.getText()));
 				} catch (Exception e) {
 					logger.error("Error", e);
 				}
 				try {
-					Factory.trayConfig.setIconSize(Integer.valueOf(iconSize.getText()));
+					Factory.get().getConfig().setIconSize(Integer.valueOf(iconSize.getText()));
 				} catch (Exception e) {
 					logger.error("Error", e);
 				}
 				try {
-					Factory.trayConfig.setImageCheckNumber(Integer.valueOf(imageCheckNumber.getText()));
+					Factory.get().getConfig().setImageCheckNumber(Integer.valueOf(imageCheckNumber.getText()));
 				} catch (Exception e) {
 					logger.error("Error", e);
 				}
 				if (new String(proxyPass.getPassword()).trim().length() > 0) {
-					if (Factory.secretKey != null) {
-						Factory.trayConfig.setProxyPass(CryptoEncrypter.encrypt(new String(proxyPass.getPassword()), Factory.secretKey));
+					if (Factory.get().getSecretKey() != null) {
+						Factory.get().getConfig().setProxyPass(CryptoEncrypter.encrypt(new String(proxyPass.getPassword()), Factory.get().getSecretKey()));
 					} else {
 						Interpreter.showError("You need to set or configure your encryption key to save the proxy password.");
 						return;
 					}
 				} else {
-					Factory.trayConfig.setProxyPass("");
+					Factory.get().getConfig().setProxyPass("");
 				}
-				Factory.trayConfig.save();
-				Factory.compute();
-				Factory.trayPass.loadIcon();
-				Factory.trayPass.setMenu();
+				Factory.get().getConfig().save();
+				Factory.get().reset();
+				Factory.get().getTrayPass().loadIcon();
+				Factory.get().getTrayPass().setMenu();
 				dispose();
 			}
 		});

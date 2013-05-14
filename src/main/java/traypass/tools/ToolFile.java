@@ -29,7 +29,7 @@ public class ToolFile {
 		try {
 			FileInputStream fstream = new FileInputStream(file);
 			DataInputStream in = new DataInputStream(fstream);
-			BufferedReader br = new BufferedReader(new InputStreamReader(in, Factory.fileEncode));
+			BufferedReader br = new BufferedReader(new InputStreamReader(in, Factory.get().getConfig().getFileEncode()));
 			String line;
 			while ((line = br.readLine()) != null) {
 				result.add(line);
@@ -46,7 +46,7 @@ public class ToolFile {
 		List<String> result = new ArrayList<String>();
 		try {
 			InputStream in = Factory.class.getResourceAsStream(file);
-			BufferedReader br = new BufferedReader(new InputStreamReader(in, Factory.fileEncode));
+			BufferedReader br = new BufferedReader(new InputStreamReader(in, Factory.get().getConfig().getFileEncode()));
 			String line;
 			while ((line = br.readLine()) != null) {
 				result.add(line);
@@ -75,7 +75,7 @@ public class ToolFile {
 				save = getFileLines(file);
 			}
 			OutputStream bos = new BufferedOutputStream(new FileOutputStream(file));
-			OutputStreamWriter out = new OutputStreamWriter(bos, Factory.fileEncode);
+			OutputStreamWriter out = new OutputStreamWriter(bos, Factory.get().getConfig().getFileEncode());
 			for (String line : save) {
 				out.write(line + Factory.lineSeparator);
 			}

@@ -12,7 +12,7 @@ public class ActionInfo extends Action {
 		if (parameters.size() > 0) {
 			str = parameters.get(0);
 		}
-		Factory.trayPass.showInfo(str);
+		Factory.get().getTrayPass().showInfo(str);
 		return str;
 	}
 }

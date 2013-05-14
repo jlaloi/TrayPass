@@ -57,7 +57,7 @@ public class ToolImage {
 	}
 
 	public static BufferedImage getScreenCapture(Rectangle bounds) {
-		BufferedImage desktop = Factory.getRobot().createScreenCapture(bounds);
+		BufferedImage desktop = Factory.get().getRobot().createScreenCapture(bounds);
 		return desktop;
 	}
 

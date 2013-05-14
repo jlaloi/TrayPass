@@ -45,13 +45,13 @@ public class ActionSocket extends Action {
 				String fileName = (new String(buffer)).replaceAll("\u0000.*", "");
 				bis.read(buffer);
 				long fileSize = Long.valueOf((new String(buffer)).replaceAll("\u0000.*", "")).longValue();
-				Factory.trayPass.showInfo("Downloading " + fileName + " (" + ToolFile.formatSize(fileSize) + ")");
+				Factory.get().getTrayPass().showInfo("Downloading " + fileName + " (" + ToolFile.formatSize(fileSize) + ")");
 				FileOutputStream fos = new FileOutputStream(path + Factory.fileSeparator + fileName);
 				BufferedOutputStream bos = new BufferedOutputStream(fos);
 				while ((in = bis.read(buffer)) != -1 && !interpreter.isStop()) {
 					bos.write(buffer, 0, in);
 				}
-				Factory.trayPass.showInfo("Downloaded " + ToolFile.formatSize(fileSize) + " to " + fileName + " (" + ToolFile.formatSize(fileSize) + ")");
+				Factory.get().getTrayPass().showInfo("Downloaded " + ToolFile.formatSize(fileSize) + " to " + fileName + " (" + ToolFile.formatSize(fileSize) + ")");
 				bos.close();
 				bis.close();
 				sock.close();
@@ -59,9 +59,9 @@ public class ActionSocket extends Action {
 				ServerSocket servsock = new ServerSocket(port);
 				File file = new File(path);
 				while (true && !interpreter.isStop()) {
-					Factory.trayPass.showInfo("Sharing " + path + " (" + ToolFile.formatSize(file.length()) + ")" + " on port " + port);
+					Factory.get().getTrayPass().showInfo("Sharing " + path + " (" + ToolFile.formatSize(file.length()) + ")" + " on port " + port);
 					Socket sock = servsock.accept();
-					Factory.trayPass.showInfo("Sending " + path + " to " + sock.toString());
+					Factory.get().getTrayPass().showInfo("Sending " + path + " to " + sock.toString());
 					BufferedInputStream bis = new BufferedInputStream(new FileInputStream(file));
 					OutputStream os = sock.getOutputStream();
 					BufferedOutputStream bos = new BufferedOutputStream(os);
@@ -78,7 +78,7 @@ public class ActionSocket extends Action {
 			}
 		} catch (Exception e) {
 			logger.error("Error", e);
-			Factory.trayPass.showError(e.getMessage());
+			Factory.get().getTrayPass().showError(e.getMessage());
 			result = null;
 		}
 		return result;

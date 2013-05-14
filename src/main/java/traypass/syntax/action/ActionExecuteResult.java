@@ -13,7 +13,7 @@ public class ActionExecuteResult extends Action {
 		String result = "";
 		try {
 			Process p = ActionExecute.execute(parameters);
-			BufferedReader input = new BufferedReader(new InputStreamReader(p.getInputStream(), Factory.consoleEncode));
+			BufferedReader input = new BufferedReader(new InputStreamReader(p.getInputStream(), Factory.get().getConfig().getConsoleEncode()));
 			String line;
 			while ((line = input.readLine()) != null) {
 				result += line + Factory.lineSeparator;

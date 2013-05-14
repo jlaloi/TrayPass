@@ -49,28 +49,25 @@ public class TrayPass {
 
 	public void loadIcon() {
 		try {
-			Factory.trayImageIcon = ToolImage.getImage(Factory.iconFile);
-			workingIcon = ToolImage.toBufferedImage(Factory.trayImageIcon);
+			workingIcon = ToolImage.toBufferedImage(Factory.get().getTrayImageIcon());
 			Graphics g = workingIcon.getGraphics();
 			int rectSize = 6;
 			g.setColor(Color.GREEN);
 			g.fillOval(workingIcon.getWidth() - rectSize, workingIcon.getHeight() - rectSize, rectSize, rectSize);
 			if (trayIcon != null) {
-				trayIcon.setImage(Factory.trayImageIcon);
+				trayIcon.setImage(Factory.get().getTrayImageIcon());
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
-			logger.error("Error while fetching the image icon " + Factory.trayImageIcon, e);
+			logger.error("Error while fetching the image icon " + Factory.get().getTrayImageIcon(), e);
 		}
 	}
 
 	public TrayPass() {
 		try {
 			loadIcon();
-			trayIcon = new TrayIcon(Factory.trayImageIcon, Factory.appName, null);
+			trayIcon = new TrayIcon(Factory.get().getTrayImageIcon(), Factory.appName, null);
 			trayIcon.setImageAutoSize(true);
 			SystemTray tray = SystemTray.getSystemTray();
-			setMenu();
 			tray.add(trayIcon);
 			trayIcon.addMouseListener(new MouseAdapter() {
 				public void mouseReleased(MouseEvent e) {
@@ -105,12 +102,12 @@ public class TrayPass {
 		List<JMenu> currentMenu = new ArrayList<JMenu>();
 
 		// Adding pass
-		for (String pass : ToolFile.getFileLines(Factory.passFile)) {
+		for (String pass : ToolFile.getFileLines(Factory.get().getConfig().getMenuFile())) {
 			try {
 				if (pass.contains(Syntax.DECRYPT.getPattern())) {
 					useEncryption = true;
 				}
-				if (pass.contains(Syntax.DOWNLOAD.getPattern()) && Factory.trayConfig.getProxyPass() != null && Factory.trayConfig.getProxyPass().trim().length() > 0) {
+				if (pass.contains(Syntax.DOWNLOAD.getPattern()) &&Factory.get().getConfig().getProxyPass() != null && Factory.get().getConfig().getProxyPass().trim().length() > 0) {
 					useEncryption = true;
 				}
 				if (pass.startsWith("<--{") && pass.endsWith("}")) {
@@ -121,7 +118,7 @@ public class TrayPass {
 						label = label.substring(0, label.indexOf(Syntax.functionParamSeparator));
 					}
 					JMenu menu = new JMenu(label);
-					menu.setFont(Factory.font);
+					menu.setFont(Factory.get().getFont());
 					menu.setIcon(PassMenuItem.getImageIcon(icon));
 					if (currentMenu.size() > 0) {
 						currentMenu.get(currentMenu.size() - 1).add(menu);
@@ -155,7 +152,7 @@ public class TrayPass {
 					PassMenuItem item;
 					if (pass.startsWith("title:")) {
 						item = new PassMenuItem(pass.substring(pass.indexOf(":") + 1), null, "");
-						item.setFont(Factory.fontBold);
+						item.setFont(Factory.get().getFontBold());
 					} else {
 						String label = pass;
 						String icon = null;
@@ -183,12 +180,12 @@ public class TrayPass {
 
 		popup.addSeparator();
 		JMenu configMenu = new JMenu("Configuration");
-		configMenu.setFont(Factory.fontBold);
+		configMenu.setFont(Factory.get().getFontBold());
 
 		PassMenuItem editor = new PassMenuItem("Edit Menu");
 		editor.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new EditorFrame(Factory.passFile);
+				new EditorFrame(Factory.get().getConfig().getMenuFile());
 			}
 		});
 		configMenu.add(editor);
@@ -207,6 +204,14 @@ public class TrayPass {
 			}
 		});
 		configMenu.add(configitem);
+		
+		PassMenuItem reloadPluginItem = new PassMenuItem("Reload Plugin");
+		reloadPluginItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Factory.get().getPluginManager().initPluginList();
+			}
+		});
+		configMenu.add(reloadPluginItem);
 
 		// Misc
 		PassMenuItem helpItem = new PassMenuItem("Syntax help");
@@ -226,7 +231,7 @@ public class TrayPass {
 
 		if (tasks.size() > 0) {
 			JMenu taskMenu = new JMenu("Tasks");
-			taskMenu.setFont(Factory.fontBold);
+			taskMenu.setFont(Factory.get().getFontBold());
 			for (ToolTimer tt : tasks) {
 				final PassMenuItem taskItem = new PassMenuItem(tt.getTitle());
 				taskItem.setIcon(PassMenuItem.getImageIcon(tt.getIcon()));
@@ -269,9 +274,9 @@ public class TrayPass {
 
 		// Crypto
 		if (useEncryption) {
-			if (Factory.trayConfig.getCryptoExample() != null && Factory.trayConfig.getCryptoExample().trim().length() > 0) {
+			if (Factory.get().getConfig().getCryptoExample() != null && Factory.get().getConfig().getCryptoExample().trim().length() > 0) {
 				new CryptoEnterFrame();
-			} else if (Factory.secretKey == null) {
+			} else if (Factory.get().getSecretKey() == null) {
 				new ConfigurationFrame();
 			}
 		}
@@ -289,7 +294,7 @@ public class TrayPass {
 		if (trayIcon != null && bool) {
 			trayIcon.setImage(workingIcon);
 		} else if (trayIcon != null) {
-			trayIcon.setImage(Factory.trayImageIcon);
+			trayIcon.setImage(Factory.get().getTrayImageIcon());
 			trayIcon.setToolTip(Factory.appName);
 		}
 	}
@@ -319,7 +324,7 @@ public class TrayPass {
 	}
 
 	private void exit() {
-		Factory.trayConfig.save();
+		Factory.get().getConfig().save();
 		System.exit(0);
 	}
 }

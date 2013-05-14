@@ -42,7 +42,7 @@ public class ActionSend extends Action {
 
 	public static void load() {
 		lib.clear();
-		for (String line : ToolFile.getFileLinesJar(Factory.keyFile)) {
+		for (String line : ToolFile.getFileLinesJar(Factory.get().getConfig().getKeyFile())) {
 			String[] parts = line.split("=>");
 			if (parts.length >= 2) {
 				String[] codes = parts[1].trim().split(",");
@@ -53,7 +53,7 @@ public class ActionSend extends Action {
 				lib.put(parts[0], keys);
 			}
 		}
-		logger.info(Factory.keyFile + " loaded");
+		logger.info(Factory.get().getConfig().getKeyFile() + " loaded");
 	}
 
 	public int[] getCode(String key) {
@@ -90,9 +90,9 @@ public class ActionSend extends Action {
 		if (length > 0) {
 			ActionWait.waitMS(waitBetweenChar);
 			try {
-				Factory.getRobot().keyPress(keyCodes[offset]);
+				Factory.get().getRobot().keyPress(keyCodes[offset]);
 				doType(keyCodes, offset + 1, length - 1);
-				Factory.getRobot().keyRelease(keyCodes[offset]);
+				Factory.get().getRobot().keyRelease(keyCodes[offset]);
 			} catch (Exception e) {
 				logger.error("Error", e);
 			}

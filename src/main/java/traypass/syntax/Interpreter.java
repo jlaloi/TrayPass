@@ -26,12 +26,12 @@ public class Interpreter extends Thread {
 
 	public void run() {
 		stop = false;
-		if (!invisible && Factory.trayPass != null) {
-			Factory.trayPass.setWorking(true);
+		if (!invisible && Factory.get().getTrayPass() != null) {
+			Factory.get().getTrayPass().setWorking(true);
 		}
 		computeFunctions(line);
-		if (!invisible && Factory.trayPass != null) {
-			Factory.trayPass.setWorking(false);
+		if (!invisible && Factory.get().getTrayPass() != null) {
+			Factory.get().getTrayPass().setWorking(false);
 		}
 		stop = true;
 	}
@@ -42,7 +42,7 @@ public class Interpreter extends Thread {
 			for (String function : splitFunctions(line)) {
 				if (stop) {
 					if (function != null && function.trim().length() > 0) {
-						Factory.trayPass.showError("Stopped before executing: " + function);
+						Factory.get().getTrayPass().showError("Stopped before executing: " + function);
 					}
 					break;
 				}
@@ -123,7 +123,7 @@ public class Interpreter extends Thread {
 		}
 		// Plugin action
 		if (result == null) {
-			for (Plugin plugin : Factory.getPluginManager().getPluginList()) {
+			for (Plugin plugin : Factory.get().getPluginManager().getPluginList()) {
 				if ((Syntax.functionStart + plugin.getPattern()).toLowerCase().equals(functionName.toLowerCase())) {
 					result = plugin;
 					break;
@@ -235,8 +235,8 @@ public class Interpreter extends Thread {
 	}
 
 	public static void showError(String text) {
-		if (Factory.trayPass != null) {
-			Factory.trayPass.showError(text);
+		if (Factory.get().getTrayPass() != null) {
+			Factory.get().getTrayPass().showError(text);
 		} else {
 			System.out.println("ERROR " + text);
 		}

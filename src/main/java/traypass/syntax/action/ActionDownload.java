@@ -39,8 +39,8 @@ public class ActionDownload extends Action {
 				writeFile.write(buffer, 0, read);
 				currentSize += read;
 				progress = currentSize * 100 / fullSize;
-				if (Factory.trayPass != null && progress % 10 == 0 && progress != lastDl && progress > 0) {
-					Factory.trayPass.showInfo("Downloading " + ToolFile.formatSize(fullSize) + " from " + url + " (" + progress + "%)");
+				if (Factory.get().getTrayPass() != null && progress % 10 == 0 && progress != lastDl && progress > 0) {
+					Factory.get().getTrayPass().showInfo("Downloading " + ToolFile.formatSize(fullSize) + " from " + url + " (" + progress + "%)");
 					lastDl = progress;
 				}
 			}

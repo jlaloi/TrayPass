@@ -49,7 +49,7 @@ public class SyntaxFrame extends JFrame {
 		version.setHorizontalAlignment(JLabel.RIGHT);
 		add(version, BorderLayout.SOUTH);
 
-		setIconImage(Factory.trayImageIcon);
+		setIconImage(Factory.get().getTrayImageIcon());
 		pack();
 		setLocationRelativeTo(getParent());
 		setVisible(true);

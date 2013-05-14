@@ -40,7 +40,7 @@ public class ActionScreenCapture extends Action {
 			image = ToolImage.getScreenCapture();
 		} else if (manual.equals(parameters.get(1).toLowerCase())) {
 			try {
-				Font font = new Font(Factory.fontName, Font.BOLD, 24);
+				Font font = new Font(Factory.get().getConfig().getFontName(), Font.BOLD, 24);
 				JDialog firstDialog = createWarningDialog("Select top left position", font);
 				Thread.sleep(1500);
 				Point firstLocation = MouseInfo.getPointerInfo().getLocation();

@@ -31,13 +31,13 @@ public class ToolMouse {
 		int c = getMouseClick(click);
 		if (c > 0) {
 			System.out.println("click " + x + "x" + y + " " + c);
-			Factory.getRobot().mouseMove(x, y);
-			Factory.getRobot().mousePress(c);
-			Factory.getRobot().mouseRelease(c);
+			Factory.get().getRobot().mouseMove(x, y);
+			Factory.get().getRobot().mousePress(c);
+			Factory.get().getRobot().mouseRelease(c);
 			if (click > 3) {
 				ActionWait.waitMS(200);
-				Factory.getRobot().mousePress(c);
-				Factory.getRobot().mouseRelease(c);
+				Factory.get().getRobot().mousePress(c);
+				Factory.get().getRobot().mouseRelease(c);
 			}
 		}
 	}

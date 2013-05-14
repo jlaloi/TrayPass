@@ -8,12 +8,12 @@ public class TrayButton extends JButton {
 
 	public TrayButton() {
 		super();
-		setFont(Factory.font);
+		setFont(Factory.get().getFont());
 	}
 
 	public TrayButton(String label) {
 		super(label);
-		setFont(Factory.font);
+		setFont(Factory.get().getFont());
 	}
 
 }

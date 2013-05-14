@@ -29,7 +29,7 @@ public class CryptoEnterFrame extends JDialog {
 
 		setSize(200, 80);
 		setTitle("Enter your key");
-		setIconImage(Factory.trayImageIcon);
+		setIconImage(Factory.get().getTrayImageIcon());
 		setLocationRelativeTo(getParent());
 		setAlwaysOnTop(true);
 		setResizable(false);
@@ -41,11 +41,11 @@ public class CryptoEnterFrame extends JDialog {
 			public void keyReleased(KeyEvent e) {
 				String keyp = new String(key.getPassword());
 				SecretKey generatedKey = CryptoEncrypter.getSecretKey(keyp);
-				String result = CryptoEncrypter.decrypt(Factory.trayConfig.getCryptoExample(), generatedKey);
+				String result = CryptoEncrypter.decrypt(Factory.get().getConfig().getCryptoExample(), generatedKey);
 				example.setText(result);
 				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 					if (example.getText().trim().length() > 0) {
-						Factory.secretKey = generatedKey;
+						Factory.get().setSecretKey(generatedKey);
 						dispose();
 					}
 				}

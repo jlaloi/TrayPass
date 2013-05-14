@@ -23,7 +23,7 @@ public class PassMenuItem extends JMenuItem {
 
 	public static ImageIcon defaultIcon;
 
-	public static String defaultIconPath = "DefaultMenuIcon.png";
+	public static final String defaultIconPath = "DefaultMenuIcon.png";
 
 	public static HashMap<String, ImageIcon> library = new HashMap<String, ImageIcon>();
 
@@ -64,11 +64,11 @@ public class PassMenuItem extends JMenuItem {
 		if (defaultIcon == null) {
 			defaultIcon = getImageIcon(defaultIconPath);
 		}
-		setFont(Factory.font);
+		setFont(Factory.get().getFont());
 		if (line != null && line.trim().length() > 0) {
 			addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					Factory.trayPass.compute(line);
+					Factory.get().getTrayPass().compute(line);
 				}
 			});
 		}
@@ -81,7 +81,7 @@ public class PassMenuItem extends JMenuItem {
 				result = library.get(path);
 			} else if (path != null && (defaultIconPath.equals(path) || new File(path).exists())) {
 				Image image = ToolImage.getImage(path);
-				BufferedImage icon = ToolImage.resizeImage(image, Factory.iconSize, Factory.iconSize);
+				BufferedImage icon = ToolImage.resizeImage(image, Factory.get().getConfig().getIconSize(), Factory.get().getConfig().getIconSize());
 				result = new ImageIcon(icon);
 				library.put(path, result);
 			} else {

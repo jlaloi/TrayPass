@@ -10,8 +10,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import traypass.TrayPass;
+import traypass.configuration.TrayPassConfig;
 import traypass.misc.PassMenuItem;
 import traypass.syntax.plugin.PluginManager;
+import traypass.tools.ToolImage;
 
 public class Factory {
 
@@ -21,93 +23,89 @@ public class Factory {
 
 	public static final String appName = "Tray Pass";
 
-	public static String configFileName = ".TrayPass";
-
-	public static String tmpDir = "TrayPass";
-
-	public static String passFile = "c:\\TrayPass.txt";
-
-	public static String iconFile = "DefaultIcon.png";
-
-	public static String fontName = "Calibri";
-
-	public static int fontSize = 11;
-
-	public static Font font = null;
-
-	public static Font fontInfo = null;
-
-	public static Font fontBold = null;
+	public static final String tmpDir = "TrayPass";
 
 	public static final String algorithm = "AES";
 
-	public static String fileSeparator = System.getProperty("file.separator");
+	public static final String fileSeparator = System.getProperty("file.separator");
 
-	public static String lineSeparator = System.getProperty("line.separator");
+	public static final String lineSeparator = System.getProperty("line.separator");
 
-	public static TrayPassConfig trayConfig = new TrayPassConfig();
+	public static final String defaultTrayConfigFile = "trayPass.properties";
 
-	public static SecretKey secretKey;
+	private static Factory instance;
 
-	public static Image trayImageIcon;
+	private TrayPassConfig trayConfig;
 
-	public static String fileEncode = "ISO-8859-1";
+	private TrayPass trayPass;
 
-	public static String consoleEncode = "CP850";
+	private Robot robot;
 
-	public static int captureWidth = 1024;
+	private PluginManager pluginManager;
 
-	public static int imageCheckNumber = 60;
+	private SecretKey secretKey;
+	
+	private Image trayImageIcon;
 
-	public static int imageCheckInterval = 400;
-
-	public static int iconSize = 16;
-
-	public static String keyFile = "key_azerty.txt";
-
-	public static TrayPass trayPass;
-
-	private static Robot robot;
-
-	private static PluginManager pluginManager;
-
-	static {
-		pluginManager = new PluginManager();
-	}
-
-	public static Robot getRobot() {
-		if (robot == null) {
-			try {
-				robot = new Robot();
-			} catch (Exception e) {
-				logger.error("Error", e);
-			}
+	public Factory(String TrayPassFile) {
+		instance = this;
+		try {
+			robot = new Robot();
+		} catch (Exception e) {
+			logger.error("Error", e);
 		}
-		return robot;
+		trayConfig = new TrayPassConfig(TrayPassFile);
+		trayConfig.load();
+		trayImageIcon = ToolImage.getImage(getConfig().getIconFile());
+		pluginManager = new PluginManager();
+		pluginManager.initPluginList();
+		trayPass = new TrayPass();
+		trayPass.setMenu();
 	}
 
-	public static void compute() {
-		passFile = trayConfig.getPassFile();
-		iconFile = trayConfig.getIconFile();
-		fileEncode = trayConfig.getFileEncode();
-		consoleEncode = trayConfig.getConsoleEncode();
-		fontName = trayConfig.getFont();
-		fontSize = trayConfig.getFontSize();
-		captureWidth = trayConfig.getCaptureWidth();
-		imageCheckInterval = trayConfig.getImageCheckInterval();
-		imageCheckNumber = trayConfig.getImageCheckNumber();
-		iconSize = trayConfig.getIconSize();
-		font = new Font(fontName, Font.PLAIN, fontSize);
-		fontInfo = new Font(fontName, Font.PLAIN, fontSize + 1);
-		fontBold = new Font(fontName, Font.BOLD, fontSize);
-		keyFile = trayConfig.getKeyFile();
+	public static Factory get() {
+		return instance;
+	}
+
+	public Image getTrayImageIcon() {
+		return trayImageIcon;
+	}
+
+	public void reset() {
 		PassMenuItem.defaultIcon = null;
 		PassMenuItem.library.clear();
 		pluginManager.initPluginList();
 	}
 
-	public static PluginManager getPluginManager() {
+	public TrayPassConfig getConfig() {
+		return trayConfig;
+	}
+
+	public TrayPass getTrayPass() {
+		return trayPass;
+	}
+
+	public Font getFont() {
+		return new Font(getConfig().getFontName(), Font.PLAIN, getConfig().getFontSize());
+	}
+
+	public Font getFontBold() {
+		return new Font(getConfig().getFontName(), Font.BOLD, getConfig().getFontSize());
+	}
+
+	public SecretKey getSecretKey() {
+		return secretKey;
+	}
+
+	public void setSecretKey(SecretKey secretKey) {
+		this.secretKey = secretKey;
+	}
+
+	public PluginManager getPluginManager() {
 		return pluginManager;
 	}
 
+	public Robot getRobot() {
+		return robot;
+	}
 }

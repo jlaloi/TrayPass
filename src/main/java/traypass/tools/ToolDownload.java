@@ -12,9 +12,9 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import traypass.configuration.TrayPassConfig;
 import traypass.crypto.CryptoEncrypter;
 import traypass.ressources.Factory;
-import traypass.ressources.TrayPassConfig;
 
 import com.sun.org.apache.xml.internal.security.utils.Base64;
 
@@ -26,13 +26,13 @@ public class ToolDownload {
 		HttpURLConnection connection = null;
 		try {
 			connection = (HttpURLConnection) new URL(url).openConnection();
-			TrayPassConfig config = Factory.trayConfig;
+			TrayPassConfig config = Factory.get().getConfig();
 			if (config != null && config.getProxyHost() != null && config.getProxyHost().trim().length() > 0 && config.getProxyPort() > 0) {
 				System.setProperty("http.proxyHost", config.getProxyHost());
 				System.setProperty("http.proxyPort", config.getProxyPort() + "");
 			}
-			if (config != null && config.getProxyUser() != null && config.getProxyUser().trim().length() > 0 && config.getProxyPass() != null && config.getProxyPass().trim().length() > 0 && Factory.secretKey != null) {
-				String password = CryptoEncrypter.decrypt(config.getProxyPass(), Factory.secretKey);
+			if (config != null && config.getProxyUser() != null && config.getProxyUser().trim().length() > 0 && config.getProxyPass() != null && config.getProxyPass().trim().length() > 0 && Factory.get().getSecretKey() != null) {
+				String password = CryptoEncrypter.decrypt(config.getProxyPass(), Factory.get().getSecretKey());
 				String encoded = new String(Base64.encode(new String(config.getProxyUser() + ":" + password).getBytes()));
 				connection.setRequestProperty("Proxy-Authorization", "Basic " + encoded);
 			}

@@ -1,7 +1,5 @@
 package traypass;
 
-import java.awt.SystemTray;
-
 import javax.swing.UIManager;
 
 import org.slf4j.Logger;
@@ -15,29 +13,17 @@ public class Launcher {
 
 	public static final String configFileNameParam = "configFileName:";
 
-	public static void setParameters(String[] args) {
-		for (String arg : args) {
-			if (arg.startsWith(configFileNameParam)) {
-				Factory.configFileName = arg.substring(arg.indexOf(':') + 1);
-			} else {
-				logger.warn("Unknown paremeter: " + arg);
-			}
-		}
-	}
-
 	public static void main(String[] args) {
-		setParameters(args);
-		logger.info(configFileNameParam + " " + Factory.configFileName);
-		if (SystemTray.isSupported()) {
-			try {
-				UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
-			} catch (Exception e) {
-				logger.error("Error", e);
+		try {
+			UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
+			String configFile = Factory.defaultTrayConfigFile;
+			if (args.length > 0 && args[0].startsWith(configFileNameParam)) {
+				configFile = args[0].substring(args[0].indexOf(':') + 1);
 			}
-			Factory.trayConfig.load();
-			Factory.compute();
-			Factory.trayPass = new TrayPass();
+			new Factory(configFile);
+		} catch (Exception e) {
+			logger.error("Error", e);
 		}
-
 	}
+
 }

@@ -42,7 +42,7 @@ public class EditorFrame extends JFrame {
 		JPanel top = new JPanel();
 
 		functions = new JComboBox();
-		functions.setFont(Factory.font);
+		functions.setFont(Factory.get().getFont());
 		functions.removeAll();
 		for (Syntax s : Syntax.getSort()) {
 			functions.addItem(s);
@@ -78,7 +78,7 @@ public class EditorFrame extends JFrame {
 		keyCode.setToolTipText("Type to get the key code, right click to put in clipboard");
 		keyCode.setEditable(false);
 		keyCode.setPreferredSize(new Dimension(80, keyCode.getPreferredSize().height));
-		keyCode.setFont(new Font(Factory.fontName, Font.PLAIN, Factory.fontSize));
+		keyCode.setFont(Factory.get().getFont());
 		keyCode.addKeyListener(new KeyListener() {
 			public void keyTyped(KeyEvent e) {
 			}
@@ -104,8 +104,8 @@ public class EditorFrame extends JFrame {
 		setMenu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				save();
-				if (Factory.trayPass != null) {
-					Factory.trayPass.setMenu();
+				if (Factory.get().getTrayPass() != null) {
+					Factory.get().getTrayPass().setMenu();
 				}
 				dispose();
 			}
@@ -114,13 +114,13 @@ public class EditorFrame extends JFrame {
 
 		text = new JTextArea();
 		text.setSelectionColor(Color.GRAY);
-		text.setFont(new Font(Factory.fontName, Font.PLAIN, 13));
+		text.setFont(new Font(Factory.get().getConfig().getFontName(), Font.PLAIN, 13));
 		JScrollPane paneScrollPane = new JScrollPane(text, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
-		paneScrollPane.setPreferredSize(new Dimension(Factory.captureWidth, 700));
+		paneScrollPane.setPreferredSize(new Dimension(Factory.get().getConfig().getCaptureWidth(), 700));
 
 		add(top, BorderLayout.NORTH);
 		add(paneScrollPane, BorderLayout.CENTER);
-		setIconImage(Factory.trayImageIcon);
+		setIconImage(Factory.get().getTrayImageIcon());
 		pack();
 		setLocationRelativeTo(getParent());
 		setVisible(true);
@@ -140,7 +140,7 @@ public class EditorFrame extends JFrame {
 	}
 
 	private void save() {
-		ToolFile.addToFile(Factory.passFile, text.getText(), false);
+		ToolFile.addToFile(Factory.get().getConfig().getMenuFile(), text.getText(), false);
 	}
 
 	private void addFunction(Syntax function) {
@@ -163,8 +163,8 @@ public class EditorFrame extends JFrame {
 		if (text.getSelectionStart() != text.getSelectionEnd()) {
 			String exe = text.getText().substring(text.getSelectionStart(), text.getSelectionEnd());
 			System.out.println("Testing: " + exe);
-			if (Factory.trayPass != null) {
-				Factory.trayPass.compute(exe);
+			if (Factory.get().getTrayPass() != null) {
+				Factory.get().getTrayPass().compute(exe);
 			}
 		}
 	}

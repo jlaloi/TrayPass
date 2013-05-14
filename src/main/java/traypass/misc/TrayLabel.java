@@ -8,12 +8,12 @@ public class TrayLabel extends JLabel {
 
 	public TrayLabel() {
 		super();
-		setFont(Factory.font);
+		setFont(Factory.get().getFont());
 	}
 
 	public TrayLabel(String label) {
 		super(label);
-		setFont(Factory.font);
+		setFont(Factory.get().getFont());
 	}
 
 }

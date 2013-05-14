@@ -43,7 +43,7 @@ public class CaptureFrame extends JDialog {
 		label.setHorizontalAlignment(JLabel.CENTER);
 		image = inputImage;
 		original = inputImage;
-		height = Factory.captureWidth * image.getHeight() / image.getWidth();
+		height = Factory.get().getConfig().getCaptureWidth() * image.getHeight() / image.getWidth();
 		label.setToolTipText("Hold left click to select - Middle click to save - Right click to clipboard - Space to reset");
 		add(label);
 		label.setLocation(0, 0);
@@ -52,7 +52,7 @@ public class CaptureFrame extends JDialog {
 
 		setUndecorated(true);
 		setResizable(false);
-		setIconImage(Factory.trayImageIcon);
+		setIconImage(Factory.get().getTrayImageIcon());
 		setVisible(true);
 
 		padX = getSize().width - getContentPane().getSize().width;
@@ -130,8 +130,8 @@ public class CaptureFrame extends JDialog {
 		int iwidth = image.getWidth();
 		int iheight = image.getHeight();
 
-		if (iwidth > Factory.captureWidth) {
-			iwidth = Factory.captureWidth - 1;
+		if (iwidth > Factory.get().getConfig().getCaptureWidth()) {
+			iwidth = Factory.get().getConfig().getCaptureWidth() - 1;
 			iheight = iwidth * image.getHeight() / image.getWidth();
 		}
 
@@ -152,15 +152,15 @@ public class CaptureFrame extends JDialog {
 	private boolean saveFile() {
 		JFileChooser chooser = new JFileChooser();
 		chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
-		chooser.setSelectedFile(new File(Factory.trayConfig.getCaptureDir() + "Capture" + nbCapture + ".png"));
+		chooser.setSelectedFile(new File(Factory.get().getConfig().getCaptureDir() + "Capture" + nbCapture + ".png"));
 		nbCapture++;
 		chooser.setApproveButtonText("Save");
 		chooser.setDialogTitle("Save image");
 		int returnVal = chooser.showOpenDialog(this);
 		if (returnVal == JFileChooser.APPROVE_OPTION) {
 			ToolImage.saveImage(image, chooser.getSelectedFile());
-			Factory.trayConfig.setCaptureDir(chooser.getSelectedFile().getParentFile().getPath() + Factory.fileSeparator);
-			Factory.trayConfig.save();
+			Factory.get().getConfig().setCaptureDir(chooser.getSelectedFile().getParentFile().getPath() + Factory.fileSeparator);
+			Factory.get().getConfig().save();
 			return true;
 		}
 		return false;
